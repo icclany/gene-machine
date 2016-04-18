@@ -40,6 +40,42 @@ var seedUsers = function () {
         {
             email: 'obama@gmail.com',
             password: 'potus'
+        },
+        {
+            email: 'tk@gmail.com',
+            password: '123'
+        },
+        {
+            email: 'Iris@gmail.com',
+            password: 'abc'
+        },
+        {
+            email: 'Brian@hotmail.com',
+            password: 'imdabest'
+        },
+        {
+            email: 'anthony@aol.com',
+            password: 'coolbeans'
+        },
+        {
+            email: 'bob@gmail.com',
+            password: 'seeding'
+        },
+        {
+            email: 'abc@hotmail.com',
+            password: 'testing123'
+        },
+        {
+            email: 'testinguser@fsa.com',
+            password: 'fullstack'
+        },
+        {
+            email: 'animalbuyer@gmail.com',
+            password: 'ohdeer'
+        },
+        {
+            email: 'workinprogress@gmail.com',
+            password: 'almostdone'
         }
     ];
 

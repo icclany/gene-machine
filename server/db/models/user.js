@@ -3,21 +3,32 @@ var crypto = require('crypto');
 var mongoose = require('mongoose');
 var _ = require('lodash');
 
-var schema = new mongoose.Schema({
+var User = new mongoose.Schema({
     email: {
-        type: String
+        type: String,
+        required: true
     },
     password: {
-        type: String
+        type: String,
+        required: true
     },
     salt: {
         type: String
     },
-    twitter: {
-        id: String,
-        username: String,
-        token: String,
-        tokenSecret: String
+    isAdmin: {
+      type: Boolean,
+      required: true
+    },
+    address: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Address'
+    }],
+    paymentInfo: [{
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'PaymentInfo'
+    }],
+    reviews: {
+      type: Array
     },
     facebook: {
         id: String
@@ -63,4 +74,4 @@ schema.method('correctPassword', function (candidatePassword) {
     return encryptPassword(candidatePassword, this.salt) === this.password;
 });
 
-mongoose.model('User', schema);
+mongoose.model('User', User);

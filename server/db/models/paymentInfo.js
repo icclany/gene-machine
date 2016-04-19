@@ -8,7 +8,7 @@ var paymentInfoSchema = new mongoose.Schema({ //added new mongoose.Schema and ad
   },
   billingAddress: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Address'
+    ref: 'addressSchema'
   },
   ccNum: {
     type: String,

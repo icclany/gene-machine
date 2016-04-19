@@ -1,7 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
 
-var PaymentInfo = mongoose.Schema({
+var PaymentInfo = new mongoose.Schema({ //added new mongoose.Schema
   name: {
     type: String,
     required: true

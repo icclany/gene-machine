@@ -33,9 +33,13 @@ var PaymentInfo = mongoose.model('PaymentInfo');
 var wipeCollections = function () {
     var removeUsers = User.remove({});
     var removeProducts = Product.remove({});
+    var removeAddresses = Address.remove({});
+    var removePaymentInfo = PaymentInfo.remove({});
     return Promise.all([
         removeUsers,
-        removeProducts
+        removeProducts,
+        removeAddresses,
+        removePaymentInfo
     ]);
 };
 

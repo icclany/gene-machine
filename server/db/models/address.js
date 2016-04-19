@@ -1,7 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
 
-var Address = mongoose.Schema({
+var Address = new mongoose.Schema({
   name: {
     type: String,
     required: true

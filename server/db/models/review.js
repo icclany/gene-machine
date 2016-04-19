@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 
 var reviewSchema = new mongoose.Schema({
-    numstars: {
+    numStars: {
         type: Number,
         min: 1,
         max: 5,
@@ -12,7 +12,7 @@ var reviewSchema = new mongoose.Schema({
         type: String
     },
     user: {
-        type : mongoose.Schema.Types.ObjectId, 
+        type : mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },

@@ -20,4 +20,4 @@ var addressSchema = new mongoose.Schema({ //add new to mongoose.Schema and made 
   },
 });
 
-mongoose.model('Address', Address);
+mongoose.model('Address', addressSchema); //make things more consistent

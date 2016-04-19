@@ -224,8 +224,8 @@ function seedPaymentInfo(){
     {
       name: 'Beyonce',
       billingAddress: funAddress._id,
-      ccNum: '5',
-      ccExpiration: '5/5/55'
+      ccNum: '5', // add validation later
+      ccExpiration: '5/5/55' // add validation later
     },
     {
       name: 'HOV',

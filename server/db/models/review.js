@@ -8,7 +8,7 @@ var reviewSchema = new mongoose.Schema({
         max: 5,
         required: true
     },
-    review: {
+    text: {
         type: String
     },
     user: {

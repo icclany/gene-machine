@@ -5,6 +5,7 @@ var chalk = require('chalk');
 // mongoose establishing a connection to a MongoDB database.
 var startDb = require('./db');
 
+
 // Create a node server instance! cOoL!
 var server = require('http').createServer();
 

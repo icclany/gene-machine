@@ -1,7 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
 
-var Address = new mongoose.Schema({
+var addressSchema = new mongoose.Schema({ //add new to mongoose.Schema and made variable schema
   name: {
     type: String,
     required: true
@@ -20,4 +20,4 @@ var Address = new mongoose.Schema({
   },
 });
 
-mongoose.model('Address', Address);
+mongoose.model('Address', addressSchema); //make things more consistent

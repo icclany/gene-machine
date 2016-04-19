@@ -17,68 +17,112 @@ name in the environment files.
 
 */
 
+// in fields that req objectId, just do new Address({field: info, etc})
+
 var mongoose = require('mongoose');
 var Promise = require('bluebird');
 var chalk = require('chalk');
 var connectToDb = require('./server/db');
 var User = mongoose.model('User');
 var Product = mongoose.model('Product');
+var Address = mongoose.model('Address');
+var Purchase = mongoose.model('Purchase');
+var Review = mongoose.model('Review');
+var PaymentInfo = mongoose.model('PaymentInfo');
 
 var wipeCollections = function () {
     var removeUsers = User.remove({});
     var removeProducts = Product.remove({});
+    var removeAddresses = Address.remove({});
+    var removePaymentInfo = PaymentInfo.remove({});
     return Promise.all([
         removeUsers,
-        removeProducts
+        removeProducts,
+        removeAddresses,
+        removePaymentInfo
     ]);
 };
 
+var funAddress;
+var funUser;
+var funProduct;
+var funPaymentInfo;
+
 var seedUsers = function () {
+
+
+  Address.create({name: 'Bill', street: '123', city: 'NY', zipCode: 12345})
+  .then(function(newAddress){
+    funAddress = newAddress;
+  });
+  User.create({email: 'hello@hello.com', password: '123', isAdmin: true})
+  .then(function(newUser){
+    funUser = newUser;
+  });
+  Product.create({name: 'great thing!', price: 1})
+  .then(function(newProduct){
+    funProduct = newProduct;
+  });
+  PaymentInfo.create({name: 'Bill', ccNum: '123', ccExpiration: '05/12'}) // made MM/YY format
+  .then(function(newPaymentInfo){
+    funPaymentInfo = newPaymentInfo;
+  });
 
     var users = [
         {
             email: 'testing@fsa.com',
-            password: 'password'
+            password: 'password',
+            isAdmin: true
         },
         {
             email: 'obama@gmail.com',
-            password: 'potus'
+            password: 'potus',
+            isAdmin: true
         },
         {
             email: 'tk@gmail.com',
-            password: '123'
+            password: '123',
+            isAdmin: false
         },
         {
             email: 'Iris@gmail.com',
-            password: 'abc'
+            password: 'abc',
+            isAdmin: false
         },
         {
             email: 'Brian@hotmail.com',
-            password: 'imdabest'
+            password: 'imdabest',
+            isAdmin: false
         },
         {
             email: 'anthony@aol.com',
-            password: 'coolbeans'
+            password: 'coolbeans',
+            isAdmin: false
         },
         {
             email: 'bob@gmail.com',
-            password: 'seeding'
+            password: 'seeding',
+            isAdmin: false
         },
         {
             email: 'abc@hotmail.com',
-            password: 'testing123'
+            password: 'testing123',
+            isAdmin: false
         },
         {
             email: 'testinguser@fsa.com',
-            password: 'fullstack'
+            password: 'fullstack',
+            isAdmin: false
         },
         {
             email: 'animalbuyer@gmail.com',
-            password: 'ohdeer'
+            password: 'ohdeer',
+            isAdmin: false
         },
         {
             email: 'workinprogress@gmail.com',
-            password: 'almostdone'
+            password: 'almostdone',
+            isAdmin: false
         }
     ];
 
@@ -174,6 +218,82 @@ var seedProducts = function () {
     return Product.create(products);
 };
 
+// need address ObjectId's
+function seedPaymentInfo(){
+  var paymentsInfo = [
+    {
+      name: 'Beyonce',
+      billingAddress: funAddress._id,
+      ccNum: '5', // add validation later
+      ccExpiration: '5/5/55' // add validation later
+    },
+    {
+      name: 'HOV',
+      billingAddress: funAddress._id,
+      ccNum: '6',
+      ccExpiration: '4/4/55'
+    },
+    {
+      name: 'Bill D\'Blasio',
+      billingAddress: funAddress._id, // can .ObjectId or ._id if it doesn't recognize the object as an ObjectId
+      ccNum: '34',
+      ccExpiration: '1/4/105'
+    }
+  ];
+  return PaymentInfo.create(paymentsInfo);
+}
+
+function seedAddresses(){
+  var addresses = [
+    {
+      name: 'TK',
+      street: '5 Hanover',
+      city: 'NY',
+      zipCode: 12234
+    },
+    {
+      name: 'TA',
+      street: '5 HaDnover',
+      city: 'NYC',
+      zipCode: 12214
+    }
+  ];
+  return Address.create(addresses);
+}
+
+function seedReviews(){
+  var reviews = [
+    {
+      numStars: 4,
+      user: funUser._id,
+      product: funProduct._id
+    },
+    {
+      numStars: 1,
+      user: funUser._id,
+      product: funProduct._id
+    },
+    {
+      numStars: 5,
+      user: funUser._id,
+      product: funProduct._id
+    }
+  ];
+  return Review.create(reviews);
+}
+
+///// this needs to be done when we have ObjectId's for products, addresses, and payments info
+function seedPurchases(){
+  var purchases = [
+    {
+      items: [funProduct._id],
+      shippingAddress: funAddress._id,
+      paymentInfo: funPaymentInfo._id
+    }
+  ];
+  return Purchase.create(purchases);
+}
+
 connectToDb
     .then(function () {
         return wipeCollections();
@@ -183,6 +303,18 @@ connectToDb
     })
     .then(function () {
         return seedProducts();
+    })
+    .then(function(){
+      return seedPaymentInfo();
+    })
+    .then(function(){
+      return seedAddresses();
+    })
+    .then(function(){
+      return seedReviews();
+    })
+    .then(function(){
+      return seedPurchases();
     })
     .then(function () {
         console.log(chalk.green('Seed successful!'));

@@ -21,6 +21,9 @@ var productSchema = new mongoose.Schema({
         enum: ['small', 'medium', 'large']
     },
     reviews: [{ type : mongoose.Schema.Types.ObjectId, ref: 'Review' }],
+    description: {
+        type: String
+    },
     tags: {
         type: [String]
     }

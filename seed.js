@@ -28,6 +28,7 @@ var Product = mongoose.model('Product');
 var Address = mongoose.model('Address');
 var Purchase = mongoose.model('Purchase');
 var Review = mongoose.model('Review');
+var PaymentInfo = mongoose.model('PaymentInfo');
 
 var wipeCollections = function () {
     var removeUsers = User.remove({});
@@ -44,10 +45,26 @@ var funProduct;
 var funPaymentInfo;
 
 var seedUsers = function () {
-  funAddress = new Address({name: 'Bill', street: '123', city: 'NY', zipCode: 12345}).save();
-  funUser = new User({email: 'hello@hello.com', password: '123', isAdmin: true}).save();
-  funProduct = new Product({name: 'great thing!', price: 1}).save();
-  funPaymentInfo = new PaymentInfo({name: 'Bill', ccNum: '123', ccExpiration: '5/12'}).save();
+
+
+  Address.create({name: 'Bill', street: '123', city: 'NY', zipCode: 12345})
+  .then(function(newAddress){
+    funAddress = newAddress;
+  });
+  User.create({email: 'hello@hello.com', password: '123', isAdmin: true})
+  .then(function(newUser){
+    funUser = newUser;
+  });
+  Product.create({name: 'great thing!', price: 1})
+  .then(function(newProduct){
+    funProduct = newProduct;
+  });
+  PaymentInfo.create({name: 'Bill', ccNum: '123', ccExpiration: '5/12'})
+  .then(function(newPaymentInfo){
+    funPaymentInfo = newPaymentInfo;
+  });
+
+  console.log("HEY", funAddress);
 
     var users = [
         {
@@ -201,6 +218,7 @@ var seedProducts = function () {
 
 // need address ObjectId's
 function seedPaymentInfo(){
+  console.log("PAYMENT INFO", funAddress);
   var paymentsInfo = [
     {
       name: 'Beyonce',
@@ -239,6 +257,7 @@ function seedAddresses(){
       zipCode: 12214
     }
   ];
+  return Address.create(addresses);
 }
 
 function seedReviews(){
@@ -259,6 +278,7 @@ function seedReviews(){
       product: funProduct._id
     }
   ];
+  return Review.create(reviews);
 }
 
 ///// this needs to be done when we have ObjectId's for products, addresses, and payments info
@@ -266,11 +286,6 @@ function seedPurchases(){
   var purchases = [
     {
       items: [funProduct._id],
-      shippingAddress: funAddress._id,
-      paymentInfo: funPaymentInfo._id
-    },
-    {
-      items: [funProduct._id, funProduct._id],
       shippingAddress: funAddress._id,
       paymentInfo: funPaymentInfo._id
     }

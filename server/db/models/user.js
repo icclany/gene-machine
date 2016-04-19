@@ -3,7 +3,7 @@ var crypto = require('crypto');
 var mongoose = require('mongoose');
 var _ = require('lodash');
 
-var User = new mongoose.Schema({
+var userSchema = new mongoose.Schema({ //make things more consistent
     email: {
         type: String,
         required: true
@@ -74,4 +74,4 @@ schema.method('correctPassword', function (candidatePassword) {
     return encryptPassword(candidatePassword, this.salt) === this.password;
 });
 
-mongoose.model('User', User);
+mongoose.model('User', userSchema); //make things more consistent

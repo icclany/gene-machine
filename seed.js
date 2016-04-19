@@ -22,6 +22,7 @@ var Promise = require('bluebird');
 var chalk = require('chalk');
 var connectToDb = require('./server/db');
 var User = mongoose.model('User');
+var Product = mongoose.model('Product');
 
 var wipeCollections = function () {
     var removeUsers = User.remove({});

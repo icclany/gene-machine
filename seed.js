@@ -59,7 +59,7 @@ var seedUsers = function () {
   .then(function(newUser){
     funUser = newUser;
   });
-  Product.create({name: 'great thing!', price: 1})
+  Product.create({name: 'great thing!', price: 1, description: "This is a product description"})
   .then(function(newProduct){
     funProduct = newProduct;
   });
@@ -139,7 +139,8 @@ var seedProducts = function () {
         price: 100,
         stock: 5,
         category: 'medium',
-        tags: ['tiger', 'pig']
+        tags: ['tiger', 'pig'],
+        description: 'this is a mix of a tiger and a pig'
     },
     {
         name: 'Squana',
@@ -147,7 +148,8 @@ var seedProducts = function () {
         price: 20,
         stock: 50,
         category: 'small',
-        tags: ['squirrel', 'iguana']
+        tags: ['squirrel', 'iguana'],
+        description: 'this is a squirrel mixed with an iguana'
     },
     {
         name: 'Catdog',
@@ -155,7 +157,8 @@ var seedProducts = function () {
         price: 50,
         stock: 10,
         category: 'medium',
-        tags: ['dog', 'cat']
+        tags: ['dog', 'cat'],
+        description: 'this is a cat mixed with a dog'
     },
     {
         name: 'Koalasloth',
@@ -163,7 +166,8 @@ var seedProducts = function () {
         price: 35,
         stock: 15,
         category: 'small',
-        tags: ['koala', 'sloth']
+        tags: ['koala', 'sloth'],
+        description: 'this is a koala mixed with a sloth'
     },
     {
         name: 'Chickphant',
@@ -171,7 +175,8 @@ var seedProducts = function () {
         price: 1000,
         stock: 18,
         category: 'large',
-        tags: ['chicken', 'elephant']
+        tags: ['chicken', 'elephant'],
+        description: 'this is a chicken mixed with an elephant'
     },
     {
         name: 'Whiraffe',
@@ -179,7 +184,8 @@ var seedProducts = function () {
         price: 2500,
         stock: 1,
         category: 'large',
-        tags: ['whale', 'giraffe']
+        tags: ['whale', 'giraffe'],
+        description: 'this is a whale mixed with a giraffe'
     },
     {
         name: 'Camster',
@@ -187,7 +193,8 @@ var seedProducts = function () {
         price: 3,
         stock: 600,
         category: 'small',
-        tags: ['caterpillar', 'hamster']
+        tags: ['caterpillar', 'hamster'],
+        description: 'this is a caterpillar mixed with a hamster'
     },
     {
         name: 'Bow',
@@ -195,7 +202,8 @@ var seedProducts = function () {
         price: 500,
         stock: 17,
         category: 'large',
-        tags: ['bear', 'cow']
+        tags: ['bear', 'cow'],
+        description: 'this is a bear mixed with a cow'
     },
     {
         name: 'Pandaroo',
@@ -203,7 +211,8 @@ var seedProducts = function () {
         price: 120,
         stock: 6,
         category: 'medium',
-        tags: ['panda', 'kangaroo']
+        tags: ['panda', 'kangaroo'],
+        description: 'this is a panda mixed with a kangaroo'
     },
     {
         name: 'Camigator',
@@ -211,7 +220,8 @@ var seedProducts = function () {
         price: 180,
         stock: 11,
         category: 'large',
-        tags: ['camel', 'alligator']
+        tags: ['camel', 'alligator'],
+        description: 'this is a camel mixed with an alligator'
     }
     ];
 

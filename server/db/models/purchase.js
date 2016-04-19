@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var Purchase = new mongoose.Schema({
+var purchaseSchema = new mongoose.Schema({
   items: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Product',
@@ -28,4 +28,4 @@ var Purchase = new mongoose.Schema({
   }
 });
 
-mongoose.model('Purchase', Purchase);
+mongoose.model('Purchase', purchaseSchema); //make things more consistent

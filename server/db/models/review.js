@@ -8,11 +8,11 @@ var reviewSchema = new mongoose.Schema({
         max: 5,
         required: true
     },
-    review: {
+    text: {
         type: String
     },
     user: {
-        type : mongoose.Schema.Types.ObjectId, 
+        type : mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },

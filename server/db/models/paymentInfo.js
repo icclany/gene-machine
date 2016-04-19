@@ -1,7 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
 
-var PaymentInfo = new mongoose.Schema({ //added new mongoose.Schema
+var paymentInfoSchema = new mongoose.Schema({ //added new mongoose.Schema and added variable schema
   name: {
     type: String,
     required: true
@@ -20,4 +20,4 @@ var PaymentInfo = new mongoose.Schema({ //added new mongoose.Schema
   }
 });
 
-mongoose.model('PaymentInfo', PaymentInfo);
+mongoose.model('PaymentInfo', paymentInfoSchema); //make it more consistent

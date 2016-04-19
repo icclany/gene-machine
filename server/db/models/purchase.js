@@ -2,12 +2,19 @@
 var mongoose = require('mongoose');
 
 var purchaseSchema = new mongoose.Schema({
-  items: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product',
-    required: true // What is required - one array element? Iffy on this
+  items: [
+    {
+       itemId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Product'
+        },
+        priceAtPurchase: {
+          type: Number,
+          required: true
+        },
+        required: true // What is required - one array element? Iffy on this
   }], // must keep array of prices of items when purchased
-  total: {
+  total: { // Should be a method that sums up the prices
     type: Number,
     default: 0
   },

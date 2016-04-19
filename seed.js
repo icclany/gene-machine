@@ -64,8 +64,6 @@ var seedUsers = function () {
     funPaymentInfo = newPaymentInfo;
   });
 
-  console.log("HEY", funAddress);
-
     var users = [
         {
             email: 'testing@fsa.com',
@@ -218,7 +216,6 @@ var seedProducts = function () {
 
 // need address ObjectId's
 function seedPaymentInfo(){
-  console.log("PAYMENT INFO", funAddress);
   var paymentsInfo = [
     {
       name: 'Beyonce',

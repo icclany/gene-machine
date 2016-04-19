@@ -59,7 +59,7 @@ var seedUsers = function () {
   .then(function(newProduct){
     funProduct = newProduct;
   });
-  PaymentInfo.create({name: 'Bill', ccNum: '123', ccExpiration: '5/12'})
+  PaymentInfo.create({name: 'Bill', ccNum: '123', ccExpiration: '05/12'}) // made MM/YY format
   .then(function(newPaymentInfo){
     funPaymentInfo = newPaymentInfo;
   });

@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 
 var reviewSchema = new mongoose.Schema({
-    numstars: {
+    numStars: {
         type: Number,
         min: 1,
         max: 5,

@@ -1,12 +1,11 @@
 'use strict';
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 
 var purchaseSchema = new mongoose.Schema({
   items: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Product',
-    required: true
+    required: true // What is required - one array element? Iffy on this
   }], // must keep array of prices of items when purchased
   total: {
     type: Number,

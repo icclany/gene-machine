@@ -1,33 +1,45 @@
 app.factory('ProductFactory', function($http) {
-  var ProductFactory = {};
-  var cart = [];
-  var inventory;
-  var filters = {
+    var ProductFactory = {};
+    var cart = [];
+    var inventory;
+    var filters = {
+      // tags: "*",
+      // category: ['small', 'medium', 'large']
+    };
 
-  };
+    ProductFactory.fetchAll = function() {
+        return $http.get('/api/products').then(productArray => {
+            inventory = productArray.data;
+            return productArray.data;
+        });
+    };
 
-  ProductFactory.fetchAll = function() {
-    return $http.get('/api/products').then(productArray => {
-      inventory = productArray.data;
-      return productArray.data;
-    });
-  };
+    ProductFactory.numCart = function() {
+        return cart.length;
+    }
 
-  ProductFactory.numCart = function() {
-    return cart.length;
-  }
+    ProductFactory.setFilter = function(filterObj) {
+        console.log("setting filter in Product Factory, which is")
+        console.log(filterObj)
+        var categories = [];
+        for (var size in filterObj.categories) {
+            if (filterObj.categories[size]) categories.push(size);
+        }
+        filters.tags = filterObj.tags;
+        filters.category = categories;
 
-  ProductFactory.setFilter = function(filterObj) {
-    filters = filterObj;
-  }
+        console.log("set filters in factory to")
+        console.log(filters)
+    }
 
-  ProductFactory.getFilter = function() {
-    return filters;
-  }
+    ProductFactory.getFilters = function() {
+        return filters;
+    }
 
-  ProductFactory.fetchById = function(id){
-    return $http.get('/api/products/' + id).then(product => {return product.data});
-  };
+    ProductFactory.fetchById = function(id) {
+        return $http.get('/api/products/' + id).then(product => {
+            return product.data });
+    };
 
-  return ProductFactory;
+    return ProductFactory;
 });

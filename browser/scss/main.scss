@@ -6,11 +6,6 @@ body {
   background: #fdfdfd;
 }
 
-img .thumbnail {
-    height: 600px;
-    width: 600px
-}
-
 @mixin clearfix {
   &:after {
     content: "";

@@ -1,5 +1,6 @@
 <div class="row">
-  <div class="col-xs-4" ui-sref="product({productId: product._id})" ng-repeat="product in products | filter: {tags: filter.tags, category: filter.category} : false" >
+  <div class="col-xs-4" ui-sref="product({productId: product._id})" ng-repeat="product in products | ProductFilter:filter.category:'category'">
     <single-product the-product="product"></single-product>
   </div>
 </div>
+  <!-- filter: {tags: filter.tags, category: $filter.category} : false" > -->

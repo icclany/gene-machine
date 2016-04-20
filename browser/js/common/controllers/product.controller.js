@@ -10,9 +10,17 @@ app.controller('AllProductsController', function($scope, allProducts, ProductFac
         return orig.concat(element.tags);
     }, []);
     $scope.categories = allProducts.reduce(function(orig, element) {
-        return orig.concat(element.category);
+        // if (orig.find(function(x) {return x!=element.category})) {
+        console.log("orig is ")
+        console.log(orig)
+        console.log("element is")
+        console.log(element)
+        if (orig.indexOf(element.category) === -1) {
+           return orig.concat(element.category);
+        }
+        else return orig;
     }, []);
-
+    console.log($scope.categories)
     // $scope.filter = ProductFactory.getFilters();
 
     $scope.filter = {

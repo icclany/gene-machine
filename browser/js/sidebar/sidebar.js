@@ -12,14 +12,14 @@ app.controller('SideBar', function($scope, ProductFactory){
 	var modelDefault = angular.copy($scope.filter);
 	$scope.filter = function(){
 		ProductFactory.setFilter($scope.filter);
+		console.log("setting filter from sidebar")
 	};
 
 	$scope.clearFilters = function(){
-		console.log($scope);
+// 		console.log($scope);
 		$scope.sidebarForm.$setPristine();
 		$scope.filter = modelDefault;
-		
-
+		ProductFactory.setFilter($scope.filter);
 	};
 
 });

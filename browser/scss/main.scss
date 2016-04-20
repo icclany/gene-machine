@@ -14,19 +14,49 @@ body {
   }
 }
 
+
+navbar {
+  height: 20vh;
+	width: 100vw;
+}
+
+.all-products{
+  width: 80vw;
+  height: 100vh;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+}
+
+single-product {
+  height: 200px;
+  width: 200px;
+
+
 .row {
   margin-left: 3vw;
+
 }
 
 #main {
   padding-top: 60px;
-  margin: 0 auto;
+  // margin: 0 auto;
+  height: 100%;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: 80vh;
+  width: 99vw;
 }
 
 sidebar {
-  position: absolute;
-  height: 100vh;
-  padding: 1vw;
+  height: 100%;
+  width: 19vw;
+  
   background-color: lightgrey;
 }
 

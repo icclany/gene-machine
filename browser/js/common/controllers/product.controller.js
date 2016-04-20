@@ -6,6 +6,12 @@ app.controller('ProductController', function($scope, theProduct) {
 
 app.controller('AllProductsController', function($scope, allProducts, ProductFactory) {
     $scope.products = allProducts;
+    $scope.tags = allProducts.reduce(function(orig, element) {
+        return orig.concat(element.tags);
+    }, []);
+    $scope.categories = allProducts.reduce(function(orig, element) {
+        return orig.concat(element.category);
+    }, []);
 
     // $scope.filter = ProductFactory.getFilters();
 
@@ -20,10 +26,6 @@ app.controller('AllProductsController', function($scope, allProducts, ProductFac
     };
     var modelDefault = angular.copy($scope.filter);
 
-    // $scope.setFilter = function() {
-    //     ProductFactory.setFilter($scope.filter);
-    //     console.log("setting filter from sidebar")
-    // };
 
     $scope.clearFilters = function() {
         //      console.log($scope);
@@ -35,8 +37,8 @@ app.controller('AllProductsController', function($scope, allProducts, ProductFac
         };
         $scope.filter.tags = "";
     };
+});
 
-})
 
 app.filter('ProductFilter', function($filter) {
             return function(list, arrayFilter, element) {

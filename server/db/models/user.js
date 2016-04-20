@@ -8,6 +8,10 @@ var userSchema = new mongoose.Schema({ //make things more consistent
         type: String,
         required: true
     },
+    username: {
+      type: String,
+      required: true
+    },
     password: {
         type: String,
         required: true
@@ -17,6 +21,14 @@ var userSchema = new mongoose.Schema({ //make things more consistent
     },
     isAdmin: {
       type: Boolean,
+      required: true
+    },
+    firstName: {
+      type: String,
+      required: true
+    },
+    lastName: {
+      type: String,
       required: true
     },
     cart: [{

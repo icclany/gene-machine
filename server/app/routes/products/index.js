@@ -7,23 +7,22 @@ var Products = mongoose.model('Product');
 
 
 router.get('/', function (req, res, next) {
-    Products.find({}).then(products=> {
-        console.log(products);
+    Products.find({}).populate('reviews').then(products=> {
         res.json(products);
     })
     .catch(next);
 });
 
 router.get('/category', function (req, res, next) {
-    Products.find({category: req.query.type}).then(products=> {
+    Products.find({category: req.query.type}).populate('reviews').then(products=> {
+      products.reviews.populate('user');
         res.json(products);
     })
     .catch(next);
 });
 
 router.get('/:id', function (req, res, next) {
-
-    Products.findById(req.params.id).then(product => {
+    Products.findById(req.params.id).populate('reviews').then(product=> {
         res.json(product);
     })
     .catch(next);
@@ -31,4 +30,3 @@ router.get('/:id', function (req, res, next) {
 
 // For search, doing on front-end
 
- 

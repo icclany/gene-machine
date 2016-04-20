@@ -1,10 +1,13 @@
 <div>
-  <img ng-src="{{ product.image }}">
+  <img ng-src="{{ theProduct.image }}">
   <!-- this is the larger (non-thumbnail) image -->
-  <p>Description: {{ product.description }}</p>
-  <p>Price: {{ product.price}}</p>
-  <p>Reviews: </p>
-  <div ng-repeat="review in product.reviews">
-    <review theReview="review"></review>
-  </div>
+  <p>Description: {{ theProduct.description }}</p>
+  <p>Price: {{ theProduct.price}}</p>
+  <p>Reviews:</p>
+  <div ng-repeat="review in theProduct.reviews">
+    <!-- <review theReview="review"></review> -->
+    <p>Stars: {{review.numStars}}</p>
+    <p>Review by: {{review.user}}</p>
+    <p>{{review.text}}</p>
+  <!-- </div> -->
 </div>

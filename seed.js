@@ -56,6 +56,7 @@ var seedUsers = function () {
   .then(function(newAddress){
     funAddress = newAddress;
   });
+  // WE ALREADY CREATE USERS AND PRODUCTS BELOW
   User.create({email: 'hello@hello.com', password: '123', isAdmin: true})
   .then(function(newUser){
     funUser = newUser;
@@ -64,7 +65,7 @@ var seedUsers = function () {
   .then(function(newProduct){
     funProduct = newProduct;
   });
-  PaymentInfo.create({name: 'Bill', ccNum: '123', ccExpiration: '05/12'}) // made MM/YY format
+  PaymentInfo.create({name: 'Bill', ccNum: '123', ccExpiration: '05/12'})
   .then(function(newPaymentInfo){
     funPaymentInfo = newPaymentInfo;
   });
@@ -143,7 +144,7 @@ var seedProducts = function () {
     var products = [
     {
         name: 'Tig',
-        image: 'http://www.fillmurray.com/50/49',
+        image: '/js/product/images/1.png',
         price: 100,
         stock: 5,
         category: 'medium',
@@ -153,7 +154,7 @@ var seedProducts = function () {
     },
     {
         name: 'Squana',
-        image: 'http://www.fillmurray.com/50/48',
+        image: '/js/product/images/3.png',
         price: 20,
         stock: 50,
         category: 'small',
@@ -162,7 +163,7 @@ var seedProducts = function () {
     },
     {
         name: 'Catdog',
-        image: 'http://www.fillmurray.com/48/50',
+        image: '/js/product/images/2.png',
         price: 50,
         stock: 10,
         category: 'medium',
@@ -171,7 +172,7 @@ var seedProducts = function () {
     },
     {
         name: 'Koalasloth',
-        image: 'http://www.fillmurray.com/49/50',
+        image: '/js/product/images/4.png',
         price: 35,
         stock: 15,
         category: 'small',
@@ -179,8 +180,8 @@ var seedProducts = function () {
         description: 'this is a koala mixed with a sloth'
     },
     {
-        name: 'Chickphant',
-        image: 'someurl',
+        name: 'Eleroost',
+        image: '/js/product/images/5.png',
         price: 1000,
         stock: 18,
         category: 'large',
@@ -189,7 +190,7 @@ var seedProducts = function () {
     },
     {
         name: 'Whiraffe',
-        image: 'someurl',
+        image: '/js/product/images/6.png',
         price: 2500,
         stock: 1,
         category: 'large',
@@ -198,7 +199,7 @@ var seedProducts = function () {
     },
     {
         name: 'Camster',
-        image: 'someurl',
+        image: '/js/product/images/7.png',
         price: 3,
         stock: 600,
         category: 'small',
@@ -207,7 +208,7 @@ var seedProducts = function () {
     },
     {
         name: 'Bow',
-        image: 'someurl',
+        image: '/js/product/images/8.png',
         price: 500,
         stock: 17,
         category: 'large',
@@ -216,7 +217,7 @@ var seedProducts = function () {
     },
     {
         name: 'Pandaroo',
-        image: 'someurl',
+        image: '/js/product/images/9.png',
         price: 120,
         stock: 6,
         category: 'medium',
@@ -225,7 +226,7 @@ var seedProducts = function () {
     },
     {
         name: 'Camigator',
-        image: 'someurl',
+        image: '/js/product/images/10.png',
         price: 180,
         stock: 11,
         category: 'large',

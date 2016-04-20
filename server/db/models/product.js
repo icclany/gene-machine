@@ -9,6 +9,9 @@ var productSchema = new mongoose.Schema({
     image: {
         type: String //url
     },
+    thumbnail: {
+        type: String // smaller image for the multiple product view aka product.html
+    },
     price: {
         type: Number,
         required: true

@@ -1,0 +1,10 @@
+<div>
+  <img ng-src="{{ product.image }}">
+  <!-- this is the larger (non-thumbnail) image -->
+  <p>Description: {{ product.description }}</p>
+  <p>Price: {{ product.price}}</p>
+  <p>Reviews: </p>
+  <div ng-repeat="review in product.reviews">
+    <review theReview="review"></review>
+  </div>
+</div>

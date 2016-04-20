@@ -7,7 +7,35 @@ app.controller('ProductController', function($scope, theProduct) {
 app.controller('AllProductsController', function($scope, allProducts, ProductFactory) {
     $scope.products = allProducts;
 
-    $scope.filter = ProductFactory.getFilters();
+    // $scope.filter = ProductFactory.getFilters();
+
+    $scope.filter = {
+        categories: {
+            small: false,
+            medium: false,
+            large: false
+        },
+        tags: '',
+        defaultTag: 'Enter Value'
+    };
+    var modelDefault = angular.copy($scope.filter);
+
+    // $scope.setFilter = function() {
+    //     ProductFactory.setFilter($scope.filter);
+    //     console.log("setting filter from sidebar")
+    // };
+
+    $scope.clearFilters = function() {
+        //      console.log($scope);
+        // $scope.sidebarForm.$setPristine();
+        $scope.filter.categories = {
+            small: false,
+            medium: false,
+            large: false
+        };
+        $scope.filter.tags = "";
+    };
+
 })
 
 app.filter('ProductFilter', function($filter) {
@@ -20,9 +48,9 @@ app.filter('ProductFilter', function($filter) {
                             console.log("comparing...", arrayFilter[i], listItem[element])
                              // if (arrayFilter[i] == listItem)
                             if (arrayFilter[i] == listItem[element])
-                                return true;
+                                return false;
                         }
-                        return false;
+                        return true;
                     });
                 }
             }

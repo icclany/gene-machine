@@ -1,5 +1,5 @@
 "use strict";
-app.controller('SideBar', function($scope){
+app.controller('SideBar', function($scope, ProductFactory){
 	$scope.filter = {
 		categories: {
 		small: false,
@@ -11,7 +11,7 @@ app.controller('SideBar', function($scope){
 	};
 	var modelDefault = angular.copy($scope.filter);
 	$scope.filter = function(){
-		console.log($scope);
+		ProductFactory.setFilter($scope.filter);
 	};
 
 	$scope.clearFilters = function(){

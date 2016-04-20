@@ -11,7 +11,7 @@ app.config(function ($urlRouterProvider, $locationProvider) {
         window.location.reload();
     });
 });
-
+ 
 // This app.run is for controlling access to specific states.
 app.run(function ($rootScope, AuthService, $state) {
 

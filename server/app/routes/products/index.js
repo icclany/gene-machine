@@ -8,6 +8,7 @@ var Products = mongoose.model('Product');
 
 router.get('/', function (req, res, next) {
     Products.find({}).then(products=> {
+        console.log(products);
         res.json(products);
     })
     .catch(next);
@@ -30,3 +31,4 @@ router.get('/:id', function (req, res, next) {
 
 // For search, doing on front-end
 
+ 

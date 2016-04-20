@@ -13,10 +13,11 @@ app.controller('AllProductsController', function($scope, allProducts, ProductFac
         return orig.concat(element.category);
     }, []);
 
-    $scope.filter = ProductFactory.getFilters();
+    // $scope.filter = ProductFactory.getFilters();
+
     $scope.filter = {
         categories: {
-            small: 'small',
+            small: false,
             medium: false,
             large: false
         },
@@ -24,6 +25,7 @@ app.controller('AllProductsController', function($scope, allProducts, ProductFac
         defaultTag: 'Enter Value'
     };
     var modelDefault = angular.copy($scope.filter);
+
 
     $scope.clearFilters = function() {
         //      console.log($scope);
@@ -34,11 +36,8 @@ app.controller('AllProductsController', function($scope, allProducts, ProductFac
             large: false
         };
         $scope.filter.tags = "";
-        console.log("clearing filters")
-        console.log($scope.filter)
     };
 });
-
 
 
 app.filter('ProductFilter', function($filter) {
@@ -51,9 +50,9 @@ app.filter('ProductFilter', function($filter) {
                             console.log("comparing...", arrayFilter[i], listItem[element])
                              // if (arrayFilter[i] == listItem)
                             if (arrayFilter[i] == listItem[element])
-                                return true;
+                                return false;
                         }
-                        return false;
+                        return true;
                     });
                 }
             }

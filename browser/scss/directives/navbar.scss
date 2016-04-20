@@ -6,9 +6,11 @@ navbar {
   box-shadow: 1px 1px 14px -3px black;
 
   .container {
-    width: 91%;
+    width: 100vw;
     max-width: 1340px;
-    padding-top: 20px;
+
+      padding: 5px;
+        height: 4vh;
   }
 
   fullstack-logo {
@@ -45,7 +47,7 @@ navbar {
     outline: none !important;
   }
 
-  .welcome {
+  .right-side {
     float: right;
     margin-top: 12px;
     span {
@@ -58,5 +60,14 @@ navbar {
       cursor: pointer;
     }
   }
+
+.navbar {
+  margin: 5px
+}
+
+gmlogo img {
+  height: 50px;
+  padding: 0px
+}
 
 }

@@ -19,6 +19,10 @@ var userSchema = new mongoose.Schema({ //make things more consistent
       type: Boolean,
       required: true
     },
+    cart: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product'
+    }],
     address: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Address'

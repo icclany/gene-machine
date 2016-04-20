@@ -1,7 +1,7 @@
 'use strict';
 
 app.controller('ProductController', function($scope, theProduct){
-  $scope.product = theProduct;
+  $scope.theProduct = theProduct;
 });
 
 app.controller('AllProductsController', function($scope, allProducts){

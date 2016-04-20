@@ -1,11 +1,12 @@
 <div>
-  <a class="thumbnail" ui-sref="product({productId: product._id})">
-    <img ng-src="{{ product.image }}">
+  <a class="thumbnail">
+    <img ng-src="{{ theProduct.image }}">
+    <!-- maybe make a thumbnail version of the image? -->
     <div class="caption">
       <h5>
-        <span>{{ product.name }}</span>
+        <span>{{ theProduct.name }}</span>
       </h5>
-      <small>{{ product.price }} songs</small>
+      <small>{{ theProduct.price }} </small>
     </div>
   </a>
 </div>

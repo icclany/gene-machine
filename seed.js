@@ -47,6 +47,7 @@ var funAddress;
 var funUser;
 var funProduct;
 var funPaymentInfo;
+// var funReview;
 
 var seedUsers = function () {
 
@@ -67,6 +68,13 @@ var seedUsers = function () {
   .then(function(newPaymentInfo){
     funPaymentInfo = newPaymentInfo;
   });
+  // can't create below because of asynchronicity
+  // wanted to use this to test out reviews populating on singleproductpage.html
+
+  // Review.create({numStars: 5, text: 'best genetically modified mutant money can buy', user: funUser._id, product: funProduct._id})
+  // .then(function(newReview){
+  //   funReview = newReview;
+  // });
 
     var users = [
         {
@@ -132,19 +140,20 @@ var seedUsers = function () {
 
 var seedProducts = function () {
 
-    var products =[
+    var products = [
     {
         name: 'Tig',
-        image: 'someurl',
+        image: 'http://www.fillmurray.com/50/49',
         price: 100,
         stock: 5,
         category: 'medium',
         tags: ['tiger', 'pig'],
         description: 'this is a mix of a tiger and a pig'
+        // reviews: [funReview, funReview]
     },
     {
         name: 'Squana',
-        image: 'someurl',
+        image: 'http://www.fillmurray.com/50/48',
         price: 20,
         stock: 50,
         category: 'small',
@@ -153,7 +162,7 @@ var seedProducts = function () {
     },
     {
         name: 'Catdog',
-        image: 'someurl',
+        image: 'http://www.fillmurray.com/48/50',
         price: 50,
         stock: 10,
         category: 'medium',
@@ -162,7 +171,7 @@ var seedProducts = function () {
     },
     {
         name: 'Koalasloth',
-        image: 'someurl',
+        image: 'http://www.fillmurray.com/49/50',
         price: 35,
         stock: 15,
         category: 'small',

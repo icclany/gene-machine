@@ -17,12 +17,35 @@
 </head>
 
 <body ng-app="genemachine">
+    
     <navbar></navbar>
-    <div class="col-xs-2">
-        <sidebar>HI IM A SIDEBAR AND I AM BEATUFIUL</sidebar>
-        <p>HII</p>
-    </div>
-    <div id="main" ui-view class="col-xs-10">
+    <div class='row'>
+        <div class="col-xs-2">
+            <sidebar ng-controller="SideBar">            
+                <form name="sidebarForm" ng-submit="filter()" novalidate>
+
+
+                  <div class="form-group">
+                    <h4>Categories</h4>
+                    <label><input ng-model="filter.categories.small" type='checkbox'>Small</label><br>
+                    <label><input ng-model="filter.categories.medium" type='checkbox'>Medium</label><br>
+                    <label><input ng-model="filter.categories.large" type='checkbox'>Large</label>
+                
+                    <h4>Search by tags</h4>
+                    <input type="text" placeholder="Enter Tags" ng-model='filter.defaultTags' class="form-control" name="tags">
+                    
+                  </div>
+                   <button type="submit" class="btn btn-default">Submit</button>
+                   <button type='button' ng-click=clearFilters() class="btn btn-default">Clear</button>
+                </form>
+
+
+                
+
+            </sidebar>
+        </div>
+        <div id="main" ui-view class="col-xs-10">
+        </div>
     </div>
 </body>
 

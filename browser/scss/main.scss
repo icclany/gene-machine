@@ -14,9 +14,24 @@ body {
   }
 }
 
+navbar {
+	width: 100vw;
+}
+
+.row {
+  margin-left: 3vw;
+}
+
 #main {
   padding-top: 60px;
   margin: 0 auto;
+}
+
+sidebar {
+  position: absolute;
+  height: 100vh;
+  padding: 1vw;
+  background-color: lightgrey;
 }
 
 @import 'directives/main';

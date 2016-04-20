@@ -14,12 +14,6 @@ body {
   }
 }
 
-
-navbar {
-  height: 20vh;
-	width: 100vw;
-}
-
 .all-products{
   width: 80vw;
   height: 100vh;
@@ -40,22 +34,19 @@ single-product {
 }
 
 #main {
-  padding-top: 60px;
-  // margin: 0 auto;
   height: 100%;
   width: 100vw;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  height: 80vh;
+  height: 90vh;
   width: 99vw;
 }
 
 sidebar {
   height: 100%;
   width: 19vw;
-
   background-color: lightgrey;
 }
 

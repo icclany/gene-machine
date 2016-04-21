@@ -7,7 +7,7 @@ var UserModel = mongoose.model('User');
 
 module.exports = function (app) {
 
-    var googleConfig = app.getValue('env').GOOGLE;
+    // var googleConfig = app.getValue('env').GOOGLE;
 
     // var googleCredentials = {
     //     clientID: googleConfig.clientID,
@@ -18,10 +18,12 @@ module.exports = function (app) {
     var googleCredentials = {
         clientID: '773488430488-i89elpco22hlr1mmob9o8hiiqvb7eh8m.apps.googleusercontent.com',
         clientSecret: 'GJAczToVWXhb2y9d_LoHDJKw',
-        callbackURL: 'http://localhost:1337/products'
+        callbackURL: 'http://127.0.0.1:1337/auth/google/callback' // ??????????
     };
 
     var verifyCallback = function (accessToken, refreshToken, profile, done) {
+
+      console.log("google profile", profile);
 
         UserModel.findOne({ 'google.id': profile.id }).exec()
             .then(function (user) {
@@ -30,15 +32,14 @@ module.exports = function (app) {
                 if (user) {
                     return user;
                 } else {
-                  console.log("creating new user with google id. here's profile:", profile);
                     return UserModel.create({
                         google: {
                             id: profile.id
                         },
-                        // email: profile.emails[0].value,
-                        // isAdmin: false,
-                        // password: '',
-                        // username: ''
+                        email: profile.emails[0].value,
+                        isAdmin: false,
+                        firstName: profile.name.givenName,
+                        lastName: profile.name.familyName,
                     });
                 }
             })
@@ -64,6 +65,7 @@ module.exports = function (app) {
     app.get('/auth/google/callback',
         passport.authenticate('google', { failureRedirect: '/login' }),
         function (req, res) {
+          console.log('hey? in google');
             res.redirect('/');
         });
 

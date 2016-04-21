@@ -52,12 +52,16 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
-  console.log("hitting the user post route");
+  console.log("hitting the user post route. req.body: ", req.body);
+  if(req.body.username.length && req.body.password.length){
     User.create(req.body)
     .then(function (user) {
-        res.status(201).json(user);
+      res.status(201).json(user);
     })
     .catch(next);
+  } else {
+    res.send(404);
+  }
 });
 
 router.get('/:id', function (req, res, next) {

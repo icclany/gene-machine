@@ -126,10 +126,10 @@ User.create({
         isAdmin: false
       }, {
         email: 'Iris@gmail.com',
-        password: 'abc',
+        password: 'fullstack',
         username: 'hello',
-        firstName: 'Brian',
-        lastName: 'McGough',
+        firstName: 'Iris',
+        lastName: 'Chang',
         isAdmin: false
       }, {
         email: 'Brian@hotmail.com',

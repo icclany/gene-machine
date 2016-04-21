@@ -14,19 +14,26 @@ app.factory('ProductFactory', function($http) {
         });
     };
 
-    ProductFactory.addToCart = function(product) {
+    ProductFactory.addToCart = function(product, user) {
         // cart.find(product)
         if(cart[product._id]) {
-            console.log("adding on to old")
-            cart[product._id].quantity++;
+            // console.log("adding on to old")
+            $http.put('/api/users/'+user._id+'/cart', {
+                item: product
+            })
+            .then(function (res) {
+                 cart[product._id].quantity++;
+                 console.log("Added item to cart")
+            })
         }
         else {
-            console.log("adding new")
+            // console.log("adding new")
             cart[product._id] = {
                 quantity: 1,
                 productinfo: product
             };
         }
+
     }
 
     ProductFactory.getCart = function() {

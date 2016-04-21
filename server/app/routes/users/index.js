@@ -59,13 +59,12 @@ router.post('/', function (req, res, next) {
     .catch(next);
 });
 
-// router.put('/cart', function (req, res, next) {
-//     User.create(req.body)
-//     .then(function (user) {
-//         res.status(201).json(user);
-//     })
-//     .catch(next);
-// });
+router.put('/:id/cart', function (req, res, next) {
+    console.log("IN THE ROUTE!!!!!!!!!!!!!")
+    let item = req.body.item;
+    req.requestedUser.addToCart(item);
+    res.sendStatus(201);
+});
 
 router.get('/:id', function (req, res, next) {
     res.json(req.requestedUser);

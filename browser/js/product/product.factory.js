@@ -1,6 +1,6 @@
 app.factory('ProductFactory', function($http) {
     var ProductFactory = {};
-    var cart = [];
+    var cart = {};
     // var inventory;
     var filters = {
       // tags: "*",
@@ -16,7 +16,18 @@ app.factory('ProductFactory', function($http) {
 
     ProductFactory.addToCart = function(product) {
         // cart.find(product)
-        cart.push(product);
+        if(cart[product._id]) {
+            console.log("adding on to old")
+            cart[product._id].quantity++;
+        }
+        else {
+            console.log("adding new")
+            cart[product._id] = {
+                quantity = 1,
+                productinfo = product
+            };
+            console.log(cart)
+        }
     }
 
     ProductFactory.getCart = function() {

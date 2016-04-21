@@ -59,6 +59,11 @@ userSchema.methods.sanitize = function () {
     return _.omit(this.toJSON(), ['password', 'salt']);
 };
 
+// // **Get reviews method**
+// userSchema.methods.getReviews = function () {
+//   return Reviews.find({user: this._id}).exec();
+// };
+
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.
 var generateSalt = function () {

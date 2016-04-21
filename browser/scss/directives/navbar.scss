@@ -7,6 +7,13 @@ font-family: 'Bangers', cursive;
   border-bottom: 1px solid black;
   box-shadow: 1px 1px 14px -3px black;
   align-items: center;
+  height: 10vh;
+  margin: 0;
+  border-bottom: 0;
+  .navbar{
+    margin-bottom: 0;
+    
+  }
 
   .container {
     display: flex;
@@ -38,8 +45,9 @@ font-family: 'Bangers', cursive;
   .nav > li > a {
     cursor: pointer;
     transition: color 0.2s;
+    border-bottom: 0 !important;
     &.active {
-      color: darken(#f31214, 10%);
+      color: darken(#dddddd, 50%);
     }
     &:hover {
       background: none;
@@ -48,6 +56,9 @@ font-family: 'Bangers', cursive;
     &:focus {
       background: none;
     }
+  }
+  .navbar-static-top{
+    border-bottom: 0 !important;
   }
 
   .login-button {
@@ -71,9 +82,7 @@ font-family: 'Bangers', cursive;
     }
   }
 
-.navbar {
-  margin: 5px
-}
+
 
 gmlogo img {
   height: 50px;

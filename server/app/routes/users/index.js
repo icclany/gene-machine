@@ -60,14 +60,14 @@ router.post('/', function (req, res, next) {
 });
 
 router.get('/:id', function (req, res, next) {
-    res.json("Haven't finished yet")
+    res.json(req.requestedUser)
     // req.requestedUser.getStories()
     // .then(function (stories) {
     //     var obj = req.requestedUser.toObject();
     //     obj.stories = stories;
     //     res.json(obj);
     // })
-    .catch(next);
+    // .catch(next);
 });
 
 router.put('/:id', function (req, res, next) {

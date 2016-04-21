@@ -37,11 +37,13 @@ var wipeCollections = function() {
   var removeProducts = Product.remove({});
   var removeAddresses = Address.remove({});
   var removePaymentInfo = PaymentInfo.remove({});
+  var removeReviews = Review.remove({});
   return Promise.all([
     removeUsers,
     removeProducts,
     removeAddresses,
-    removePaymentInfo
+    removePaymentInfo,
+    removeReviews
   ]);
 };
 
@@ -69,6 +71,10 @@ User.create({
 })
 .then(function(product) {
   funProduct = product;
+  console.log("funuser is")
+  console.log(funUser)
+  console.log("funProduct is")
+  console.log(funProduct)
   return Review.create({
     numStars: 5,
     text: 'best genetically modified mutant money can buy',
@@ -95,7 +101,6 @@ User.create({
   });
 }).then(function(address) {
   funAddress = address;
-    console.log("these should be cool?", funAddress);
 
     // WE ALREADY CREATE USERS AND PRODUCTS BELOW
     // ^^ yes but these objects are being explicitly used for their ObjectId's in creation of other
@@ -195,7 +200,7 @@ User.create({
         category: 'medium',
         tags: ['tiger', 'pig'],
         description: 'this is a mix of a tiger and a pig',
-        reviews: [funReview, funReview]
+        reviews: ['5718e099fbd5f95b55b86e69']
       }, {
         name: 'Squana',
         image: '/js/product/images/3.png',
@@ -313,7 +318,8 @@ User.create({
       var reviews = [{
         numStars: 4,
         user: funUser._id,
-        product: funProduct._id
+        product: funProduct._id,
+        text: "This is a great thing!"
       }, {
         numStars: 1,
         user: funUser._id,

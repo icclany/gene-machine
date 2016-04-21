@@ -23,10 +23,9 @@ app.factory('ProductFactory', function($http) {
         else {
             console.log("adding new")
             cart[product._id] = {
-                quantity = 1,
-                productinfo = product
+                quantity: 1,
+                productinfo: product
             };
-            console.log(cart)
         }
     }
 

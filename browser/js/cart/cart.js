@@ -18,6 +18,7 @@ app.config(function ($stateProvider) {
 app.controller('CartCtrl', function($scope, currentUser, ProductFactory) {
     $scope.cart = ProductFactory.getCart();
     $scope.user = currentUser;
+    // $scope.quantity =
 })
 
 // app.directive('cartItem', function() {

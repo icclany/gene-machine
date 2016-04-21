@@ -1,7 +1,14 @@
-  <div>
-  <!-- <p>{{cart()}}</p> -->
-  <h1>Your Cart: {{cart}}</h1>
+<div>
+    <!-- <p>{{cart()}}</p> -->
+    <h1>Your Cart:</h1>
+    <form name="cartform" novalidate>
 
+        <div ng-repeat="item in cart">
+            <img class="cart-thumb" ng-src="{{item.productinfo.image}}" ui-sref="product({productId: item.productinfo._id})">
+            <h5>Item: {{item.productinfo.name}}</h5>
+            <h5>Price: {{item.productinfo.price}}</h5>
+            <h5>Quantity:</h5><input ng-model="item.quantity" type="text" value={{item.quantity}}>
+        </div>
 
+    </form>
 </div>
-

@@ -14,22 +14,29 @@ app.factory('ProductFactory', function($http) {
         });
     };
 
+    ProductFactory.addToCart = function(product) {
+        // cart.find(product)
+        cart.push(product);
+    }
+
+    ProductFactory.getCart = function() {
+       return cart;
+    }
+    ProductFactory.emptyCart = function() {
+        cart = [];
+    }
+
     ProductFactory.numCart = function() {
         return cart.length;
     }
 
     ProductFactory.setFilter = function(filterObj) {
-        console.log("setting filter in Product Factory, which is")
-        console.log(filterObj)
         var categories = [];
         for (var size in filterObj.categories) {
             if (filterObj.categories[size]) categories.push(size);
         }
         filters.tags = filterObj.tags;
         filters.category = categories;
-
-        console.log("set filters in factory to")
-        console.log(filters)
     }
 
     ProductFactory.getFilters = function() {

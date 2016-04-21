@@ -11,10 +11,10 @@ app.controller('AllProductsController', function($scope, allProducts, ProductFac
     }, []);
     $scope.categories = allProducts.reduce(function(orig, element) {
         // if (orig.find(function(x) {return x!=element.category})) {
-        console.log("orig is ")
-        console.log(orig)
-        console.log("element is")
-        console.log(element)
+        // console.log("orig is ")
+        // console.log(orig)
+        // console.log("element is")
+        // console.log(element)
         if (orig.indexOf(element.category) === -1) {
            return orig.concat(element.category);
         }

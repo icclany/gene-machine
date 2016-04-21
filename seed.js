@@ -71,10 +71,6 @@ User.create({
 })
 .then(function(product) {
   funProduct = product;
-  console.log("funuser is")
-  console.log(funUser)
-  console.log("funProduct is")
-  console.log(funProduct)
   return Review.create({
     numStars: 5,
     text: 'best genetically modified mutant money can buy',

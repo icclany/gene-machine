@@ -57,10 +57,12 @@ userSchema.methods.sanitize = function () {
     return _.omit(this.toJSON(), ['password', 'salt']);
 };
 
-// // **Get reviews method**
-// userSchema.methods.getReviews = function () {
-//   return Reviews.find({user: this._id}).exec();
-// };
+// **Get purchases method**
+userSchema.methods.getPurchases = function () {
+  return mongoose
+  .model('Purchase').find({user: this._id})
+  .populate('user items');
+};
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.

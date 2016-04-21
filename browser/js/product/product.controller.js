@@ -1,7 +1,14 @@
 'use strict';
 
-app.controller('ProductController', function($scope, theProduct) {
+app.controller('ProductController', function($scope, theProduct, ProductFactory) {
     $scope.theProduct = theProduct;
+
+    $scope.addToCart = function(item) {
+        console.log("adding in product ctrl")
+        console.log(item)
+        ProductFactory.addToCart(item);
+    }
+
 });
 
 app.controller('AllProductsController', function($scope, allProducts, ProductFactory) {
@@ -11,16 +18,11 @@ app.controller('AllProductsController', function($scope, allProducts, ProductFac
     }, []);
     $scope.categories = allProducts.reduce(function(orig, element) {
         // if (orig.find(function(x) {return x!=element.category})) {
-        // console.log("orig is ")
-        // console.log(orig)
-        // console.log("element is")
-        // console.log(element)
         if (orig.indexOf(element.category) === -1) {
            return orig.concat(element.category);
         }
         else return orig;
     }, []);
-    console.log($scope.categories)
     // $scope.filter = ProductFactory.getFilters();
 
     $scope.filter = {
@@ -33,7 +35,6 @@ app.controller('AllProductsController', function($scope, allProducts, ProductFac
         defaultTag: 'Enter Value'
     };
     var modelDefault = angular.copy($scope.filter);
-
 
     $scope.clearFilters = function() {
         //      console.log($scope);

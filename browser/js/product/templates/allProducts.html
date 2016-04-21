@@ -1,0 +1,26 @@
+
+	<sidebar>
+        <form name="sidebarForm" ng-submit="setFilter()" novalidate>
+          <div class="form-group">
+            <h4>Categories</h4>
+            <label ng-repeat='category in categories'>
+            <input ng-model="filter.categories[category]" ng-true-value={{category}} type='checkbox'>{{category}}
+            </label>
+
+            <h4>Search by tags</h4>
+            <select class='input input-large input-large-altered form-control' type="text" placeholder="Enter Tags" ng-model='filter.tags' name="tags">
+            	<option ng-repeat='tag in tags'>{{tag}}</option>
+        	</select>
+
+          </div>
+           <button type="submit" class="btn btn-default">Submit</button>
+           <button type='button' ng-click=clearFilters() class="btn btn-default">Clear</button>
+        </form>
+    </sidebar>
+
+
+    <div class='all-products'>
+	    <single-product the-product="product"  ng-repeat="product in products | filter: {tags: filter.tags, category: filter.categories[category]}" ui-sref="product({productId: product._id})" ></single-product>
+  </div>
+<!-- ProductFilter:filter.category:'category' | filter: {tags: filter.tags, category: $filter.category} : false"   -->
+<!-- ProductFilter:filter.category:'category'} -->

@@ -12,15 +12,15 @@
         </div>
         <div class='nav-right'>
             <div ng-show="user" class="right-side">
-                <span>Welcome, {{ user.email }}!</span>
+                <span>Welcome, {{ user.firstName }}!</span>
                 <button class="btn btn-danger" ng-click="logout()">Logout</button>
             </div>
 
             <div class="right-side">
-            <span class="glyphicon glyphicon-shopping-cart"></span>
+            <span class="glyphicon glyphicon-shopping-cart" ui-sref="cart"></span>
             </div>
             <div ng-show="!user" class="right-side">
-             <button class="btn btn-primary">Signup</button>
+              <button ui-sref="signup" class="btn btn-primary">Signup</button>
               <button ui-sref="login" class="btn btn-success">Login</button>
             </div>
         </div>

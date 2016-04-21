@@ -3,7 +3,7 @@
 app.config(function($stateProvider){
   $stateProvider.state('product', {
     url: '/product/:productId',
-    templateUrl: '/js/product/singleproductpage.html',
+    templateUrl: '/js/product/templates/singleproductpage.html',
     controller: 'ProductController',
     resolve: {
       theProduct: function(ProductFactory, $stateParams){
@@ -16,7 +16,7 @@ app.config(function($stateProvider){
 app.config(function($stateProvider){
   $stateProvider.state('allProducts', {
     url: '/products',
-    templateUrl: '/js/product/allProducts.html',
+    templateUrl: '/js/product/templates/allProducts.html',
     controller: 'AllProductsController',
     resolve: {
       allProducts: function(ProductFactory){

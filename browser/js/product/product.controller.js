@@ -1,7 +1,14 @@
 'use strict';
 
-app.controller('ProductController', function($scope, theProduct) {
+app.controller('ProductController', function($scope, theProduct, ProductFactory) {
     $scope.theProduct = theProduct;
+
+    $scope.addToCart = function(item) {
+        console.log("adding in product ctrl")
+        console.log(item)
+        ProductFactory.addToCart(item);
+    }
+
 });
 
 app.controller('AllProductsController', function($scope, allProducts, ProductFactory) {
@@ -32,6 +39,7 @@ app.controller('AllProductsController', function($scope, allProducts, ProductFac
             return orig;
         }
     }, []);
+
     $scope.typeCategoryClick = function($event, scope){
         this.category.status = !this.category.status;
     };
@@ -49,6 +57,7 @@ app.controller('AllProductsController', function($scope, allProducts, ProductFac
         }
     };
 
+
     $scope.filter = {
         categories: angular.copy(categories),
         tags: angular.copy(tags),
@@ -56,7 +65,6 @@ app.controller('AllProductsController', function($scope, allProducts, ProductFac
     };
     $scope.filter.filterByTag = false;
     var modelDefault = angular.copy($scope.filter);
-
 
     $scope.clearFilters = function() {
         $scope.filter = angular.copy(modelDefault);

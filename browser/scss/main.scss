@@ -17,8 +17,14 @@ body {
 }
 
 
-
-
+.all-products{
+  width: 80vw;
+  height: 100vh;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
 
 .form-group{
   display: flex;

@@ -1,5 +1,6 @@
 'use strict'
 var mongoose = require('mongoose');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 var productSchema = new mongoose.Schema({
     name: {
@@ -8,9 +9,6 @@ var productSchema = new mongoose.Schema({
     },
     image: {
         type: String //url
-    },
-    thumbnail: {
-        type: String // smaller image for the multiple product view aka product.html
     },
     price: {
         type: Number,
@@ -23,7 +21,10 @@ var productSchema = new mongoose.Schema({
         type: String,
         enum: ['small', 'medium', 'large']
     },
-    reviews: [{ type : mongoose.Schema.Types.ObjectId, ref: 'Review' }],
+    reviews: [
+    { type : mongoose.Schema.Types.ObjectId,
+        ref: 'Review' }
+        ],
     description: {
         type: String
     },
@@ -31,5 +32,5 @@ var productSchema = new mongoose.Schema({
         type: [String]
     }
 });
-
+productSchema.plugin(deepPopulate);
 mongoose.model('Product', productSchema);

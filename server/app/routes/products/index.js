@@ -7,23 +7,30 @@ var Products = mongoose.model('Product');
 
 
 router.get('/', function (req, res, next) {
-    Products.find({}).populate('reviews').then(products=> {
+    Products.find({}).then(products=> {
         res.json(products);
     })
     .catch(next);
 });
 
 router.get('/category', function (req, res, next) {
-    Products.find({category: req.query.type}).populate('reviews').then(products=> {
-      products.reviews.populate('user');
+    Products.find({category: req.query.type}).then(products=> {
         res.json(products);
     })
     .catch(next);
 });
 
 router.get('/:id', function (req, res, next) {
-    Products.findById(req.params.id).populate('reviews').then(product=> {
-        res.json(product);
+    Products.findById(req.params.id)
+    .populate('reviews')
+    // .populate('reviews')
+    // .deepPopulate('reviews')
+    .then(product=> {
+        console.log("found the product")
+        console.log(product)
+        console.log("review is")
+        console.log(product.reviews)
+        res.send(product);
     })
     .catch(next);
 });

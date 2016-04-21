@@ -1,5 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 var reviewSchema = new mongoose.Schema({
     numStars: {
@@ -23,4 +24,5 @@ var reviewSchema = new mongoose.Schema({
     }
 });
 
+reviewSchema.plugin(deepPopulate);
 mongoose.model('Review', reviewSchema);

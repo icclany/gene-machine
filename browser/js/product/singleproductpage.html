@@ -4,10 +4,12 @@
   <p>Description: {{ theProduct.description }}</p>
   <p>Price: {{ theProduct.price}}</p>
   <p>Reviews:</p>
+  <p>Product object is: {{theProduct}}</p>
   <div ng-repeat="review in theProduct.reviews">
     <!-- <review theReview="review"></review> -->
+    <p>Review object is: {{review}}</p>
     <p>Stars: {{review.numStars}}</p>
-    <p>Review by: {{review.user}}</p>
+    <p>Review by: {{review.user.username}}</p>
     <p>{{review.text}}</p>
   <!-- </div> -->
 </div>

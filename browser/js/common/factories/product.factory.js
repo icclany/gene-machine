@@ -1,7 +1,7 @@
 app.factory('ProductFactory', function($http) {
     var ProductFactory = {};
     var cart = [];
-    var inventory;
+    // var inventory;
     var filters = {
       // tags: "*",
       // category: ['small', 'medium', 'large']
@@ -9,7 +9,7 @@ app.factory('ProductFactory', function($http) {
 
     ProductFactory.fetchAll = function() {
         return $http.get('/api/products').then(productArray => {
-            inventory = productArray.data;
+            // inventory = productArray.data;
             return productArray.data;
         });
     };
@@ -38,7 +38,7 @@ app.factory('ProductFactory', function($http) {
 
     ProductFactory.fetchById = function(id) {
         return $http.get('/api/products/' + id).then(product => {
-            return product.data });
+            return product.data});
     };
 
     return ProductFactory;

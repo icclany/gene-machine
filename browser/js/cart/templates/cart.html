@@ -1,0 +1,8 @@
+  <div>
+  <!-- <p>{{cart()}}</p> -->
+  <h1>Your Cart: </h1>
+
+       <single-product the-product="product"  ng-repeat="product in cart" ui-sref="product({productId: product._id})" ></single-product>
+
+</div>
+

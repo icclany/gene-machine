@@ -52,6 +52,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
+  console.log("hitting the user post route");
     User.create(req.body)
     .then(function (user) {
         res.status(201).json(user);
@@ -60,7 +61,7 @@ router.post('/', function (req, res, next) {
 });
 
 router.get('/:id', function (req, res, next) {
-    res.json(req.requestedUser)
+    res.json(req.requestedUser);
     // req.requestedUser.getStories()
     // .then(function (stories) {
     //     var obj = req.requestedUser.toObject();

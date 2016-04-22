@@ -12,12 +12,10 @@ var userSchema = new mongoose.Schema({ //make things more consistent
         required: true
     },
     username: {
-      type: String,
-      required: true
+      type: String
     },
     password: {
-        type: String,
-        required: true
+        type: String
     },
     salt: {
         type: String

@@ -51,12 +51,16 @@ router.get('/', function(req, res, next) {
         .catch(next);
 });
 
-router.post('/', function(req, res, next) {
+router.post('/', function (req, res, next) {
+  if(req.body.username.length && req.body.password.length){
     User.create(req.body)
-        .then(function(user) {
-            res.status(201).json(user);
-        })
-        .catch(next);
+    .then(function (user) {
+      res.status(201).json(user);
+    })
+    .catch(next);
+  } else {
+    res.send(401);
+  }
 });
 
 router.post('/:id/cart', function(req, res, next) {
@@ -100,38 +104,42 @@ router.get('/:id/cart', function(req, res, next) {
             mongoose.model('Product').findById(item.productInfo))
     })
     Promise.all(promiseQueries)
-        .then((populatedItems) => {
-            req.requestedUser.cart.forEach((item) => {
-                populatedItems.forEach((popItem) => {
-                    if (item.productInfo.toString() === popItem._id.toString()) {
-                        item.productInfo = popItem;
-                    }
-                })
-            })
-            res.json(req.requestedUser.cart);
-        })
-        .catch(next);
+    .then((populatedItems) => {
+        req.requestedUser.cart.forEach((item) => {
+            populatedItems.forEach((popItem) => {
+                if(item.productInfo.toString() === popItem._id.toString()) {
+                    item.productInfo = popItem;
+                }
+            });
+        });
+        res.json(req.requestedUser.cart);
+    })
+    .catch(next);
 });
 
 router.get('/:id', function(req, res, next) {
     res.json(req.requestedUser);
 });
 
-router.put('/:id', function(req, res, next) {
+router.put('/:id', function (req, res, next) {
+  if(req.user.isAdmin){
     _.extend(req.requestedUser, req.body);
     req.requestedUser.save()
-        .then(function(user) {
-            res.json(user);
-        })
-        .catch(next);
+    .then(function (user) {
+        res.json(user);
+    })
+    .catch(next);
+  } else res.sendStatus(401);
 });
 
-router.delete('/:id', function(req, res, next) {
-    req.requestedUser.remove()
-        .then(function() {
-            res.status(204).end();
-        })
-        .catch(next);
+router.delete('/:id', function (req, res, next) {
+    if(req.user.isAdmin){ // not sure if this works, req.user doesn't exist from Postman, which is good, but can't check functionality until we make requests from webpage.
+      req.requestedUser.remove()
+      .then(function () {
+        res.status(204).end();
+    })
+    .catch(next);
+  } else res.send(401);
 });
 
 module.exports = router;

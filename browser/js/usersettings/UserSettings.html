@@ -1,0 +1,22 @@
+<div>
+  <form class='form-group' ng-submit='updateProfile()'>
+      First Name: <input ng-disabled="editSettings" type='name' ng-model = 'user.firstName' required</>
+      Last Name: <input ng-disabled="editSettings" type='name' ng-model = 'user.lastName' required</>
+      E-mail: <input ng-disabled="editSettings" type='email' ng-model = 'user.email' required</>
+      Address: <input ng-disabled="editSettings" type='address' ng-model = 'user.address[addr]' ng-repeat='addr in user.address'</>
+      Payment Info <input  ng-disabled="editSettings" ng-model = 'user.paymentInfo[payment]' ng-repeat='payment in user.paymentInfo'</>
+      Billing Info <input  ng-disabled="editSettings" ng-model = 'user.paymentInfo[payment]' ng-repeat='payment in user.paymentInfo'</>
+      Is Admin <input ng-disabled="editSettings" type='checkbox'ng-model='user.isAdmin'</>
+    <button class='btn' type='submit' ng-show='editSettings===false'>Update Profile</button>
+  </form>
+  <button class='btn' ng-click='editSettings=false'>Edit Profile</button>
+  <ul>
+    <input class='form-group' ng-model ='user.review[review]' ng-repeat='review in user.reviews'></li>
+  </ul>
+  <ul>
+    <input class='form-group' ng-repeat='cartInstance in user.cart'></li>
+  </ul>
+  <ul>
+    <input class='form-group' ng-model = 'user.reviews[review]' ng-repeat='review in user.reviews'></li>
+  </ul>
+</div>

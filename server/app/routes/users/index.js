@@ -4,6 +4,9 @@ module.exports = router;
 var _ = require('lodash');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var Address = mongoose.model('Address');
+var PaymentInfo = mongoose.model('PaymentInfo');
+var Purchase = mongoose.model('Purchase');
 
 var ensureAuthenticated = function(req, res, next) {
     if (req.isAuthenticated()) {
@@ -51,16 +54,16 @@ router.get('/', function(req, res, next) {
         .catch(next);
 });
 
-router.post('/', function (req, res, next) {
-  if(req.body.username.length && req.body.password.length){
-    User.create(req.body)
-    .then(function (user) {
-      res.status(201).json(user);
-    })
-    .catch(next);
-  } else {
-    res.send(401);
-  }
+router.post('/', function(req, res, next) {
+    if (req.body.username.length && req.body.password.length) {
+        User.create(req.body)
+            .then(function(user) {
+                res.status(201).json(user);
+            })
+            .catch(next);
+    } else {
+        res.send(401);
+    }
 });
 
 router.post('/:id/cart', function(req, res, next) {
@@ -97,6 +100,21 @@ router.delete('/:id/cart/:productId', function(req, res, next) {
     res.sendStatus(201);
 });
 
+router.delete('/:id/cart', function(req, res, next) {
+    var donePurchase = {
+        items: req.requestedUser.cart,
+        user: req.requestedUser._id
+    };
+    console.log("CREATING PURCHASE FROM")
+    console.log(donePurchase)
+    return Purchase.create(donePurchase)
+    .then(function(createdPurchase) {
+         req.requestedUser.cart = [];
+    req.requestedUser.save();
+    res.sendStatus(201);
+    })
+});
+
 router.get('/:id/cart', function(req, res, next) {
     const promiseQueries = [];
     req.requestedUser.cart.forEach((item) => {
@@ -104,42 +122,54 @@ router.get('/:id/cart', function(req, res, next) {
             mongoose.model('Product').findById(item.productInfo))
     })
     Promise.all(promiseQueries)
-    .then((populatedItems) => {
-        req.requestedUser.cart.forEach((item) => {
-            populatedItems.forEach((popItem) => {
-                if(item.productInfo.toString() === popItem._id.toString()) {
-                    item.productInfo = popItem;
-                }
+        .then((populatedItems) => {
+            req.requestedUser.cart.forEach((item) => {
+                populatedItems.forEach((popItem) => {
+                    if (item.productInfo.toString() === popItem._id.toString()) {
+                        item.productInfo = popItem;
+                    }
+                });
             });
-        });
-        res.json(req.requestedUser.cart);
-    })
-    .catch(next);
+            res.json(req.requestedUser.cart);
+        })
+        .catch(next);
 });
 
 router.get('/:id', function(req, res, next) {
     res.json(req.requestedUser);
 });
 
-router.put('/:id', function (req, res, next) {
-  if(req.user.isAdmin){
-    _.extend(req.requestedUser, req.body);
-    req.requestedUser.save()
-    .then(function (user) {
-        res.json(user);
-    })
-    .catch(next);
-  } else res.sendStatus(401);
+router.put('/:id/checkout', function(req, res, next) {
+    req.user.address = new Address(req.body.address);
+    req.user.paymentInfo.push(
+        new PaymentInfo({
+            name: req.body.paymentInfo.name,
+            billingAddress: new Address(req.body.paymentInfo.billinfo),
+            ccNum: req.body.paymentInfo.ccNum
+        }));
+    req.user.save();
+    res.sendStatus(202);
 });
 
-router.delete('/:id', function (req, res, next) {
-    if(req.user.isAdmin){ // not sure if this works, req.user doesn't exist from Postman, which is good, but can't check functionality until we make requests from webpage.
-      req.requestedUser.remove()
-      .then(function () {
-        res.status(204).end();
-    })
-    .catch(next);
-  } else res.send(401);
+router.put('/:id', function(req, res, next) {
+    if (req.user.isAdmin) {
+        _.extend(req.requestedUser, req.body);
+        req.requestedUser.save()
+            .then(function(user) {
+                res.json(user);
+            })
+            .catch(next);
+    } else res.sendStatus(401);
+});
+
+router.delete('/:id', function(req, res, next) {
+    if (req.user.isAdmin) { // not sure if this works, req.user doesn't exist from Postman, which is good, but can't check functionality until we make requests from webpage.
+        req.requestedUser.remove()
+            .then(function() {
+                res.status(204).end();
+            })
+            .catch(next);
+    } else res.send(401);
 });
 
 module.exports = router;

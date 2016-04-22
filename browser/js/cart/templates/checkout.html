@@ -4,11 +4,34 @@
             <img class="cart-thumb" ng-src="{{cartItem.productInfo.image}}" ui-sref="product({productId: cartItem.productInfo._id})">
             <h5>Item: {{cartItem.productInfo.name}}</h5>
             <h5>Price: {{cartItem.productInfo.price}}</h5>
-            <h5>Quantity:</h5>
-            <input ng-model="cartItem.quantity" ng-keypress="updateQuantity($event, cartItem)" type="number" value={{cartItem.quantity}}>
-            <button>
-                <span class="glyphicon glyphicon-minus" ng-click="removeFromCart(cartItem)">Remove from Cart</span>
-            </button>
+            <h5>Quantity: {{cartItem.quantity}}</h5>
         </div>
-    <button class="checkout glyphicon glyphicon-usd">CHECKOUT</button>
+    <h2>Your total is ${{total}}!!</h2>
+    <form name="shippingbilling">
+        <div>
+            <h2>Shipping info</h2>
+            <label>Name:</label><input type="text" ng-model="shipping.name"><br>
+            <label>Street:</label><input type="text" ng-model="shipping.street"><br>
+            <label>City:</label><input type="text" ng-model="shipping.city"><br>
+            <label>Zipcode:</label><input type="text" ng-model="shipping.zipCode"><br>
+        </div>
+        <div>
+            <h2>Billing info</h2>
+
+            <h3>Credit Card Information</h3>
+            <label>Name:</label><input type="text" ng-model="billing.cc.name"><br>
+            <label>Number:</label><input type="text" ng-model="billing.cc.number"><br>
+            <label>Expiration Date:</label><input type="text" ng-model="billing.cc.date"><br>
+
+            <h3>Billing Address</h3>
+            <label>Name:</label><input type="text" ng-model="billing.address.name"><br>
+            <label>Street:</label><input type="text" ng-model="billing.address.street"><br>
+            <label>City:</label><input type="text" ng-model="billing.address.city"><br>
+            <label>Zipcode:</label><input type="text" ng-model="billing.address.zipCode"><br>
+        </div>
+
+    </form>
+    <button class="checkout glyphicon glyphicon-usd" ng-click="checkout()">Finish Checkout</button>
 </div>
+
+

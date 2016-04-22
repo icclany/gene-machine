@@ -77,7 +77,7 @@ userSchema.methods.addToCart = function(obj) {
     }));
   }
   this.save();
-}
+};
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.

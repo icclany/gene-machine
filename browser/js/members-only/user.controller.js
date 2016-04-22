@@ -1,9 +1,5 @@
-app.controller('UserCtrl', function($scope, SecretStash, currentUser) {
-    // SecretStash.getStash().then(function(stash) {
-    //     $scope.stash = stash;
-    // });
-    // //
+app.controller('UserCtrl', function($scope, currentUser) {
+
     $scope.user = currentUser;
-    //
 
 });

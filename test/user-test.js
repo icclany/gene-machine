@@ -6,7 +6,7 @@ var expect = require('chai').expect;
 var mongoose = require('mongoose');
 
 // Require in all models.
-require('../../../server/db/models');
+require('../server/db/models');
 
 var User = mongoose.model('User');
 
@@ -15,6 +15,8 @@ describe('User model', function () {
     beforeEach('Establish DB connection', function (done) {
         if (mongoose.connection.db) return done();
         mongoose.connect(dbURI, done);
+        var testUser;
+        // User.create({email: 'johndoe@hotmail.com', username: 'JoeyDoughey', password: 'thetruthisoutthere', isAdmin: false, firstName: 'Joe', lastName: 'Doe'}).then(user => testUser = user);
     });
 
     afterEach('Clear test database', function (done) {
@@ -23,6 +25,20 @@ describe('User model', function () {
 
     it('should exist', function () {
         expect(User).to.be.a('function');
+    });
+
+    it('should require emails', function () {        
+        // User.create({username: 'JoeyDoughey', password: 'thetruthisoutthere', isAdmin: false, firstName: 'Joe', lastName: 'Doe'});
+        var userLength;
+        User.find({}).then(result => console.log(result));
+        expect(userLength).to.equal(1);
+    });
+
+    it('should require unique emails', function () {        
+        // User.create({email: 'johndoe@hotmail.com', username: 'JoeyDoughey', password: 'thetruthisoutthere', isAdmin: false, firstName: 'Joe', lastName: 'Doe'});
+        var userLength;
+        User.find({}).then(result => userLength = result.length);
+        expect(userLength).to.equal(1);
     });
 
     describe('password encryption', function () {

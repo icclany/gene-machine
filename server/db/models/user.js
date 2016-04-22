@@ -75,6 +75,7 @@ userSchema.methods.addToCart = function(obj) {
     if (this.cart[i].productInfo == obj._id) {
       exists = true;
       ++this.cart[i].quantity
+      this.save();
     }
   }
 
@@ -82,8 +83,9 @@ userSchema.methods.addToCart = function(obj) {
     this.cart.push(new Cart({
       productInfo: obj._id
     }));
+      this.save();
   }
-  this.save();
+
 }
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations

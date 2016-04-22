@@ -6,7 +6,7 @@ var ProductSchema = mongoose.model('Product').schema;
 var cartSchema = new mongoose.Schema({
   quantity: {
     type: Number,
-    default: 1
+    default: 100
   },
   productInfo: {
         type: mongoose.Schema.Types.ObjectId,

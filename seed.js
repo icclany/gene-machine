@@ -33,73 +33,66 @@ var Review = mongoose.model('Review');
 var PaymentInfo = mongoose.model('PaymentInfo');
 
 var wipeCollections = function() {
-  var removeUsers = User.remove({});
-  var removeProducts = Product.remove({});
-  var removeAddresses = Address.remove({});
-  var removePaymentInfo = PaymentInfo.remove({});
-  var removeReviews = Review.remove({});
   return Promise.all([
-    removeUsers,
-    removeProducts,
-    removeAddresses,
-    removePaymentInfo,
-    removeReviews
+    User.remove({}),
+    Product.remove({}),
+    Address.remove({}),
+    PaymentInfo.remove({}),
+    Review.remove({})
   ]);
 };
 
-var funAddress;
-var funUser;
-var funProduct;
-var funPaymentInfo;
-var funReview;
+// var funAddress;
+// var funUser;
+// var funProduct;
+// var funPaymentInfo;
+// var funReview;
 
-User.create({
-    email: 'hello@hello.com',
-    password: '123',
-    username: 'hello',
-    firstName: 'Brian',
-    lastName: 'McGough',
-    isAdmin: true
-  })
-.then(function(newUser) {
-  funUser = newUser;
-  return Product.create({
-    name: 'great thing!',
-    price: 1,
-    description: "This is a product description"
-  });
-})
-.then(function(product) {
-  funProduct = product;
-  return Review.create({
-    numStars: 5,
-    text: 'best genetically modified mutant money can buy',
-    user: funUser._id,
-    product: funProduct._id
-  });
-})
-.then(function(review) {
-  console.log('hey i made a review', review);
-  funReview = review;
-  return PaymentInfo.create({
-    name: 'Bill',
-    ccNum: '123',
-    ccExpiration: '05/12'
-  });
-})
-.then(function(paymentInfo) {
-  funPaymentInfo = paymentInfo;
-  return Address.create({
-    name: 'Bill',
-    street: '5 Hanover',
-    city: 'NYC',
-    zipCode: 11213
-  });
-}).then(function(address) {
-  funAddress = address;
+// User.create({
+//     email: 'hello@hello.com',
+//     password: '123',
+//     username: 'hello',
+//     firstName: 'Brian',
+//     lastName: 'McGough',
+//     isAdmin: true
+//   })
+// .then(function(newUser) {
+//   funUser = newUser;
+//   return Product.create({
+//     name: 'great thing!',
+//     price: 1,
+//     description: "This is a product description"
+//   });
+// })
+// .then(function(product) {
+//   funProduct = product;
+//   return Review.create({
+//     numStars: 5,
+//     text: 'best genetically modified mutant money can buy',
+//     user: funUser._id,
+//     product: funProduct._id
+//   });
+// })
+// .then(function(review) {
+//   console.log('hey i made a review', review);
+//   funReview = review;
+//   return PaymentInfo.create({
+//     name: 'Bill',
+//     ccNum: '123',
+//     ccExpiration: '05/12'
+//   });
+// })
+// .then(function(paymentInfo) {
+//   funPaymentInfo = paymentInfo;
+//   return Address.create({
+//     name: 'Bill',
+//     street: '5 Hanover',
+//     city: 'NYC',
+//     zipCode: 11213
+//   });
+// }).then(function(address) {
+//   funAddress = address;
 
-    // WE ALREADY CREATE USERS AND PRODUCTS BELOW
-    // ^^ yes but these objects are being explicitly used for their ObjectId's in creation of other
     // mongoose objects that require references to ObjectId's. we can only access said Id's when we assign objects to variables
 
     var seedUsers = function() {
@@ -114,15 +107,15 @@ User.create({
         email: 'obama@gmail.com',
         password: 'potus',
         username: 'hello',
-        firstName: 'Brian',
-        lastName: 'McGough',
+        firstName: 'Barack',
+        lastName: 'Obama',
         isAdmin: true
       }, {
         email: 'tk@gmail.com',
         password: '123',
         username: 'hello',
-        firstName: 'Brian',
-        lastName: 'McGough',
+        firstName: 'Teaseung',
+        lastName: 'Kim',
         isAdmin: false
       }, {
         email: 'Iris@gmail.com',
@@ -142,43 +135,43 @@ User.create({
         email: 'anthony@aol.com',
         password: 'coolbeans',
         username: 'hello',
-        firstName: 'Brian',
-        lastName: 'McGough',
+        firstName: 'Anthony',
+        lastName: 'CSSMan',
         isAdmin: false
       }, {
         email: 'bob@gmail.com',
         password: 'seeding',
         username: 'hello',
-        firstName: 'Brian',
-        lastName: 'McGough',
+        firstName: 'Bob',
+        lastName: 'Dunn',
         isAdmin: false
       }, {
         email: 'abc@hotmail.com',
         password: 'testing123',
         username: 'hello',
-        firstName: 'Brian',
-        lastName: 'McGough',
+        firstName: 'Abc',
+        lastName: 'Chang',
         isAdmin: false
       }, {
         email: 'testinguser@fsa.com',
         password: 'fullstack',
         username: 'hello',
-        firstName: 'Brian',
-        lastName: 'McGough',
+        firstName: 'Omri',
+        lastName: 'Bernstein',
         isAdmin: false
       }, {
         email: 'animalbuyer@gmail.com',
         password: 'ohdeer',
         username: 'hello',
-        firstName: 'Brian',
-        lastName: 'McGough',
+        firstName: 'Crocodile',
+        lastName: 'Dundee',
         isAdmin: false
       }, {
         email: 'workinprogress@gmail.com',
         password: 'almostdone',
         username: 'hello',
-        firstName: 'Brian',
-        lastName: 'McGough',
+        firstName: 'Sean',
+        lastName: 'Bert',
         isAdmin: false
       }];
 
@@ -348,18 +341,18 @@ User.create({
       .then(function() {
         return seedProducts();
       })
-      .then(function() {
-        return seedPaymentInfo();
-      })
+      // .then(function() {
+      //   return seedPaymentInfo();
+      // })
       .then(function() {
         return seedAddresses();
       })
-      .then(function() {
-        return seedReviews();
-      })
-      .then(function() {
-        return seedPurchases();
-      })
+      // .then(function() {
+      //   return seedReviews();
+      // })
+      // .then(function() {
+      //   return seedPurchases();
+      // })
       .then(function() {
         console.log(chalk.green('Seed successful!'));
         process.kill(0);
@@ -368,4 +361,4 @@ User.create({
         console.error(err);
         process.kill(1);
       });
-  });
+

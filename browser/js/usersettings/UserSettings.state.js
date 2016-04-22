@@ -9,12 +9,12 @@ app.config(function($stateProvider){
       },
   	resolve: {
       User: function($stateParams, $http){
-      	var user = $stateParams.user;
-      	$http.get('/api/users/'+user._id)
-      	.then(function(populatedUser){
-      		console.log('http response from user');
-      		console.log(populatedUser);
-      	}); 
+      	return $stateParams.user;
+      	// $http.get('/api/users/'+user._id)
+      	// .then(function(populatedUser){
+      	// 	console.log('http response from user');
+      	// 	console.log(populatedUser);
+      	// }); 
   		}
   	}
   });

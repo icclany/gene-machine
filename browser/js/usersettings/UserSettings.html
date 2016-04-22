@@ -6,7 +6,7 @@
       Address: <input ng-disabled="editSettings" type='address' ng-model = 'user.address[addr]' ng-repeat='addr in user.address'</>
       Payment Info <input  ng-disabled="editSettings" ng-model = 'user.paymentInfo[payment]' ng-repeat='payment in user.paymentInfo'</>
       Billing Info <input  ng-disabled="editSettings" ng-model = 'user.paymentInfo[payment]' ng-repeat='payment in user.paymentInfo'</>
-      Is Admin <input ng-disabled="editSettings" type='checkbox'ng-model='user.isAdmin'</>
+      Is Admin <input ng-disabled="editSettings" ng-show='user.isAdmin' type='checkbox'ng-model='user.isAdmin'</>
     <button class='btn' type='submit' ng-show='editSettings===false'>Update Profile</button>
   </form>
   <button class='btn' ng-click='editSettings=false'>Edit Profile</button>

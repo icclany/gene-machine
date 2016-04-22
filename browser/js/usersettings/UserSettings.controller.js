@@ -1,9 +1,14 @@
-app.controller('UserSettings', function($scope, $stateParams, ProductFactory){
+app.controller('UserSettings', function($scope, User, UserSettingsFact){
 	"use strict"
-	$scope.user = $stateParams.user;
+	$scope.user = User;
 	$scope.editSettings = true;
 	$scope.updateProfile = function(){
-
+		UserSettingsFact.updateUser($scope.user)
+		.then(function(returnedData){
+			$scope.user = returnedData;
+			$scope.editSettings = true;
+		});
+		
 	};
 
 	

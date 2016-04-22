@@ -1,6 +1,5 @@
 <div>
-    <h1>Your Cart:</h1>
-    <form name="cartform" novalidate>
+    <h1>Confirm Your Order</h1>
         <div ng-repeat="cartItem in cart">
             <img class="cart-thumb" ng-src="{{cartItem.productInfo.image}}" ui-sref="product({productId: cartItem.productInfo._id})">
             <h5>Item: {{cartItem.productInfo.name}}</h5>
@@ -11,6 +10,5 @@
                 <span class="glyphicon glyphicon-minus" ng-click="removeFromCart(cartItem)">Remove from Cart</span>
             </button>
         </div>
-    </form>
     <button class="checkout glyphicon glyphicon-usd">CHECKOUT</button>
 </div>

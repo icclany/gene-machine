@@ -5,7 +5,7 @@ var _ = require('lodash');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
-var ensureAuthenticated = function (req, res, next) {
+var ensureAuthenticated = function(req, res, next) {
     if (req.isAuthenticated()) {
         next();
     } else {
@@ -13,7 +13,7 @@ var ensureAuthenticated = function (req, res, next) {
     }
 };
 
-router.get('/secret-stash', ensureAuthenticated, function (req, res) {
+router.get('/secret-stash', ensureAuthenticated, function(req, res) {
 
     var theStash = [
         'http://ep.yimg.com/ay/candy-crate/bulk-candy-store-2.gif',
@@ -33,94 +33,105 @@ router.get('/secret-stash', ensureAuthenticated, function (req, res) {
 
 });
 
-router.param('id', function (req, res, next, id) {
+router.param('id', function(req, res, next, id) {
     User.findById(id).exec()
-    .then(function (user) {
-        if (!user) throw new Error(404);
-        req.requestedUser = user;
-        next();
-    })
-    .catch(next);
+        .then(function(user) {
+            if (!user) throw new Error(404);
+            req.requestedUser = user;
+            next();
+        })
+        .catch(next);
 });
 
-router.get('/', function (req, res, next) {
+router.get('/', function(req, res, next) {
     User.find({}).exec()
-    .then(function (users) {
-        res.json(users);
-    })
-    .catch(next);
+        .then(function(users) {
+            res.json(users);
+        })
+        .catch(next);
 });
 
-router.post('/', function (req, res, next) {
+router.post('/', function(req, res, next) {
     User.create(req.body)
-    .then(function (user) {
-        res.status(201).json(user);
-    })
-    .catch(next);
+        .then(function(user) {
+            res.status(201).json(user);
+        })
+        .catch(next);
 });
 
-router.post('/:id/cart', function (req, res, next) {
+router.post('/:id/cart', function(req, res, next) {
     let item = req.body.item;
     req.requestedUser.addToCart(item);
     res.sendStatus(201);
 });
 
-router.put('/:id/cart', function (req, res, next) {
+router.put('/:id/cart', function(req, res, next) {
     let itemId = req.body.productId;
     let itemQuantity = req.body.quantity;
 
     req.requestedUser.cart.forEach((item) => {
         if (item.productInfo.toString() === itemId.toString()) {
-        // if (item._id.toString() === itemId.toString()) {
+            // if (item._id.toString() === itemId.toString()) {
             item.quantity = itemQuantity;
         }
     });
     req.requestedUser.save();
-    console.log("finished put request")
-    console.log(req.requestedUser)
     res.sendStatus(201);
 });
 
-router.get('/:id/cart', function (req, res, next) {
+router.delete('/:id/cart/:productId', function(req, res, next) {
+    let itemId = req.params.productId;
+    let index = null;
+
+    for (let i = 0; i < req.requestedUser.cart.length; i++) {
+        if (req.requestedUser.cart[i].productInfo.toString() === itemId.toString()) {
+            index = i;
+        }
+    }
+    req.requestedUser.cart.splice(index, 1);
+    req.requestedUser.save();
+    res.sendStatus(201);
+});
+
+router.get('/:id/cart', function(req, res, next) {
     const promiseQueries = [];
     req.requestedUser.cart.forEach((item) => {
         promiseQueries.push(
             mongoose.model('Product').findById(item.productInfo))
     })
-
     Promise.all(promiseQueries)
-    .then((populatedItems) => {
-        req.requestedUser.cart.forEach((item) => {
-            populatedItems.forEach((popItem) => {
-                if(item.productInfo.toString() === popItem._id.toString()) {
-                    item.productInfo = popItem;
-                }
+        .then((populatedItems) => {
+            req.requestedUser.cart.forEach((item) => {
+                populatedItems.forEach((popItem) => {
+                    if (item.productInfo.toString() === popItem._id.toString()) {
+                        item.productInfo = popItem;
+                    }
+                })
             })
+            res.json(req.requestedUser.cart);
         })
-        res.json(req.requestedUser.cart);
-    })
-    .catch(next);
+        .catch(next);
 });
 
-router.get('/:id', function (req, res, next) {
+router.get('/:id', function(req, res, next) {
     res.json(req.requestedUser);
 });
 
-router.put('/:id', function (req, res, next) {
+router.put('/:id', function(req, res, next) {
     _.extend(req.requestedUser, req.body);
     req.requestedUser.save()
-    .then(function (user) {
-        res.json(user);
-    })
-    .catch(next);
+        .then(function(user) {
+            res.json(user);
+        })
+        .catch(next);
 });
 
-router.delete('/:id', function (req, res, next) {
+router.delete('/:id', function(req, res, next) {
     req.requestedUser.remove()
-    .then(function () {
-        res.status(204).end();
-    })
-    .catch(next);
+        .then(function() {
+            res.status(204).end();
+        })
+        .catch(next);
 });
 
 module.exports = router;

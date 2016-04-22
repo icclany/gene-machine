@@ -18,16 +18,19 @@ app.config(function($stateProvider) {
 
 });
 
-app.controller('CartCtrl', function($scope, cart, currentUser, ProductFactory) {
+app.controller('CartCtrl', function($scope, $state, cart, currentUser, ProductFactory) {
     $scope.cart = cart;
 
     $scope.updateQuantity = function($event, cartItem) {
         var keyCode = $event.which || $event.keyCode;
         if (keyCode === 13) {
-            // Do that thing you finally wanted to do
-            console.log("item is")
-            console.log(cartItem);
             return ProductFactory.updateQuantity(currentUser, cartItem.productInfo, cartItem.quantity)
         }
+    }
+
+    $scope.removeFromCart = function(cartItem) {
+        return ProductFactory.removeFromCart(currentUser, cartItem.productInfo).then(function(res) {
+                $state.go($state.current, {}, {reload:true})
+        })
     }
 })

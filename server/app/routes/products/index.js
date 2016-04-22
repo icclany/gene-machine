@@ -26,6 +26,10 @@ router.get('/:id', function (req, res, next) {
     // .populate('reviews')
     // .deepPopulate('reviews')
     .then(product=> {
+        console.log("found the product")
+        console.log(product)
+        console.log("review is")
+        console.log(product.reviews)
         res.send(product);
     })
     .catch(next);

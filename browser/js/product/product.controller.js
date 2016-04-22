@@ -3,8 +3,8 @@
 app.controller('ProductController', function($scope, theProduct, ProductFactory, currentUser) {
     $scope.theProduct = theProduct;
 
-    $scope.addToCart = function() {
-        ProductFactory.addToCart(theProduct, currentUser);
+    $scope.addToCart = function(item) {
+        ProductFactory.addToCart(item, currentUser);
     }
 
 });

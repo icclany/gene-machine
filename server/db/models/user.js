@@ -2,6 +2,7 @@
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 var CartSchema = mongoose.model('Cart').schema;
+var AddressSchema = mongoose.model('Address').schema;
 var Cart = mongoose.model('Cart');
 var _ = require('lodash');
 
@@ -34,10 +35,7 @@ var userSchema = new mongoose.Schema({ //make things more consistent
       required: true
     },
     cart: [CartSchema],
-    address: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Address'
-    }],
+    address: [AddressSchema],
     paymentInfo: [{
       type: [mongoose.Schema.Types.ObjectId],
       ref: 'PaymentInfo'
@@ -76,7 +74,6 @@ userSchema.methods.addToCart = function(obj) {
       console.log("already exists");
       exists = true;
       ++this.cart[i].quantity
-      this.save();
     }
   }
 
@@ -89,7 +86,6 @@ userSchema.methods.addToCart = function(obj) {
       this.save();
       // console.log(this)
   }
-
 }
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
@@ -123,4 +119,4 @@ userSchema.method('correctPassword', function (candidatePassword) {
     return encryptPassword(candidatePassword, this.salt) === this.password;
 });
 
-mongoose.model('User', userSchema); //make things more consistent
+mongoose.model('User', userSchema);

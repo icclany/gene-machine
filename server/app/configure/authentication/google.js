@@ -10,7 +10,7 @@ module.exports = function (app) {
     var googleCredentials = {
         clientID: '773488430488-i89elpco22hlr1mmob9o8hiiqvb7eh8m.apps.googleusercontent.com',
         clientSecret: 'GJAczToVWXhb2y9d_LoHDJKw',
-        callbackURL: 'http://127.0.0.1:1337/auth/google/callback' // ??????????
+        callbackURL: 'http://127.0.0.1:1337/auth/google/callback'
     };
 
     var verifyCallback = function (accessToken, refreshToken, profile, done) {

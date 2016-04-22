@@ -52,7 +52,6 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
-  console.log("hitting the user post route. req.body: ", req.body);
   if(req.body.username.length && req.body.password.length){
     User.create(req.body)
     .then(function (user) {
@@ -60,36 +59,33 @@ router.post('/', function (req, res, next) {
     })
     .catch(next);
   } else {
-    res.send(404);
+    res.send(401);
   }
 });
 
 router.get('/:id', function (req, res, next) {
     res.json(req.requestedUser);
-    // req.requestedUser.getStories()
-    // .then(function (stories) {
-    //     var obj = req.requestedUser.toObject();
-    //     obj.stories = stories;
-    //     res.json(obj);
-    // })
-    // .catch(next);
 });
 
 router.put('/:id', function (req, res, next) {
+  if(req.user.isAdmin){
     _.extend(req.requestedUser, req.body);
     req.requestedUser.save()
     .then(function (user) {
         res.json(user);
     })
     .catch(next);
+  } else res.sendStatus(401);
 });
 
 router.delete('/:id', function (req, res, next) {
-    req.requestedUser.remove()
-    .then(function () {
+    if(req.user.isAdmin){
+      req.requestedUser.remove()
+      .then(function () {
         res.status(204).end();
     })
     .catch(next);
+  } else res.send(401);
 });
 
 module.exports = router;

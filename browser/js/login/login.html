@@ -1,3 +1,8 @@
+    <a href="/auth/google">
+    <img src="https://developers.google.com/+/images/branding/sign-in-buttons/btn_google+_signin_dark_normal_web.png">
+    </a>
+
+
 <form id="login-form" name="loginForm" ng-submit="loginForm.$valid && sendLogin(login)">
 
     <alert type="danger" ng-show="error">
@@ -7,6 +12,7 @@
     <a href="/auth/google">
       <img src="https://developers.google.com/+/images/branding/sign-in-buttons/btn_google+_signin_dark_normal_web.png">
     </a>
+
     <div class="form-group">
         <label for="email">Email address</label>
         <input type="text" ng-model="login.email" class="form-control" id="email" placeholder="Enter email">

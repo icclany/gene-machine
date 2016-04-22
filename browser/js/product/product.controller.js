@@ -1,69 +1,89 @@
 'use strict';
 
-app.controller('ProductController', function($scope, theProduct, ProductFactory) {
+app.controller('ProductController', function($scope, theProduct, ProductFactory, currentUser) {
     $scope.theProduct = theProduct;
 
-    $scope.addToCart = function(item) {
-        console.log("adding in product ctrl")
-        console.log(item)
-        ProductFactory.addToCart(item);
+    $scope.addToCart = function() {
+        return ProductFactory.addToCart(theProduct, currentUser);
     }
 
 });
 
 app.controller('AllProductsController', function($scope, allProducts, ProductFactory) {
+
     $scope.products = allProducts;
-    $scope.tags = allProducts.reduce(function(orig, element) {
-        return orig.concat(element.tags);
+    var tags = allProducts.reduce(function(orig, element) {
+        element.tags.forEach(function(tag){
+            if (orig.indexOf(tag) === -1) {
+                var obj = {};
+                obj.status = true;
+                obj.name = tag;
+                orig.push(obj);
+            }
+        });
+        return orig;
     }, []);
-    $scope.categories = allProducts.reduce(function(orig, element) {
-        // if (orig.find(function(x) {return x!=element.category})) {
-        if (orig.indexOf(element.category) === -1) {
-           return orig.concat(element.category);
+
+    var categories = allProducts.reduce(function(orig, element) {
+        if (element.category && (!orig.find(function(x){
+            return x.name === element.category;
+        }))) {
+            var obj = {};
+            obj.status = true;
+            obj.name = element.category;
+            orig.push(obj);
+           return orig;
+        } else {
+            return orig;
         }
-        else return orig;
     }, []);
-    // $scope.filter = ProductFactory.getFilters();
+
+    $scope.typeCategoryClick = function($event, scope){
+        this.category.status = !this.category.status;
+    };
+    $scope.typeButtonClick = function($event, scope){
+        this.tag.status = !this.tag.status;
+        if (this.tag.status === true) {
+            if ($scope.filter.tags.find(function(tag) {return tag.status === false})) {
+                $scope.filter.filterByTag = true;
+            } else {
+                console.log($scope);
+                $scope.filter.filterByTag = false;
+            }
+        } else {
+            $scope.filter.filterByTag = true;
+        }
+    };
+
 
     $scope.filter = {
-        categories: {
-            small: false,
-            medium: false,
-            large: false
-        },
-        tags: '',
-        defaultTag: 'Enter Value'
+        categories: angular.copy(categories),
+        tags: angular.copy(tags),
+        description: ''
     };
+    $scope.filter.filterByTag = false;
     var modelDefault = angular.copy($scope.filter);
 
     $scope.clearFilters = function() {
-        //      console.log($scope);
-        // $scope.sidebarForm.$setPristine();
-        $scope.filter.categories = {
-            small: false,
-            medium: false,
-            large: false
-        };
-        $scope.filter.tags = "";
+        $scope.filter = angular.copy(modelDefault);
     };
-});
 
-
-app.filter('ProductFilter', function($filter) {
-            return function(list, arrayFilter, element) {
-                if (arrayFilter) {
-                    return $filter("filter")(list, function(listItem) {
-                        console.log("list item is")
-                        console.log(listItem)
-                        for (var i = 0; i < arrayFilter.length; i++) {
-                            console.log("comparing...", arrayFilter[i], listItem[element])
-                             // if (arrayFilter[i] == listItem)
-                            if (arrayFilter[i] == listItem[element])
-                                return false;
-                        }
+    $scope.filterByCategory = function(category, filterby){
+        return function(item){
+            if (typeof item[filterby] === 'object'){
+                if (!$scope.filter.filterByTag) {
+                    return true;
+                }
+                return category.find(function(x){
+                     if (item[filterby].indexOf(x.name) !== -1 && !x.status){
                         return true;
-                    });
+                    }
+                });
+            } else if (typeof item[filterby] === 'string'){
+                if (category.find(function(x){ return x.name === item[filterby] && x.status})) {
+                    return true;
                 }
             }
-        }
-        )
+        };
+    };
+});

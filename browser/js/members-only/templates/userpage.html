@@ -1,6 +1,6 @@
 <div>
   <!-- this is the larger (non-thumbnail) image -->
-  <h1>Welcome {{user.firstName}} !!!!</h1>
+  <h1>Welcome {{loggedInUser.firstName}} !!!!</h1>
   <h1>Your Purchases: </h1>
  <div class='purchase-list'>
       <div ng-repeat="purchase in user.getPurchases()">
@@ -9,4 +9,29 @@
        </div>
   </div>
   <!-- </div> -->
+  <div>
+  <form class='form-group' >
+      First Name: <input ng-disabled="editSettings" type='name' ng-model = 'user.firstName' required</>
+      Last Name: <input ng-disabled="editSettings" type='name' ng-model = 'user.lastName' required</>
+      E-mail: <input ng-disabled="editSettings" type='email' ng-model = 'user.email' required</>
+      Address: <input ng-disabled="editSettings" type='address' ng-model = 'user.address[addr]' ng-repeat='addr in user.address'</>
+      Payment Info <input  ng-disabled="editSettings" ng-model = 'user.paymentInfo[payment]' ng-repeat='payment in user.paymentInfo'</>
+      Billing Info <input  ng-disabled="editSettings" ng-model = 'user.paymentInfo[payment]' ng-repeat='payment in user.paymentInfo'</>
+      Is Admin <input ng-disabled="editSettings" ng-show='loggedInUser.isAdmin' type='checkbox'ng-model='user.isAdmin'</>
+    <button class='btn' ng-click='updateProfile()' ng-show='editSettings===false'>Update Profile</button>
+  </form>
+  <button class='btn' ng-click='editSettings=false'>Edit Profile</button>
+
+ <form name='address' class='form-group'>
+      Name: <input ng-disabled="editAddress" type='name' ng-model = 'newAddress.name' required</>
+      Street: <input ng-disabled="editAddress" type='name' ng-model = 'newAddress.street' required</>
+      City: <input ng-disabled="editAddress" type='city' ng-model = 'newAddress.city' required</>
+      Zip: <input ng-disabled="editAddress" type='address' ng-model = 'newAddress.zipCode' required</>
+  	<button class='btn' ng-click='updateAddress()' ng-show='editAddress===false'>Update Profile</button>
+  </form>
+<button class='btn' ng-click='editAddress=false'>Edit Address</button>
 </div>
+
+</div>
+
+

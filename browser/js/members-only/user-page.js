@@ -4,9 +4,23 @@ app.config(function ($stateProvider) {
         url: '/members-area',
         templateUrl: 'js/members-only/templates/userpage.html',
         controller: 'UserCtrl',
+        params: {
+            user: null
+        },
         resolve: {
-            currentUser: function(AuthService) {
-                return AuthService.getLoggedInUser();
+            // subjectUser: function($stateParams){
+            //     return $stateParams.user;
+            // },
+            currentUser: function(AuthService, $stateParams) {
+                return AuthService.getLoggedInUser()
+                .then(function(result){
+                    if ($stateParams.user){
+                        result.subjectUser = $stateParams.user;
+                    } else {
+                        result.subjectUser = result;
+                    }
+                    return result;
+                });
             }
         },
         // The following data.authenticate is read by an event listener

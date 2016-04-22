@@ -7,7 +7,15 @@ app.factory('UserSettingsFact', function($http){
     });
   };
 
+  var updateAddress = function(user, address){
+    return $http.put('/api/users/'+user, {address: address})
+    .then(function(updatedUser) {
+      return updatedUser.data;
+    });
+  };
+
   return {
-  	updateUser: updateUser
+  	updateUser: updateUser,
+    updateAddress: updateAddress
   };
 });

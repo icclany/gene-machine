@@ -115,6 +115,8 @@ router.put('/:id', function (req, res, next) {
     _.extend(req.requestedUser, req.body);
     req.requestedUser.save()
     .then(function (user) {
+        console.log('here i am');
+        console.log(user);
         res.json(user);
     })
     .catch(next);

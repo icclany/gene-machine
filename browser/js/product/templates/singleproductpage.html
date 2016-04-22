@@ -1,17 +1,14 @@
 <div>
   <img ng-src="{{ theProduct.image }}">
-  <!-- this is the larger (non-thumbnail) image -->
   <p>Description: {{ theProduct.description }}</p>
   <p>Price: {{ theProduct.price}}</p>
   <button>
-  <span class="glyphicon glyphicon-plus" ng-click="addToCart(theProduct)">Add to Cart</span>
+  <span class="glyphicon glyphicon-plus" ng-click="addToCart()">Add to Cart</span>
   </button>
   <p>Reviews:</p>
   <div ng-repeat="review in theProduct.reviews">
-    <!-- <review theReview="review"></review> -->
     <p>Review object is: {{review}}</p>
     <p>Stars: {{review.numStars}}</p>
     <p>Review by: {{review.user.username}}</p>
     <p>{{review.text}}</p>
-  <!-- </div> -->
 </div>

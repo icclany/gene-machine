@@ -8,7 +8,10 @@ app.config(function($stateProvider){
     resolve: {
       theProduct: function(ProductFactory, $stateParams){
         return ProductFactory.fetchById($stateParams.productId);
-      }
+      },
+       currentUser: function(AuthService) {
+                return AuthService.getLoggedInUser();
+            }
     }
   });
 });

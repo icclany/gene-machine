@@ -52,7 +52,6 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
-  console.log("hitting the user post route");
     User.create(req.body)
     .then(function (user) {
         res.status(201).json(user);
@@ -60,15 +59,51 @@ router.post('/', function (req, res, next) {
     .catch(next);
 });
 
+router.post('/:id/cart', function (req, res, next) {
+    let item = req.body.item;
+    req.requestedUser.addToCart(item);
+    res.sendStatus(201);
+});
+
+router.put('/:id/cart', function (req, res, next) {
+    let itemId = req.body.productId;
+    let itemQuantity = req.body.quantity;
+
+    req.requestedUser.cart.forEach((item) => {
+        if (item.productInfo.toString() === itemId.toString()) {
+        // if (item._id.toString() === itemId.toString()) {
+            item.quantity = itemQuantity;
+        }
+    });
+    req.requestedUser.save();
+    console.log("finished put request")
+    console.log(req.requestedUser)
+    res.sendStatus(201);
+});
+
+router.get('/:id/cart', function (req, res, next) {
+    const promiseQueries = [];
+    req.requestedUser.cart.forEach((item) => {
+        promiseQueries.push(
+            mongoose.model('Product').findById(item.productInfo))
+    })
+
+    Promise.all(promiseQueries)
+    .then((populatedItems) => {
+        req.requestedUser.cart.forEach((item) => {
+            populatedItems.forEach((popItem) => {
+                if(item.productInfo.toString() === popItem._id.toString()) {
+                    item.productInfo = popItem;
+                }
+            })
+        })
+        res.json(req.requestedUser.cart);
+    })
+    .catch(next);
+});
+
 router.get('/:id', function (req, res, next) {
     res.json(req.requestedUser);
-    // req.requestedUser.getStories()
-    // .then(function (stories) {
-    //     var obj = req.requestedUser.toObject();
-    //     obj.stories = stories;
-    //     res.json(obj);
-    // })
-    // .catch(next);
 });
 
 router.put('/:id', function (req, res, next) {

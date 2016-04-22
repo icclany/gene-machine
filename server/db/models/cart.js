@@ -1,6 +1,5 @@
 'use strict';
 var mongoose = require('mongoose');
-var ProductSchema = mongoose.model('Product').schema;
 
 
 var cartSchema = new mongoose.Schema({
@@ -9,8 +8,8 @@ var cartSchema = new mongoose.Schema({
     default: 1
   },
   productInfo: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product'
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Product'
     }
 });
 

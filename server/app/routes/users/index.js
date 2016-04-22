@@ -59,11 +59,47 @@ router.post('/', function (req, res, next) {
     .catch(next);
 });
 
-router.put('/:id/cart', function (req, res, next) {
-    // console.log("IN THE ROUTE!!!!!!!!!!!!!")
+router.post('/:id/cart', function (req, res, next) {
     let item = req.body.item;
     req.requestedUser.addToCart(item);
     res.sendStatus(201);
+});
+
+router.put('/:id/cart', function (req, res, next) {
+    let itemId = req.body.productId;
+    let itemQuantity = req.body.quantity;
+
+    req.requestedUser.cart.forEach((item) => {
+        if (item.productInfo.toString() === itemId.toString()) {
+        // if (item._id.toString() === itemId.toString()) {
+            item.quantity = itemQuantity;
+        }
+    });
+    req.requestedUser.save();
+    console.log("finished put request")
+    console.log(req.requestedUser)
+    res.sendStatus(201);
+});
+
+router.get('/:id/cart', function (req, res, next) {
+    const promiseQueries = [];
+    req.requestedUser.cart.forEach((item) => {
+        promiseQueries.push(
+            mongoose.model('Product').findById(item.productInfo))
+    })
+
+    Promise.all(promiseQueries)
+    .then((populatedItems) => {
+        req.requestedUser.cart.forEach((item) => {
+            populatedItems.forEach((popItem) => {
+                if(item.productInfo.toString() === popItem._id.toString()) {
+                    item.productInfo = popItem;
+                }
+            })
+        })
+        res.json(req.requestedUser.cart);
+    })
+    .catch(next);
 });
 
 router.get('/:id', function (req, res, next) {

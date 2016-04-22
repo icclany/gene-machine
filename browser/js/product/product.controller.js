@@ -3,14 +3,14 @@
 app.controller('ProductController', function($scope, theProduct, ProductFactory, currentUser) {
     $scope.theProduct = theProduct;
 
-    $scope.addToCart = function(item) {
-        ProductFactory.addToCart(item, currentUser);
+    $scope.addToCart = function() {
+        return ProductFactory.addToCart(theProduct, currentUser);
     }
 
 });
 
 app.controller('AllProductsController', function($scope, allProducts, ProductFactory) {
-    
+
     $scope.products = allProducts;
     var tags = allProducts.reduce(function(orig, element) {
         element.tags.forEach(function(tag){
@@ -73,7 +73,7 @@ app.controller('AllProductsController', function($scope, allProducts, ProductFac
             if (typeof item[filterby] === 'object'){
                 if (!$scope.filter.filterByTag) {
                     return true;
-                } 
+                }
                 return category.find(function(x){
                      if (item[filterby].indexOf(x.name) !== -1 && !x.status){
                         return true;

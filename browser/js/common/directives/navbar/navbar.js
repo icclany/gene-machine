@@ -11,7 +11,8 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
                 { label: 'About', state: 'about' },
                 { label: 'Products', state: 'allProducts' },
                 { label: 'Members Only', state: 'membersOnly', auth: true },
-                { label: 'Users',  state: 'adminUsers', auth: true } // needs to only be visible for admin
+                { label: 'Manage Users',  state: 'adminUsers', auth: true }, // needs to only be visible for admin
+                { label: 'Manage Products', state: 'adminProducts', auth: true}
             ];
 
             scope.user = null;

@@ -122,9 +122,7 @@ router.put('/:id', function (req, res, next) {
 });
 
 router.delete('/:id', function (req, res, next) {
-  console.log("deleting this:");
     if(req.user.isAdmin){ // not sure if this works, req.user doesn't exist from Postman, which is good, but can't check functionality until we make requests from webpage.
-      console.log('youre an admin!');
       req.requestedUser.remove()
       .then(function () {
         res.status(204).end();

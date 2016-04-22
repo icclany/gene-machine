@@ -21,7 +21,7 @@
 
 
 <div class='all-products'>          
- -      <single-product the-product="product"  ng-repeat="product in products" ></single-product>
+    <single-product the-product="product" ng-repeat="product in products | filter:filterByCategory(filter.categories, 'category') | filter: filterByCategory(filter.tags, 'tags') | filter: {description: filter.description}"  ui-sref="product({productId: product._id})" ></single-product>
  <div class='all-products'>
 
  

@@ -60,7 +60,7 @@ router.post('/', function (req, res, next) {
 });
 
 router.put('/:id/cart', function (req, res, next) {
-    console.log("IN THE ROUTE!!!!!!!!!!!!!")
+    // console.log("IN THE ROUTE!!!!!!!!!!!!!")
     let item = req.body.item;
     req.requestedUser.addToCart(item);
     res.sendStatus(201);

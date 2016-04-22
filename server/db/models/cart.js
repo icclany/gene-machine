@@ -6,11 +6,12 @@ var ProductSchema = mongoose.model('Product').schema;
 var cartSchema = new mongoose.Schema({
   quantity: {
     type: Number,
-    default: 100
+    default: 1
   },
   productInfo: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product'    }
+        ref: 'Product'
+    }
 });
 
 mongoose.model('Cart', cartSchema); //make things more consistent

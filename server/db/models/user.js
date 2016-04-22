@@ -67,12 +67,13 @@ userSchema.methods.getPurchases = function () {
 
 userSchema.methods.addToCart = function(obj) {
   var exists = false;
-  console.log("in user schema")
+  // console.log("in user schema")
 
   for (let i = 0; i < this.cart.length; i++) {
-    console.log(this.cart[i])
-    console.log(obj)
+    // console.log(this.cart[i])
+    // console.log(obj)
     if (this.cart[i].productInfo == obj._id) {
+      console.log("already exists");
       exists = true;
       ++this.cart[i].quantity
       this.save();
@@ -80,10 +81,13 @@ userSchema.methods.addToCart = function(obj) {
   }
 
   if(!exists) {
+    // console.log("in userschema - doesnt exist in cart")
+    console.log("didn't exist");
     this.cart.push(new Cart({
       productInfo: obj._id
     }));
       this.save();
+      // console.log(this)
   }
 
 }

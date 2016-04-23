@@ -32,7 +32,6 @@ router.put('/:id', function(req, res, next){
   console.log('hello from the router');
   Products.findByIdAndUpdate(req.params.id, req.body)
   .then(function(product){
-    console.log('found thing and updated?', product);
     product.save();
   });
   res.send(200);

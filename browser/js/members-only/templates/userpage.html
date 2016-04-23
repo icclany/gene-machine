@@ -1,12 +1,34 @@
-<div>
-  <!-- this is the larger (non-thumbnail) image -->
-  <h1>Welcome {{user.firstName}} !!!!</h1>
-  <h1>Your Purchases: </h1>
- <div class='purchase-list'>
-      <div ng-repeat="purchase in user.getPurchases()">
-      <h3>Your purchase on {{purchase.date}}</h3>
-       <single-product the-product="product"  ng-repeat="product in purchase.items" ui-sref="product({productId: product._id})" ></single-product>
-       </div>
-  </div>
-  <!-- </div> -->
-</div>
+<h1>Welcome {{loggedInUser.firstName}} !!!!</h1>
+<div ui-view></div>
+
+
+ <sidebar>
+      <form class='form-group' name="sidebarForm" novalidate>
+
+          <div type='button' class="btn" ui-sref='.settings'>Edit User Information</div>
+
+          <div type='button' class="btn" ui-sref='.updatePassword'>Change Password</div>
+           
+           <div type='button' class="btn" >Update Address Information</br>
+            <select ng-change='editOnFileAddress()' name='addressSelect' ng-model ='addressSelected'>
+              <option value='null'>Choose Address</option>
+              <option value='{{address._id}}' ng-repeat="address in user.address">{{address.name}}</option>
+            </select>
+          </div>
+
+          <div type='button' class='btn' ui-sref='.address'>Save New Address</div>
+          <div type='button' class="btn" >Update Billing Information</br>
+            <select ng-change='editOnFileBilling()' name='billingSelect' ng-model ='billingSelected'>
+              <option value='null'>Choose Billing Profile</option>
+              <option value='{{billing._id}}' ng-repeat="billing in user.paymentInfo">{{billing.name}}</option>
+            </select>
+          </div>
+
+          <div type='button' class='btn' ui-sref='.billing'>Save New Billing Information</div>
+          
+          <label>Admin Status - <input type='checkbox' ng-show='loggedInUser.isAdmin' ng-model='user.isAdmin'></input></label>
+          <button type='button' ng-show='loggedInUser.isAdmin' ng-click='submitEdits()'>Update {{user.name}} Admin Status</button>
+
+        
+      </form>
+</sidebar>

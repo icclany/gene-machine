@@ -1,0 +1,9 @@
+<div class='all-products'>
+  <h1>Your Purchases: </h1>
+    <div class='purchase-list'>
+      <div ng-repeat="purchase in user.getPurchases()">
+        <h3>Your purchase on {{purchase.date}}</h3>
+        <single-product the-product="product"  ng-repeat="product in purchase.items" ui-sref="product({productId: product._id})" ></single-product>
+      </div>
+    </div>
+  </div>

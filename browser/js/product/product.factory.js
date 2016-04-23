@@ -31,6 +31,7 @@ app.factory('ProductFactory', function($http) {
             })
 }
 
+
 ProductFactory.getCart = function(user) {
     // return cart;
     return $http.get('/api/users/' + user._id +'/cart')
@@ -42,8 +43,12 @@ ProductFactory.getCart = function(user) {
 ProductFactory.updateQuantity = function(user, product, quantity) {
     return $http.put('/api/users/'+ user._id +'/cart', {
         productId: product._id,
-        quantity: parseInt(quantity)
+        quantity: quantity
     })
+}
+
+ProductFactory.removeFromCart = function(user, product) {
+    return $http.delete('/api/users/'+ user._id +'/cart/'+ product._id);
 }
 
 ProductFactory.emptyCart = function() {

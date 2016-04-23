@@ -70,7 +70,10 @@ var userSchema = new mongoose.Schema({ //make things more consistent
     },
     cart: [CartSchema],
     address: [AddressSchema],
-    paymentInfo: [PaymentSchema],
+    paymentInfo: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'PaymentInfo'
+    }],
     reviews: {
       type: Array
     },
@@ -80,7 +83,7 @@ var userSchema = new mongoose.Schema({ //make things more consistent
     google: {
         id: String
     }
-});
+}); 
 
 // method to remove sensitive information from user objects before sending them out
 userSchema.methods.sanitize = function () {
@@ -110,7 +113,7 @@ userSchema.methods.addToCart = function(obj) {
     }));
   }
   this.save();
-}
+};
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.

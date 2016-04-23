@@ -4,7 +4,6 @@ var mongoose = require('mongoose');
 var CartSchema = mongoose.model('Cart').schema;
 var AddressSchema = mongoose.model('Address').schema;
 var PaymentSchema = mongoose.model('PaymentInfo').schema;
-
 var Cart = mongoose.model('Cart');
 var _ = require('lodash');
 
@@ -46,7 +45,7 @@ var userSchema = new mongoose.Schema({ //make things more consistent
     google: {
         id: String
     }
-}); 
+});
 
 // method to remove sensitive information from user objects before sending them out
 userSchema.methods.sanitize = function () {
@@ -88,7 +87,7 @@ var encryptPassword = function (plainText, salt) {
     hash.update(plainText);
     hash.update(salt);
     return hash.digest('hex');
-}; 
+};
 
 userSchema.pre('save', function (next) {
 

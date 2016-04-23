@@ -3,6 +3,7 @@ var crypto = require('crypto');
 var mongoose = require('mongoose');
 var CartSchema = mongoose.model('Cart').schema;
 var AddressSchema = mongoose.model('Address').schema;
+var PaymentSchema = mongoose.model('PaymentInfo').schema;
 var Cart = mongoose.model('Cart');
 var _ = require('lodash');
 
@@ -34,10 +35,7 @@ var userSchema = new mongoose.Schema({ //make things more consistent
     },
     cart: [CartSchema],
     address: [AddressSchema],
-    paymentInfo: [{
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: 'PaymentInfo'
-    }],
+    paymentInfo: [PaymentSchema],
     reviews: {
       type: Array
     },
@@ -63,7 +61,6 @@ userSchema.methods.getPurchases = function () {
 
 userSchema.methods.addToCart = function(obj) {
   var exists = false;
-
   for (let i = 0; i < this.cart.length; i++) {
     if (this.cart[i].productInfo == obj._id) {
       exists = true;
@@ -77,7 +74,7 @@ userSchema.methods.addToCart = function(obj) {
     }));
   }
   this.save();
-}
+};
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.

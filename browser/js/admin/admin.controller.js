@@ -2,15 +2,10 @@
 
 app.controller('AdminUserCtrl', function($scope, $state, AdminFactory, theUsers){
   $scope.goToUserSettings = function(user){
-    $state.go('UserSettings', user);
+    $state.go('membersOnly', {user: user});
   };
 
-  $scope.theProducts = 'hey';
-
   $scope.theUsers = theUsers;
-
-  console.log('inside admin controller');
-
   $scope.deleteUser = AdminFactory.deleteUser;
 
   $scope.editUser = AdminFactory.editUser;

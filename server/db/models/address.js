@@ -15,9 +15,9 @@ var addressSchema = new mongoose.Schema({ //add new to mongoose.Schema and made 
     required: true
   },
   zipCode: {
-    type: Number,
+    type: String,
     required: true
   },
 });
 
-mongoose.model('Address', addressSchema); //make things more consistent
+mongoose.model('Address', addressSchema); 

@@ -6,7 +6,6 @@ app.config(function($stateProvider){
     resolve: {
       theUsers: function(AdminFactory){
         return AdminFactory.fetchAllUsers().then(function(users){
-          console.log('in adminUsers state:', users);
           return users;
         });
       }

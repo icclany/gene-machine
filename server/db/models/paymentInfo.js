@@ -19,4 +19,4 @@ var paymentInfoSchema = new mongoose.Schema({
   }
 });
 
-mongoose.model('PaymentInfo', PaymentInfoSchema);
+mongoose.model('PaymentInfo', paymentInfoSchema);

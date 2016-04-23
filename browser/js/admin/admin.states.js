@@ -21,7 +21,6 @@ app.config(function($stateProvider){
     resolve: {
       theProducts: function(ProductFactory){
         return ProductFactory.fetchAll().then(function(products){
-          console.log('heres the ', products);
           return products;
         });
       }

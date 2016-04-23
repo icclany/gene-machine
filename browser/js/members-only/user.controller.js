@@ -9,10 +9,11 @@ app.controller('UserCtrl', function($scope, $state, User, UserSettingsFact, Purc
     $scope.billingTransfer;
     $scope.addressTransfer;
     $scope.password;
-
-    console.log("purchase history is");
-    console.log(PurchaseHistory)
     $scope.purchases = PurchaseHistory;
+
+    $scope.submitReview = function(item) {
+
+    }
 
 	$scope.submitEdits = function(){
 		if ($state.current.name === 'membersOnly.address') {
@@ -61,5 +62,7 @@ app.controller('UserCtrl', function($scope, $state, User, UserSettingsFact, Purc
 			});
         }
     };
+
+
 
 });

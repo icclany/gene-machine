@@ -34,7 +34,8 @@ app.config(function($stateProvider) {
     });
 });
 
-app.controller('CheckoutCtrl', function($scope, cart, currentUser, CartFactory) {
+app.controller('CheckoutCtrl', function($state, $scope, cart, currentUser, CartFactory) {
+    $scope.user = currentUser;
     $scope.cart = cart;
     $scope.total = CartFactory.getTotal(cart);
 

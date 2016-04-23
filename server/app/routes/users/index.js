@@ -58,7 +58,6 @@ router.put('/:id/cart', function(req, res, next) {
 
     req.requestedUser.cart.forEach((item) => {
         if (item.productInfo.toString() === itemId.toString()) {
-            // if (item._id.toString() === itemId.toString()) {
             item.quantity = itemQuantity;
         }
     });
@@ -122,8 +121,9 @@ router.put('/:id/checkout', function(req, res, next) {
     req.user.paymentInfo.push(
         new PaymentInfo({
             name: req.body.paymentInfo.name,
-            billingAddress: new Address(req.body.paymentInfo.billinfo),
-            ccNum: req.body.paymentInfo.ccNum
+            billingAddress: new Address(req.body.paymentInfo.billingAddress),
+            ccNum: req.body.paymentInfo.ccNum,
+            ccExpiration: req.body.paymentInfo.ccExpiration
         }));
     req.user.save();
     res.sendStatus(202);
@@ -141,7 +141,7 @@ router.put('/:id', function(req, res, next) {
 });
 
 router.delete('/:id', function(req, res, next) {
-    if (req.user.isAdmin) { 
+    if (req.user.isAdmin) {
         req.requestedUser.remove()
             .then(function() {
                 res.status(204).end();

@@ -8,4 +8,3 @@ require('./cart');
 require('./user');
 require('./purchase');
 require('./review');
-

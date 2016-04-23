@@ -62,7 +62,6 @@ userSchema.methods.getPurchases = function () {
 
 userSchema.methods.addToCart = function(obj) {
   var exists = false;
-
   for (let i = 0; i < this.cart.length; i++) {
     if (this.cart[i].productInfo == obj._id) {
       exists = true;
@@ -89,7 +88,7 @@ var encryptPassword = function (plainText, salt) {
     hash.update(plainText);
     hash.update(salt);
     return hash.digest('hex');
-};
+}; 
 
 userSchema.pre('save', function (next) {
 

@@ -1,37 +1,34 @@
-<div>
-  <!-- this is the larger (non-thumbnail) image -->
-  <h1>Welcome {{loggedInUser.firstName}} !!!!</h1>
-  <h1>Your Purchases: </h1>
- <div class='purchase-list'>
-      <div ng-repeat="purchase in user.getPurchases()">
-      <h3>Your purchase on {{purchase.date}}</h3>
-       <single-product the-product="product"  ng-repeat="product in purchase.items" ui-sref="product({productId: product._id})" ></single-product>
-       </div>
-  </div>
-  <!-- </div> -->
-  <div>
-  <form class='form-group' >
-      First Name: <input ng-disabled="editSettings" type='name' ng-model = 'user.firstName' required</>
-      Last Name: <input ng-disabled="editSettings" type='name' ng-model = 'user.lastName' required</>
-      E-mail: <input ng-disabled="editSettings" type='email' ng-model = 'user.email' required</>
-      Address: <input ng-disabled="editSettings" type='address' ng-model = 'user.address[addr]' ng-repeat='addr in user.address'</>
-      Payment Info <input  ng-disabled="editSettings" ng-model = 'user.paymentInfo[payment]' ng-repeat='payment in user.paymentInfo'</>
-      Billing Info <input  ng-disabled="editSettings" ng-model = 'user.paymentInfo[payment]' ng-repeat='payment in user.paymentInfo'</>
-      Is Admin <input ng-disabled="editSettings" ng-show='loggedInUser.isAdmin' type='checkbox'ng-model='user.isAdmin'</>
-    <button class='btn' ng-click='updateProfile()' ng-show='editSettings===false'>Update Profile</button>
-  </form>
-  <button class='btn' ng-click='editSettings=false'>Edit Profile</button>
-
- <form name='address' class='form-group'>
-      Name: <input ng-disabled="editAddress" type='name' ng-model = 'newAddress.name' required</>
-      Street: <input ng-disabled="editAddress" type='name' ng-model = 'newAddress.street' required</>
-      City: <input ng-disabled="editAddress" type='city' ng-model = 'newAddress.city' required</>
-      Zip: <input ng-disabled="editAddress" type='address' ng-model = 'newAddress.zipCode' required</>
-  	<button class='btn' ng-click='updateAddress()' ng-show='editAddress===false'>Update Profile</button>
-  </form>
-<button class='btn' ng-click='editAddress=false'>Edit Address</button>
-</div>
-
-</div>
+<h1>Welcome {{loggedInUser.firstName}} !!!!</h1>
+<div ui-view></div>
 
 
+ <sidebar>
+      <form class='form-group' name="sidebarForm" novalidate>
+
+          <div type='button' class="btn" ui-sref='.settings'>Edit User Information</div>
+
+          <div type='button' class="btn" ui-sref='.updatePassword'>Change Password</div>
+           
+           <div type='button' class="btn" >Update Address Information</br>
+            <select ng-change='editOnFileAddress()' name='addressSelect' ng-model ='addressSelected'>
+              <option value='null'>Choose Address</option>
+              <option value='{{address._id}}' ng-repeat="address in user.address">{{address.name}}</option>
+            </select>
+          </div>
+
+          <div type='button' class='btn' ui-sref='.address'>Save New Address</div>
+          <div type='button' class="btn" >Update Billing Information</br>
+            <select ng-change='editOnFileBilling()' name='billingSelect' ng-model ='billingSelected'>
+              <option value='null'>Choose Billing Profile</option>
+              <option value='{{billing._id}}' ng-repeat="billing in user.paymentInfo">{{billing.name}}</option>
+            </select>
+          </div>
+
+          <div type='button' class='btn' ui-sref='.billing'>Save New Billing Information</div>
+          
+          <label>Admin Status - <input type='checkbox' ng-show='loggedInUser.isAdmin' ng-model='user.isAdmin'></input></label>
+          <button type='button' ng-show='loggedInUser.isAdmin' ng-click='submitEdits()'>Update {{user.name}} Admin Status</button>
+
+        
+      </form>
+</sidebar>

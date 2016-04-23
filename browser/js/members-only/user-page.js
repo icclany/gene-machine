@@ -11,15 +11,15 @@ app.config(function ($stateProvider) {
             // subjectUser: function($stateParams){
             //     return $stateParams.user;
             // },
-            currentUser: function(AuthService, $stateParams) {
+            User: function(AuthService, $stateParams) {
                 return AuthService.getLoggedInUser()
                 .then(function(result){
                     if ($stateParams.user){
-                        result.subjectUser = $stateParams.user;
+                        return {currentUser: result, subjectUser: $stateParams.user};
                     } else {
-                        result.subjectUser = result;
+                        return {currentUser: result, subjectUser: result};
+                        
                     }
-                    return result;
                 });
             }
         },
@@ -28,6 +28,30 @@ app.config(function ($stateProvider) {
         data: {
             authenticate: true
         }
+    })
+    .state('membersOnly.address', {
+        url: '/editAddress',
+        templateUrl: 'js/members-only/templates/editAddress.html'
+    })
+    .state('membersOnly.settings', {
+        url: '/editUserSettings',
+        templateUrl: 'js/members-only/templates/editUserSettings.html'
+    })
+    .state('membersOnly.billing', {
+        url: '/editBilling',
+        templateUrl: 'js/members-only/templates/editBilling.html'
+    })
+    .state('membersOnly.editBilling', {
+        url: '/billing',
+        templateUrl: 'js/members-only/templates/editOnFileBilling.html'
+    })
+    .state('membersOnly.editAddress', {
+        url: '/address',
+        templateUrl: 'js/members-only/templates/editOnFileAddress.html'
+    })
+    .state('membersOnly.updatePassword', {
+        url: '/updatePassword',
+        templateUrl: 'js/members-only/templates/changePassword.html'
     });
 
 });

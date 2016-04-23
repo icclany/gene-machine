@@ -19,7 +19,6 @@ app.factory('AdminFactory', function($http, $state){
   };
 
   AdminFactory.deleteProduct = function(product){
-    console.log("deleting product in admin factory")
     var areYouSure = confirm("Delete this product?");
     if(areYouSure){
       $http.delete('/api/products/' + product).then(function(anything){

@@ -113,6 +113,13 @@ router.get('/:id/cart', function(req, res, next) {
 });
 
 router.get('/:id', function(req, res, next) {
+    req.requestedUser.getPurchases()
+        .then(function(purchases){
+            console.log('in get id route');
+            console.log(purchases);
+            req.requestedUser.purchases = purchases;
+        });
+
     res.json(req.requestedUser);
 });
 

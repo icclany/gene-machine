@@ -8,8 +8,17 @@ app.factory('UserSettingsFact', function($http){
     });
   };
 
+  var getOrders = function(user){
+    return $http.get('/api/users/'+user._id)
+    .then(function(orders){
+      console.log('in factory');
+      console.log(orders);
+    });
+  };
+
 
   return {
-  	updateUser: updateUser
+  	updateUser: updateUser,
+    getOrders: getOrders
   };
 });

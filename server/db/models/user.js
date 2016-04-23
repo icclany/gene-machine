@@ -54,8 +54,7 @@ userSchema.methods.sanitize = function () {
 
 // **Get purchases method**
 userSchema.methods.getPurchases = function () {
-  return mongoose
-  .model('Purchase').find({user: this._id})
+  return mongoose.model('Purchase').find({user: this._id})
   .populate('user items');
 };
 

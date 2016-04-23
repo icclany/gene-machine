@@ -1,14 +1,13 @@
 'use strict';
 var mongoose = require('mongoose');
-var addressSchema = mongoose.model('Address').schema;
+var AddressSchema = mongoose.model('Address').schema;
 
 var paymentInfoSchema = new mongoose.Schema({
-
   name: {
     type: String,
     required: true
   },
-  billingAddress: addressSchema,
+  billingAddress: AddressSchema,
   ccNum: {
     type: String,
     required: true
@@ -19,4 +18,4 @@ var paymentInfoSchema = new mongoose.Schema({
   }
 });
 
-mongoose.model('PaymentInfo', PaymentInfoSchema);
+mongoose.model('PaymentInfo', paymentInfoSchema);

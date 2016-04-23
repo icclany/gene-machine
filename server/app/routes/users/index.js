@@ -16,7 +16,6 @@ var ensureAuthenticated = function(req, res, next) {
     }
 };
 
-
 router.param('id', function(req, res, next, id) {
     User.findById(id).exec()
         .then(function(user) {

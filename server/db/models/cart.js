@@ -3,14 +3,25 @@ var mongoose = require('mongoose');
 
 
 var cartSchema = new mongoose.Schema({
-  quantity: {
-    type: Number,
-    default: 1
-  },
-  productInfo: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product'
+    quantity: {
+        type: Number,
+        default: 1
+    },
+    productInfo: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
     }
 });
 
-mongoose.model('Cart', cartSchema); //make things more consistent
+cartSchema.methods.populateCart = function() {
+    var cart = this;
+    return mongoose.model('Product').findById(this.productInfo)
+        .then(function(product) {
+            return {
+                quantity: cart.quantity,
+                productInfo: product
+            }
+        })
+}
+
+mongoose.model('Cart', cartSchema);

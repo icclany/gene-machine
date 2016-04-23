@@ -4,13 +4,7 @@ app.config(function ($stateProvider) {
         url: '/members-area',
         templateUrl: 'js/members-only/templates/userpage.html',
         controller: 'UserCtrl',
-        params: {
-            user: null
-        },
         resolve: {
-            // subjectUser: function($stateParams){
-            //     return $stateParams.user;
-            // },
             User: function(AuthService, $stateParams) {
                 return AuthService.getLoggedInUser()
                 .then(function(result){
@@ -18,9 +12,16 @@ app.config(function ($stateProvider) {
                         return {currentUser: result, subjectUser: $stateParams.user};
                     } else {
                         return {currentUser: result, subjectUser: result};
-                        
                     }
                 });
+            },
+            PurchaseHistory: function(AuthService, User, UserSettingsFact){
+                return UserSettingsFact.getOrders(User.currentUser)
+                    .then(function(allOrders){
+                        console.log('inside state resolve');
+                        console.log(allOrders);
+                        return allOrders;
+                    });
             }
         },
         // The following data.authenticate is read by an event listener

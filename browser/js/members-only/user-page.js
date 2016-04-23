@@ -4,6 +4,9 @@ app.config(function ($stateProvider) {
         url: '/members-area',
         templateUrl: 'js/members-only/templates/userpage.html',
         controller: 'UserCtrl',
+        params: {
+            user: null
+        },
         resolve: {
             User: function(AuthService, $stateParams) {
                 return AuthService.getLoggedInUser()
@@ -18,8 +21,6 @@ app.config(function ($stateProvider) {
             PurchaseHistory: function(AuthService, User, UserSettingsFact){
                 return UserSettingsFact.getOrders(User.currentUser)
                     .then(function(allOrders){
-                        console.log('inside state resolve');
-                        console.log(allOrders);
                         return allOrders;
                     });
             }

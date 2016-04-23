@@ -144,6 +144,10 @@ router.put('/:id/checkout', function(req, res, next) {
 
 router.put('/:id', function(req, res, next) {
     if (req.user.isAdmin) {
+        console.warn('requesteduser');
+        console.log(req.requestedUser);
+        console.warn('requestbody');
+        console.log(req.body);
         _.extend(req.requestedUser, req.body);
         req.requestedUser.save()
             .then(function(user) {

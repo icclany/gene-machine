@@ -15,7 +15,8 @@ app.factory('CartFactory', function($http) {
                 paymentInfo: {
                     name: cardinfo.name,
                     billingAddress: billinfo,
-                    ccNum: cardinfo.number
+                    ccNum: cardinfo.number,
+                    ccExpiration: cardinfo.date
                 }
             })
             .then(function(res) {

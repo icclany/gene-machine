@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 var AddressSchema = mongoose.model('Address').schema;
 
-var paymentInfoSchema = new mongoose.Schema({ //added new mongoose.Schema and added variable schema
+var paymentInfoSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true

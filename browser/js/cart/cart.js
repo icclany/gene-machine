@@ -34,12 +34,16 @@ app.config(function($stateProvider) {
     });
 });
 
-app.controller('CheckoutCtrl', function($scope, cart, currentUser, CartFactory) {
+app.controller('CheckoutCtrl', function($state, $scope, cart, currentUser, CartFactory) {
+    $scope.user = currentUser;
     $scope.cart = cart;
     $scope.total = CartFactory.getTotal(cart);
 
     $scope.checkout = function() {
-        return CartFactory.finishOrder($scope.shipping, $scope.billing.address, $scope.billing.cc, currentUser);
+        CartFactory.finishOrder($scope.shipping, $scope.billing.address, $scope.billing.cc, currentUser)
+        .then(function(finished) {
+            $state.go('/');
+        })
     };
 
 });

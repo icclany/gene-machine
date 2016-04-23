@@ -80,26 +80,10 @@ router.delete('/:id/cart/:productId', function(req, res, next) {
 });
 
 router.delete('/:id/cart', function(req, res, next) {
-    Promise.all(req.requestedUser.cart.map(cartSchema => {
-            return cartSchema.populateCart();
-        }))
-        .then(function(populatedCart) {
-            // console.log("finished populating the cart");
-            // console.log(populatedCart)
-            var donePurchase = {
-                items: populatedCart,
-                total: 500,
-                user: req.requestedUser._id,
-            };
-            return Purchase.create(donePurchase)
-                .then(function(createdPurchase) {
-                    // console.log("created purchase")
-                    // console.log(createdPurchase)
-                    req.requestedUser.cart = [];
-                    req.requestedUser.save();
-                    res.sendStatus(201);
-                });
-        });
+    console.log("deleting your cart")
+    req.requestedUser.cart = [];
+    req.requestedUser.save();
+    res.sendStatus(201);
 });
 
 router.get('/:id/cart', function(req, res, next) {

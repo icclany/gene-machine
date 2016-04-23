@@ -2,46 +2,11 @@
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 var CartSchema = mongoose.model('Cart').schema;
+var AddressSchema = mongoose.model('Address').schema;
 var PaymentSchema = mongoose.model('PaymentInfo').schema;
 
 var Cart = mongoose.model('Cart');
 var _ = require('lodash');
-
-var AddressSchema = new mongoose.Schema({ //add new to mongoose.Schema and made variable schema
-  name: {
-    type: String,
-    required: true
-  },
-  street: {
-    type: String,
-    required: true
-  },
-  city: {
-    type: String,
-    required: true
-  },
-  zipCode: {
-    type: Number,
-    required: true
-  },
-});
-
-
-var PaymentSchema = new mongoose.Schema({ //added new mongoose.Schema and added variable schema
-  name: {
-    type: String,
-    required: true
-  },
-  billingAddress: AddressSchema,
-  ccNum: {
-    type: String,
-    required: true
-  },
-  ccExpiration: {
-    type: String,
-    required: true
-  }
-});
 
 var userSchema = new mongoose.Schema({ //make things more consistent
     email: {

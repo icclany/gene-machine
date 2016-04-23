@@ -1,5 +1,5 @@
 
-app.controller('UserCtrl', function($scope, $state, SecretStash, User, UserSettingsFact, AuthService) {
+app.controller('UserCtrl', function($scope, $state, User, UserSettingsFact) {
 	"use strict";
     $scope.user = User.subjectUser;
     $scope.loggedInUser = User.currentUser;
@@ -63,7 +63,3 @@ app.controller('UserCtrl', function($scope, $state, SecretStash, User, UserSetti
 
 
 });
-    // SecretStash.getStash().then(function(stash) {
-    //     $scope.stash = stash;
-    // });
-    // //

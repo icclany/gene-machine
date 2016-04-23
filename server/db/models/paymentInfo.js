@@ -2,8 +2,6 @@
 var mongoose = require('mongoose');
 var AddressSchema = mongoose.model('Address').schema;
 
-
-
 var paymentInfoSchema = new mongoose.Schema({ //added new mongoose.Schema and added variable schema
   name: {
     type: String,
@@ -20,4 +18,4 @@ var paymentInfoSchema = new mongoose.Schema({ //added new mongoose.Schema and ad
   }
 });
 
-mongoose.model('PaymentInfo', paymentInfoSchema); //make it more consistent
+mongoose.model('PaymentInfo', paymentInfoSchema);

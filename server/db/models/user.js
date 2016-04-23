@@ -35,7 +35,7 @@ var userSchema = new mongoose.Schema({ //make things more consistent
     cart: [CartSchema],
     address: [AddressSchema],
     paymentInfo: [{
-      type: [mongoose.Schema.Types.ObjectId],
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'PaymentInfo'
     }],
     reviews: {

@@ -1,7 +1,9 @@
 'use strict';
 var mongoose = require('mongoose');
 
-var addressSchema = new mongoose.Schema({ //add new to mongoose.Schema and made variable schema
+var Schema = mongoose.Schema;
+
+var addressSchema = new Schema({ //add new to mongoose.Schema and made variable schema
   name: {
     type: String,
     required: true
@@ -22,4 +24,5 @@ var addressSchema = new mongoose.Schema({ //add new to mongoose.Schema and made 
 
 mongoose.model('Address', addressSchema); //make things more consistent
 
+module.exports = addressSchema;
 

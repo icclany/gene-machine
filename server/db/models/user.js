@@ -2,6 +2,7 @@
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 var CartSchema = mongoose.model('Cart').schema;
+var PaymentSchema = mongoose.model('PaymentInfo').schema;
 
 var Cart = mongoose.model('Cart');
 var _ = require('lodash');
@@ -70,10 +71,7 @@ var userSchema = new mongoose.Schema({ //make things more consistent
     },
     cart: [CartSchema],
     address: [AddressSchema],
-    paymentInfo: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'PaymentInfo'
-    }],
+    paymentInfo: [PaymentSchema],
     reviews: {
       type: Array
     },

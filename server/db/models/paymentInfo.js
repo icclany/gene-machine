@@ -1,5 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
+var addressSchema = require('./address');
 
 
 var paymentInfoSchema = new mongoose.Schema({ //added new mongoose.Schema and added variable schema
@@ -7,7 +8,7 @@ var paymentInfoSchema = new mongoose.Schema({ //added new mongoose.Schema and ad
     type: String,
     required: true
   },
-  billingAddress: AddressSchema,
+  billingAddress: addressSchema,
   ccNum: {
     type: String,
     required: true

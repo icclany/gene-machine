@@ -9,7 +9,7 @@ app.factory('ProductFactory', function($http) {
 
     ProductFactory.fetchAll = function() {
         return $http.get('/api/products').then(productArray => {
-            // inventory = productArray.data;
+            console.log("productFactory.fetchall");
             return productArray.data;
         });
     };

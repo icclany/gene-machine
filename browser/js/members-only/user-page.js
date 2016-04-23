@@ -18,8 +18,18 @@ app.config(function ($stateProvider) {
                         return {currentUser: result, subjectUser: $stateParams.user};
                     } else {
                         return {currentUser: result, subjectUser: result};
-                        
                     }
+                });
+            },
+            PurchaseHistory: function(AuthService, UserSettingsFact){
+                return AuthService.getLoggedInUser()
+                .then(function(loggedInUser){
+                    UserSettingsFact.getOrders(loggedInUser)
+                    .then(function(allOrders){
+                        console.log('inside state resolve');
+                        console.log(allOrders);
+                        return allOrders;
+                    });
                 });
             }
         },

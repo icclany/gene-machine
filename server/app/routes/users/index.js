@@ -80,16 +80,26 @@ router.delete('/:id/cart/:productId', function(req, res, next) {
 });
 
 router.delete('/:id/cart', function(req, res, next) {
-    var donePurchase = {
-        items: req.requestedUser.cart,
-        user: req.requestedUser._id
-    };
-    return Purchase.create(donePurchase)
-    .then(function(createdPurchase) {
-         req.requestedUser.cart = [];
-    req.requestedUser.save();
-    res.sendStatus(201);
-    })
+    Promise.all(req.requestedUser.cart.map(cartSchema => {
+            return cartSchema.populateCart();
+        }))
+        .then(function(populatedCart) {
+            // console.log("finished populating the cart");
+            // console.log(populatedCart)
+            var donePurchase = {
+                items: populatedCart,
+                total: 500,
+                user: req.requestedUser._id,
+            };
+            return Purchase.create(donePurchase)
+                .then(function(createdPurchase) {
+                    // console.log("created purchase")
+                    // console.log(createdPurchase)
+                    req.requestedUser.cart = [];
+                    req.requestedUser.save();
+                    res.sendStatus(201);
+                });
+        });
 });
 
 router.get('/:id/cart', function(req, res, next) {
@@ -114,17 +124,13 @@ router.get('/:id/cart', function(req, res, next) {
 
 router.get('/:id', function(req, res, next) {
     req.requestedUser.getPurchases()
-        .then(function(purchases){
-            console.log('in get id route');
-            console.log(purchases);
-            req.requestedUser.purchases = purchases;
+        .then(purchases => {
+            res.json(purchases)
         });
-
-    res.json(req.requestedUser);
 });
 
 router.put('/:id/checkout', function(req, res, next) {
-    req.user.address = new Address(req.body.address);
+    req.user.address.push(new Address(req.body.address));
     req.user.paymentInfo.push(
         new PaymentInfo({
             name: req.body.paymentInfo.name,

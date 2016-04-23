@@ -12,7 +12,7 @@ app.factory('UserSettingsFact', function($http){
     return $http.get('/api/users/'+user._id)
     .then(function(orders){
       console.log('in factory');
-      console.log(orders);
+      return orders.data;
     });
   };
 

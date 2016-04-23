@@ -7,7 +7,7 @@ var PaymentSchema = mongoose.model('PaymentInfo').schema;
 var Cart = mongoose.model('Cart');
 var _ = require('lodash');
 
-var userSchema = new mongoose.Schema({ //make things more consistent
+var userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true
@@ -55,7 +55,6 @@ userSchema.methods.sanitize = function () {
 // **Get purchases method**
 userSchema.methods.getPurchases = function () {
   return mongoose.model('Purchase').find({user: this._id})
-  .populate('user items');
 };
 
 userSchema.methods.addToCart = function(obj) {

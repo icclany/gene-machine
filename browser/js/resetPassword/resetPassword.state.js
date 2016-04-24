@@ -4,8 +4,6 @@ app.config(function($stateProvider){
 		url: '/reset/:token',
 		templateUrl: '/js/members-only/templates/changePassword.html',
 		controller: function($scope, $stateParams, $state, ResetPasswordFact){
-			console.log($stateParams);
-			console.log($scope);
 			$scope.updatePassword = function (password) {
 				if(password.passwordA !== password.passwordB){
 					$scope.incongruentPasswords = true;

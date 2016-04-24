@@ -12,6 +12,7 @@ app.config(function($stateProvider) {
             },
             cart: function(ProductFactory, currentUser) {
                 return ProductFactory.getCart(currentUser);
+                
             }
         }
     });

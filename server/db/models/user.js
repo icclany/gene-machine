@@ -46,8 +46,7 @@ var userSchema = new mongoose.Schema({
         id: String
     },
     resetPassword: String,
-    resetPasswordExpiration:Date,
-    disabled: Boolean
+    resetPasswordExpiration:Date
     
 
 });

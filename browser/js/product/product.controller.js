@@ -5,7 +5,7 @@ app.controller('ProductController', function($scope, theProduct, ProductFactory,
 
     $scope.addToCart = function() {
         return ProductFactory.addToCart(theProduct, currentUser);
-    }
+    };
 
 });
 

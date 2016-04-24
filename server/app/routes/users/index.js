@@ -5,8 +5,10 @@ var _ = require('lodash');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Address = mongoose.model('Address');
+var Product = mongoose.model('Product');
 var PaymentInfo = mongoose.model('PaymentInfo');
 var Purchase = mongoose.model('Purchase');
+var Promise = require('bluebird');
 var nodemailer = require('nodemailer');
 var smtpTransport = nodemailer.createTransport('SMTP', {
     service: 'Gmail',
@@ -43,7 +45,6 @@ router.post('/reset', function(req, res, next) {
     var token = User.generateSalt();
     User.findOne({ email: req.body.email })
     .then(function(user) {
-        user.disabled = true;
         user.password = User.generateSalt();
         user.resetPassword = token;
         user.resetPasswordExpiration = Date.now() + 3600000; // 1 hour
@@ -73,15 +74,11 @@ router.post('/reset', function(req, res, next) {
 });
 
 router.put('/reset/:token', function(req,res,next){
-    console.log(req.params.token);
     User.findOne({resetPassword: req.params.token })
     .then(function(user){
-        console.log(user);
         req.body.resetPassword = null;
         req.body.resetPasswordExpiration = null;
-        console.log(req.body);
         _.extend(user, req.body);
-        console.log(user);
         return user.save();
     })
     .then(function(savedUser){
@@ -99,6 +96,27 @@ router.get('/', function(req, res, next) {
             res.json(users);
         })
         .catch(next);
+});
+
+router.post('/cart', function(req, res, next) {
+        if (!req.session.cart) {
+            req.session.cart = {};
+            req.session.cart[req.body.item] = req.body.qty;
+        } else if (req.session.cart[req.body.item]){
+            req.session.cart[req.body.item]++;
+        } else {
+            req.session.cart[req.body.item] = 1;
+        }
+    res.send(req.session.cart);
+});
+
+router.get('/cart', function(req, res, next) {
+    var guestCart = req.session.cart;
+    Promise.map(Object.keys(guestCart), product => Product.findById(product))
+    .then(function(populatedSessionCart){
+        populatedSessionCart = populatedSessionCart.map(ele => {return {quantity: guestCart[ele._id], productInfo: ele}; });
+        res.send(populatedSessionCart); })
+    .catch(next);
 });
 
 router.post('/', function(req, res, next) {

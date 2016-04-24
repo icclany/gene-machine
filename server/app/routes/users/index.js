@@ -36,9 +36,6 @@ router.param('id', function(req, res, next, id) {
         .catch(next);
 });
 
-
-
-
 router.post('/reset', function(req, res, next) {
     var token = User.generateSalt();
     User.findOne({ email: req.body.email })
@@ -76,12 +73,9 @@ router.put('/reset/:token', function(req,res,next){
     console.log(req.params.token);
     User.findOne({resetPassword: req.params.token })
     .then(function(user){
-        console.log(user);
         req.body.resetPassword = null;
         req.body.resetPasswordExpiration = null;
-        console.log(req.body);
         _.extend(user, req.body);
-        console.log(user);
         return user.save();
     })
     .then(function(savedUser){
@@ -151,8 +145,6 @@ router.delete('/:id/cart', function(req, res, next) {
             return cartSchema.populateCart();
         }))
         .then(function(populatedCart) {
-            // console.log("finished populating the cart");
-            // console.log(populatedCart)
             var donePurchase = {
                 items: populatedCart,
                 total: 500,
@@ -160,8 +152,6 @@ router.delete('/:id/cart', function(req, res, next) {
             };
             return Purchase.create(donePurchase)
                 .then(function(createdPurchase) {
-                    // console.log("created purchase")
-                    // console.log(createdPurchase)
                     req.requestedUser.cart = [];
                     req.requestedUser.save();
                     res.sendStatus(201);

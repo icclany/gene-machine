@@ -27,6 +27,7 @@ app.run(function ($rootScope, AuthService, $state) {
         if (!destinationStateRequiresAuth(toState)) {
             // The destination state does not require authentication
             // Short circuit with return.
+            console.log('no authentication required');
             return;
         }
 

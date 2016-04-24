@@ -9,6 +9,10 @@ app.controller('AdminUserCtrl', function($scope, $state, AdminFactory, theUsers)
   $scope.deleteUser = AdminFactory.deleteUser;
 
   $scope.editUser = AdminFactory.editUser;
+  $scope.passwordReset = function(user){
+    AdminFactory.resetPassword(user);
+  };
+
 });
 
 app.controller('AdminProductCtrl', function($scope, $state, AdminFactory, theProducts){

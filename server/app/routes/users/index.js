@@ -7,6 +7,16 @@ var User = mongoose.model('User');
 var Address = mongoose.model('Address');
 var PaymentInfo = mongoose.model('PaymentInfo');
 var Purchase = mongoose.model('Purchase');
+var nodemailer = require('nodemailer');
+var smtpTransport = nodemailer.createTransport('SMTP', {
+    service: 'Gmail',
+    auth: {
+      user: 'genemachine.agct@gmail.com',
+      pass: 'GeneMachine'
+    }
+});
+
+
 
 var ensureAuthenticated = function(req, res, next) {
     if (req.isAuthenticated()) {
@@ -25,6 +35,57 @@ router.param('id', function(req, res, next, id) {
         })
         .catch(next);
 });
+
+router.post('/reset', function(req, res, next) {
+    var token = User.generateSalt();
+    User.findOne({ email: req.body.email })
+    .then(function(user) {
+        user.disabled = true;
+        user.password = User.generateSalt();
+        user.resetPassword = token;
+        user.resetPasswordExpiration = Date.now() + 3600000; // 1 hour
+        return user.save();
+      })
+    .then(function(savedUser){
+
+        var mailOptions = {
+            to: 'GeneMachine.AGCT@gmail.com',
+            from: 'GeneMachine.AGCT@google.com',
+            subject: 'Node.js Password Reset',
+            text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+            'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+            'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+            'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+        };
+        smtpTransport.sendMail(mailOptions, function(err, info) {
+            if (err){
+                console.error(err);
+            } else {
+                res.json('info', 'An e-mail has been sent to ' + savedUser.email + ' with further instructions.');
+                
+            }
+        });
+    })
+    .catch(next);
+});
+
+router.put('/reset/:token', function(req,res,next){
+    console.log(req.params.token);
+    User.findOne({resetPassword: req.params.token })
+    .then(function(user){
+        req.body.resetPassword = null;
+        req.body.resetPasswordExpiration = null;
+        _.extend(user, req.body);
+        return user.save();
+    })
+    .then(function(savedUser){
+        res.sendStatus(201);
+    })
+    .catch(next);
+});
+    
+
+
 
 router.get('/', function(req, res, next) {
     User.find({}).exec()
@@ -84,8 +145,6 @@ router.delete('/:id/cart', function(req, res, next) {
             return cartSchema.populateCart();
         }))
         .then(function(populatedCart) {
-            // console.log("finished populating the cart");
-            // console.log(populatedCart)
             var donePurchase = {
                 items: populatedCart,
                 total: 500,
@@ -93,8 +152,6 @@ router.delete('/:id/cart', function(req, res, next) {
             };
             return Purchase.create(donePurchase)
                 .then(function(createdPurchase) {
-                    // console.log("created purchase")
-                    // console.log(createdPurchase)
                     req.requestedUser.cart = [];
                     req.requestedUser.save();
                     res.sendStatus(201);

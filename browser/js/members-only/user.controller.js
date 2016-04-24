@@ -10,8 +10,6 @@ app.controller('UserCtrl', function($scope, $state, User, UserSettingsFact, Purc
     $scope.addressTransfer;
     $scope.password;
 
-    console.log("purchase history is");
-    console.log(PurchaseHistory)
     $scope.purchases = PurchaseHistory;
 
 	$scope.submitEdits = function(){
@@ -48,14 +46,15 @@ app.controller('UserCtrl', function($scope, $state, User, UserSettingsFact, Purc
 		$state.go('membersOnly.editAddress');
 	};
 
-	$scope.updatePassword = function () {
+	$scope.updatePassword = function (password) {
+
 		if(password.passwordA !== password.passwordB){
         	$scope.incongruentPasswords = true;
         } else {
 			$scope.user.password = password.passwordA;
-			console.log($scope.user.password);
+
 			var user = JSON.parse(angular.toJson($scope.user));
-	        UserSettingsFact.updateUser(user)
+	        UserSettingsFact.updatePassword(user)
 			.then(function(returnedData){
 				$scope.user = returnedData;
 			});

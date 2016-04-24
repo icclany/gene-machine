@@ -21,8 +21,13 @@
           </button>
         </th>
         <th>
-          <button class="glyphicon glyphicon-pencil">
-            <a ui-sref="goToUserSettings(user)"></a>
+          <button ng-click="goToUserSettings(user)"class="glyphicon glyphicon-pencil">
+            
+          </button>
+        </th>
+         <th>
+          <button ng-click="passwordReset(user)"class="glyphicon glyphicon-refresh">
+            
           </button>
         </th>
       </tr>

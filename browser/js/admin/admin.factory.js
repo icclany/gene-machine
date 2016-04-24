@@ -25,13 +25,16 @@ app.factory('AdminFactory', function($http, $state){
         $state.go($state.current, {}, {reload:true});
       });
     }
+  }; 
+
+  AdminFactory.resetPassword = function(user){
+    $http.post('/api/users/reset', {email: user.email})
+        .then(function(user){
+          console.log('response');
+          console.log(user);
+      });
   };
 
-  // AdminFactory.editUser = function(user, options){
-  //   $http.put('/api/users/' + user, options).then(function(anything){
-  //     $state.go($state.current, {}, {reload:true});
-  //   });
-  // };
 
   AdminFactory.updateProduct = function(product){
     $http.put('/api/products/' + product._id, product).then(function(){

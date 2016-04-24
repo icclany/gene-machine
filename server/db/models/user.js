@@ -44,12 +44,17 @@ var userSchema = new mongoose.Schema({
     },
     google: {
         id: String
-    }
+    },
+    resetPassword: String,
+    resetPasswordExpiration:Date,
+    disabled: Boolean
+    
+
 });
 
 // method to remove sensitive information from user objects before sending them out
 userSchema.methods.sanitize = function () {
-    return _.omit(this.toJSON(), ['password', 'salt']);
+    return _.omit(this.toJSON(), ['password', 'resetPassword', 'resetPasswordExpiration', 'salt']);
 };
 
 // **Get purchases method**

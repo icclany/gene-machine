@@ -1,0 +1,25 @@
+  <form style="{display: inline-block}">
+    <img ng-src="{{ theProduct.image }}">
+    <fieldset class="form-group">
+      <label for="formGroupExampleInput">Product Name</label>
+      <input ng-disabled="editSettings" ng-model = "theProduct.name" type="text" class="form-control" placeholder="Product Name" required</>
+    </fieldset>
+    <fieldset class="form-group">
+      <label for="formGroupExampleInput">Description</label>
+      <input ng-disabled="editSettings" ng-model = "theProduct.description" type="text" class="form-control" placeholder="Description" required</>
+    </fieldset>
+    <fieldset class="form-group">
+      <label for="formGroupExampleInput">Stock</label>
+      <input ng-disabled="editSettings" ng-model = "theProduct.stock" type="text" class="form-control" placeholder="Stock" required</>
+    </fieldset>
+    <fieldset class="form-group">
+      <label for="formGroupExampleInput">Category</label>
+      <input ng-disabled="editSettings" ng-model = "theProduct.category" type="text" class="form-control" placeholder="Categories" required</>
+    </fieldset>
+    <fieldset class="form-group">
+      <label for="formGroupExampleInput">Tags</label>
+      <input ng-disabled="editSettings" ng-model = "theProduct.tags" type="text" class="form-control" placeholder="Tags" required</>
+    </fieldset>
+    <button class="btn btn-primary" ng-click="updateProduct(theProduct)">Update Product</button>
+    <button type="button" class="btn btn-success" id="updated-product-button" ng-show="updated">Updated!</button>
+  </form>

@@ -11,14 +11,21 @@ app.factory('UserSettingsFact', function($http){
   var getOrders = function(user){
     return $http.get('/api/users/'+user._id)
     .then(function(orders){
-      console.log('in factory');
       return orders.data;
+    });
+  };
+
+  var updatePassword = function(user){
+    return $http.put('/api/users/'+user._id, user)
+    .then(function(updatedPword){
+      return updatedPword.data;
     });
   };
 
 
   return {
   	updateUser: updateUser,
-    getOrders: getOrders
+    getOrders: getOrders,
+    updatePassword: updatePassword
   };
 });

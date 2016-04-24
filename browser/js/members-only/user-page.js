@@ -4,6 +4,9 @@ app.config(function ($stateProvider) {
         url: '/members-area',
         templateUrl: 'js/members-only/templates/userpage.html',
         controller: 'UserCtrl',
+        params: {
+            user: null
+        },
         resolve: {
             User: function(AuthService, $stateParams) {
                 return AuthService.getLoggedInUser()
@@ -18,8 +21,6 @@ app.config(function ($stateProvider) {
             PurchaseHistory: function(AuthService, User, UserSettingsFact){
                 return UserSettingsFact.getOrders(User.currentUser)
                     .then(function(allOrders){
-                        console.log('inside state resolve');
-                        console.log(allOrders);
                         return allOrders;
                     });
             }
@@ -32,27 +33,45 @@ app.config(function ($stateProvider) {
     })
     .state('membersOnly.address', {
         url: '/editAddress',
-        templateUrl: 'js/members-only/templates/editAddress.html'
+        templateUrl: 'js/members-only/templates/editAddress.html',
+        data: {
+            authenticate: true
+        }
     })
     .state('membersOnly.settings', {
         url: '/editUserSettings',
-        templateUrl: 'js/members-only/templates/editUserSettings.html'
+        templateUrl: 'js/members-only/templates/editUserSettings.html',
+        data: {
+            authenticate: true
+        }
     })
     .state('membersOnly.billing', {
         url: '/editBilling',
-        templateUrl: 'js/members-only/templates/editBilling.html'
+        templateUrl: 'js/members-only/templates/editBilling.html',
+        data: {
+            authenticate: true
+        }
     })
     .state('membersOnly.editBilling', {
         url: '/billing',
-        templateUrl: 'js/members-only/templates/editOnFileBilling.html'
+        templateUrl: 'js/members-only/templates/editOnFileBilling.html',
+        data: {
+            authenticate: true
+        }
     })
     .state('membersOnly.editAddress', {
         url: '/address',
-        templateUrl: 'js/members-only/templates/editOnFileAddress.html'
+        templateUrl: 'js/members-only/templates/editOnFileAddress.html',
+        data: {
+            authenticate: true
+        }
     })
     .state('membersOnly.updatePassword', {
         url: '/updatePassword',
-        templateUrl: 'js/members-only/templates/changePassword.html'
+        templateUrl: 'js/members-only/templates/changePassword.html',
+        data: {
+            authenticate: true
+        }
     });
 
 });

@@ -1,13 +1,3 @@
-<!-- <div class="dropdown">
-  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Admin
-  <span class="caret"></span></button>
-  <ul class="dropdown-menu">
-    <li><a ui-sref="adminProducts">Manage Products</a></li>
-    <li><a ui-sref="adminUsers">Manage Users</a></li>
-  </ul>
-</div> -->
-
-<!-- if you're an admin, a users thing also shows up... -->
 
 <div class="container">
   <table class="table">
@@ -27,10 +17,18 @@
         <th>{{user.email}}</th>
         <th>
           <button class="glyphicon glyphicon-remove" ng-click="deleteUser(user._id)">
+            <!-- <a ng-click="deleteUser(user._id)"></a> -->
           </button>
         </th>
         <th>
-          <button class="glyphicon glyphicon-pencil" ng-click="goToUserSettings(user)"></button>
+          <button ng-click="goToUserSettings(user)"class="glyphicon glyphicon-pencil">
+            
+          </button>
+        </th>
+         <th>
+          <button ng-click="passwordReset(user)"class="glyphicon glyphicon-refresh">
+            
+          </button>
         </th>
       </tr>
     </tbody>

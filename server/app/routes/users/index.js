@@ -7,6 +7,16 @@ var User = mongoose.model('User');
 var Address = mongoose.model('Address');
 var PaymentInfo = mongoose.model('PaymentInfo');
 var Purchase = mongoose.model('Purchase');
+var nodemailer = require('nodemailer');
+var smtpTransport = nodemailer.createTransport('SMTP', {
+    service: 'Gmail',
+    auth: {
+      user: 'genemachine.agct@gmail.com',
+      pass: 'GeneMachine'
+    }
+});
+
+
 
 var ensureAuthenticated = function(req, res, next) {
     if (req.isAuthenticated()) {
@@ -24,6 +34,54 @@ router.param('id', function(req, res, next, id) {
             next();
         })
         .catch(next);
+});
+
+router.post('/reset', function(req, res, next) {
+    var token = User.generateSalt();
+    User.findOne({ email: req.body.email })
+    .then(function(user) {
+        user.disabled = true;
+        user.password = User.generateSalt();
+        user.resetPassword = token;
+        user.resetPasswordExpiration = Date.now() + 3600000; // 1 hour
+        return user.save();
+      })
+    .then(function(savedUser){
+
+        var mailOptions = {
+            to: 'GeneMachine.AGCT@gmail.com',
+            from: 'GeneMachine.AGCT@google.com',
+            subject: 'Node.js Password Reset',
+            text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+            'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+            'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+            'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+        };
+        smtpTransport.sendMail(mailOptions, function(err, info) {
+            if (err){
+                console.error(err);
+            } else {
+                res.json('info', 'An e-mail has been sent to ' + savedUser.email + ' with further instructions.');
+
+            }
+        });
+    })
+    .catch(next);
+});
+
+router.put('/reset/:token', function(req,res,next){
+    console.log(req.params.token);
+    User.findOne({resetPassword: req.params.token })
+    .then(function(user){
+        req.body.resetPassword = null;
+        req.body.resetPasswordExpiration = null;
+        _.extend(user, req.body);
+        return user.save();
+    })
+    .then(function(savedUser){
+        res.sendStatus(201);
+    })
+    .catch(next);
 });
 
 router.get('/', function(req, res, next) {
@@ -80,7 +138,6 @@ router.delete('/:id/cart/:productId', function(req, res, next) {
 });
 
 router.delete('/:id/cart', function(req, res, next) {
-    console.log("deleting your cart")
     req.requestedUser.cart = [];
     req.requestedUser.save();
     res.sendStatus(201);

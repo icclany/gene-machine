@@ -15,6 +15,20 @@ var purchaseSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  id: {
+    type: String
+  },
+  email: {
+    type: String
+  },
+  shippingAddress: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Address'
+  },
+  billingAddress: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Address'
   }
 });
 

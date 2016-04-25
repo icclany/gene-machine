@@ -10,7 +10,10 @@
             <button>
                 <span class="glyphicon glyphicon-minus" ng-click="updateQuantity(cartItem)">Remove from Cart</span>
             </button>
+             <button>
+                <span class="glyphicon glyphicon-minus" ng-click="updateQuantity(cartItem)">Remove from Cart</span>
+            </button>
         </div>
     </form>
-    <button class="checkout glyphicon glyphicon-usd" ui-sref="checkout">CHECKOUT</button>
+    <button class="checkout glyphicon glyphicon-usd" ng-click="checkOut()">CHECKOUT</button>
 </div>

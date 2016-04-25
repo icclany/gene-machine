@@ -3,38 +3,43 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
     var CartFactory = {};
     CartFactory.cart = [];
     var populated = false;
+
     
     var CartedProduct = function(id, qty){
         this._id = id;
         this.quantity = qty;
     };
 
-    CartFactory.total = function(){
-        return CartFactory.cart.reduce(function(ele, orig){
-            return ele.description.price + orig.description.price;
+    CartFactory.getTotal = function(){
+        console.log(CartFactory.cart);
+        return CartFactory.cart.reduce(function(orig, ele){
+            return ele.description.price * ele.quantity + orig;
         }, 0);
     };
 
     CartFactory.findProd = function(productID){
         return CartFactory.cart.findIndex(function(ele){
-            console.log(ele._id);
             return ele._id === productID;
         });
     };
 
     CartFactory.export = function(){
         var tempCart = {};
+        console.log('in export');
         CartFactory.cart.forEach(function(ele){
-            tempCart[ele._id] = ele.qty;
+            console.log(ele);
+            tempCart[ele._id] = ele.quantity;
         });
         return tempCart;
     };
 
-    CartFactory.push = function(productID, QTY, user){
+    CartFactory.push = function(productID, QTY, user, reset){
         if (CartFactory.cart.length === 0 || CartFactory.findProd(productID) === -1){
             CartFactory.cart.push(new CartedProduct(productID, QTY));
+        } else if (reset){
+            CartFactory.cart[CartFactory.findProd(productID)].quantity = QTY;
         } else {
-            CartFactory.cart[CartFactory.findProd(productID)].qty += QTY;
+            CartFactory.cart[CartFactory.findProd(productID)].quantity += QTY;
         }
         CartFactory.persist(user);
         if (populated) {
@@ -51,8 +56,7 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
         CartFactory.persist(userID);
     };
 
-    CartFactory.populate = function(){
-
+    CartFactory.populate = function(data){
         if (CartFactory.cart.length === 0) {return; }
         CartFactory.cart = ProductFactory.filterInventory(CartFactory.cart);
         
@@ -65,38 +69,44 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
             $http.get('/api/users/' + user._id +'/cart')
             .then(function(cart) {
                 tempCart = cart.data;
+                 for (var item in tempCart){
+                    CartFactory.cart.push(new CartedProduct(item, tempCart[item]));
+                }
             });
         } else {
             if (Boolean($cookies.getObject('genemachine'))) {
                 tempCart = $cookies.getObject('genemachine');
+                console.log($cookies.getObject('genemachine'));
+                for (var item in tempCart){
+                    CartFactory.cart.push(new CartedProduct(item, tempCart[item]));
+                }
             }
         }
-        for (var item in tempCart){
-            CartFactory.cart.push(new CartedProduct(item, tempCart[item]));
-        }
+        console.log(tempCart);
+       
+        console.log(CartFactory.cart);
     };
 
     CartFactory.persist = function(userID){
         var exportedCart = CartFactory.export();
         if (userID) {
-            $http.post('/api/users/'+userID._id+'/cart', {cart: exportedCart});
+            $http.post('/api/users/'+userID._id+'/cart', {cart: exportedCart})
+            .then(function(updatedUser){
+                console.log(updatedUser);
+            });
         } else {
             $cookies.putObject('genemachine', exportedCart);
         }
+        
     };
 
-    CartFactory.finishOrder = function(shipinfo, billinfo, cardinfo, total, user) {
-        return $http.put('/api/users/' + user._id +'/checkout', {
-                address: shipinfo,
-                paymentInfo: {
-                    name: cardinfo.name,
-                    billingAddress: billinfo,
-                    ccNum: cardinfo.number,
-                    ccExpiration: cardinfo.date
-                }
+    CartFactory.finishOrder = function(shipinfo, billinfo, user) {
+        return $http.put('/api/purchases/', {items: CartFactory.cart, total: CartFactory.getTotal, user: user._id, email: user.email, paymentInfo: billinfo, address: shipinfo,
             })
-            .then(function() {
-                return $http.delete('/api/users/' + user._id + '/cart');
+            .then(function(completedOrder) {
+                console.log(completedOrder);
+                CartFactory.cart = [];
+                CartFactory.persist(user._id);
             });
     };
 

@@ -1,9 +1,9 @@
 <div>
   <h1>Confirm Your Order</h1>
   <div ng-repeat="cartItem in cart">
-    <img class="cart-thumb" ng-src="{{cartItem.productInfo.image}}" ui-sref="product({productId: cartItem.productInfo._id})">
-    <h5>Item: {{cartItem.productInfo.name}}</h5>
-    <h5>Price: {{cartItem.productInfo.price}}</h5>
+    <img class="cart-thumb" ng-src="{{cartItem.description.image}}" ui-sref="product({productId: cartItem.description._id})">
+    <h5>Item: {{cartItem.description.name}}</h5>
+    <h5>Price: {{cartItem.description.price}}</h5>
     <h5>Quantity: {{cartItem.quantity}}</h5>
   </div>
   <h2>Your total is ${{total}}!!</h2>
@@ -29,29 +29,33 @@
       <br>
     </div>
     <div>
+      
       <h2>Billing info</h2>
+      <select ng-model="billing" data-ng-options="address as payment.name for payment in user.paymentInfo">
+        <option value="">Select Account</option>
+      </select>
       <h3>Credit Card Information</h3>
       <label>Name:</label>
-      <input type="text" ng-model="billing.cc.name">
+      <input type="text" ng-model="billing.name">
       <br>
       <label>Number:</label>
-      <input type="text" ng-model="billing.cc.number">
+      <input type="text" ng-model="billing.ccNum">
       <br>
       <label>Expiration Date:</label>
-      <input type="text" ng-model="billing.cc.date">
+      <input type="text" ng-model="billing.ccExpiration">
       <br>
       <h3>Billing Address</h3>
       <label>Name:</label>
-      <input type="text" ng-model="billing.address.name">
+      <input type="text" ng-model="billing.Address.name">
       <br>
       <label>Street:</label>
-      <input type="text" ng-model="billing.address.street">
+      <input type="text" ng-model="billing.Address.street">
       <br>
       <label>City:</label>
-      <input type="text" ng-model="billing.address.city">
+      <input type="text" ng-model="billing.Address.city">
       <br>
       <label>Zipcode:</label>
-      <input type="text" ng-model="billing.address.zipCode">
+      <input type="text" ng-model="billing.Address.zipCode">
       <br>
     </div>
   </form>

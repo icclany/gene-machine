@@ -135,10 +135,12 @@ router.put('/reset/:token', function(req,res,next){
 //CART
 
 router.post('/:id/cart', function(req, res, next) {
+    console.log(req.requestedUser);
     req.requestedUser.cart = req.body.cart;
-    req.requestedUser.save
+    console.log(req.requestedUser);
+    req.requestedUser.save()
         .then(function(savedUser){
-            res.send(savedUser);
+            res.send(req.requestedUser);
         })
         .catch(next);
 });
@@ -146,21 +148,6 @@ router.post('/:id/cart', function(req, res, next) {
 router.get('/:id/cart', function(req, res, next) {
     res.send(req.requestedUser.cart);
     next();
-});
-
-
-
-router.put('/:id/checkout', function(req, res, next) {
-    req.user.address.push(new Address(req.body.address));
-    req.user.paymentInfo.push(
-        new PaymentInfo({
-            name: req.body.paymentInfo.name,
-            billingAddress: new Address(req.body.paymentInfo.billingAddress),
-            ccNum: req.body.paymentInfo.ccNum,
-            ccExpiration: req.body.paymentInfo.ccExpiration
-        }));
-    req.user.save();
-    res.sendStatus(202);
 });
 
 

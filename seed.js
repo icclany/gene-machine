@@ -46,21 +46,21 @@ var seedUsers = function() {
     var users = [{
         email: 'testing@fsa.com',
         password: 'password',
-        username: 'hello',
+        username: 'TestingAccount',
         firstName: 'Tester',
         lastName: 'McTest',
         isAdmin: true
     }, {
         email: 'obama@gmail.com',
         password: 'potus',
-        username: 'hello',
+        username: 'ThePrez',
         firstName: 'Barack',
         lastName: 'Obama',
         isAdmin: true
     }, {
         email: 'tk@gmail.com',
         password: '123',
-        username: 'hello',
+        username: 'TKCarnage',
         firstName: 'Teaseung',
         lastName: 'Kim',
         isAdmin: false
@@ -74,49 +74,49 @@ var seedUsers = function() {
     }, {
         email: 'Brian@hotmail.com',
         password: 'imdabest',
-        username: 'hello',
+        username: 'BrianDaBest',
         firstName: 'Brian',
         lastName: 'McGough',
         isAdmin: false
     }, {
         email: 'anthony@aol.com',
         password: 'coolbeans',
-        username: 'hello',
+        username: 'AnthonyVelli',
         firstName: 'Anthony',
         lastName: 'Velli',
         isAdmin: false
     }, {
         email: 'bob@gmail.com',
         password: 'seeding',
-        username: 'hello',
+        username: 'BobDunn',
         firstName: 'Bob',
         lastName: 'Dunn',
         isAdmin: false
     }, {
         email: 'abc@hotmail.com',
         password: 'testing123',
-        username: 'hello',
+        username: 'ABCMaster',
         firstName: 'Abc',
         lastName: 'Chang',
         isAdmin: false
     }, {
         email: 'testinguser@fsa.com',
         password: 'fullstack',
-        username: 'hello',
+        username: 'OmriTheGreat',
         firstName: 'Omri',
         lastName: 'Bernstein',
         isAdmin: false
     }, {
         email: 'animalbuyer@gmail.com',
         password: 'ohdeer',
-        username: 'hello',
+        username: 'CrocMan',
         firstName: 'Crocodile',
         lastName: 'Dundee',
         isAdmin: false
     }, {
         email: 'workinprogress@gmail.com',
         password: 'almostdone',
-        username: 'hello',
+        username: 'SeannySean',
         firstName: 'Sean',
         lastName: 'Bert',
         isAdmin: false

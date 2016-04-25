@@ -19,7 +19,6 @@ app.controller('UserCtrl', function($scope, $state, User, UserSettingsFact, Purc
             product: item.productInfo._id
         })
         .then(function(review) {
-            console.log("Review added.");
              $state.go($state.current, {}, { reload: true });
         });
     };

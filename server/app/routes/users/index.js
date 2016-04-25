@@ -170,9 +170,6 @@ router.get('/:id', function(req, res, next) {
 });
 
 router.put('/:id/checkout', function(req, res, next) {
-    console.log("PUTTING")
-    console.log(req.body)
-    console.log("^^^^^")
     req.user.address.push(new Address(req.body.address));
     req.user.paymentInfo.push(
         new PaymentInfo({

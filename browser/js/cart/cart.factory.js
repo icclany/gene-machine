@@ -27,10 +27,5 @@ app.factory('CartFactory', function($http) {
             });
     };
 
-
-    CartFactory.submitStripeOrder = function(token){
-      $http.put('/api/purchases/', {token: token});
-    };
-
     return CartFactory;
 });

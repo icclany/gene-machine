@@ -30,12 +30,6 @@
     </div>
     <div>
       <h2>Billing info</h2>
-      <!-- vvv HELP ME WITH THIS PLEASE vvv -->
-      <select ng-model="billing.cc" data-ng-options="creditCard as creditCard.name for paymentInfo in user.paymentInfo">
-        <option value="">Select Account</option>
-      </select>
-      <!-- ^^^ PLEASE HELP !!!!! ^^^ -->
-
       <h3>Credit Card Information</h3>
       <label>Name:</label>
       <input type="text" ng-model="billing.cc.name">
@@ -63,6 +57,5 @@
   </form>
 
   <button class="checkout glyphicon glyphicon-usd" ng-click="checkout()">Finish Checkout</button>
-
   <button type="button" class="btn btn-primary" ng-click="openStripe()">Pay with Stripe</button>
 </div>

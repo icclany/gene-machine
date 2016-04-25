@@ -4,6 +4,7 @@
      <tr>
        <th>Product Name</th>
        <th>Description</th>
+       <th>Stock</th>
        <th>Delete Product</th>
        <th>Edit Product</th>
      </tr>
@@ -12,6 +13,7 @@
      <tr ng-repeat="product in theProducts">
        <th>{{product.name}}</th>
        <th>{{product.description}}</th>
+       <th>{{product.stock}}</th>
        <th>
          <button class="glyphicon glyphicon-remove" ng-click="deleteProduct(product._id)">
          </button>

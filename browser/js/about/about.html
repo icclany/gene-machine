@@ -1,11 +1,16 @@
 <section id="about">
     <p>
-        This website--the very one at which you currently gaze--was created by a basic scaffolding
-        concocted at Fullstack Academy. Here are some of the people who make it all very real:
+        What happens when three scientists and one wizard work together to make the world a better place? <br> <br>
+        Gene Machine, that's what.
     </p>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     <carousel interval="2000">
-        <slide ng-repeat="image in images">
-            <img height="300" ng-src="{{ image }}" />
+        <slide ng-repeat="product in products">
+            <img height="500" width="900" ng-src="{{ product.image }}" />
         </slide>
     </carousel>
 </section>

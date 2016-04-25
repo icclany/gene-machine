@@ -1,3 +1,5 @@
+'use strict';
+
 app.config(function ($stateProvider) {
 
     // Register our *about* state.
@@ -9,9 +11,10 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('AboutController', function ($scope, FullstackPics) {
+app.controller('AboutController', function ($scope, ProductFactory) {
 
-    // Images of beautiful Fullstack people.
-    $scope.images = _.shuffle(FullstackPics);
+    ProductFactory.fetchAll().then(function(products){
+      $scope.products = products;
+    });
 
 });

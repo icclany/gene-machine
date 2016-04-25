@@ -14,8 +14,6 @@ app.config(function($stateProvider) {
                 console.log('in cart resolve');
                 return ProductFactory.fetchAll()
                     .then(function(allProducts){
-                        console.log('here i am!');
-                        console.log(allProducts);
                         return CartFactory.populate(allProducts);
                     });
             }
@@ -46,10 +44,38 @@ app.controller('CheckoutCtrl', function($state, $scope, cart, currentUser, CartF
     $scope.total = CartFactory.getTotal(cart);
 
     $scope.checkout = function() {
-        return CartFactory.finishOrder($scope.shipping, $scope.billing.address, $scope.billing.cc, currentUser)
+        return CartFactory.finishOrder($scope.shipping, $scope.billing.address, $scope.billing.cc, $scope.total,currentUser)
         .then(function() {
             $state.go('home');
         });
+    };
+
+    const handler = StripeCheckout.configure({
+      key: 'pk_test_IcTLSnuVPyJq7tdlRcU7gzBf',
+      image: '/js/common/directives/logo/gmlogo.png',
+      locale: 'auto',
+      token: function(token){
+        CartFactory.submitStripeOrder(token);
+      }
+    });
+
+    $scope.openStripe = function(){
+      handler.open({
+        name: "Gene Machine",
+        image: '/js/common/directives/logo/gmlogo.png',
+        billingAddress: true,
+        zipCode: true,
+        shippingAddress: true,
+        amount: $scope.total * 100
+      });
+    };
+
+    $scope.stripeCallback = function (code, result) {
+      if (result.error) {
+          window.alert('it failed! error: ' + result.error.message);
+      } else {
+          window.alert('success! token: ' + result.id);
+      }
     };
 
 });

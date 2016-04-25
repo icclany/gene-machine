@@ -38,7 +38,7 @@ router.param('id', function(req, res, next, id) {
         .catch(next);
 });
 
-//USERS//
+
 router.post('/', function(req, res, next) {
     if (req.body.username.length && req.body.password.length) {
         User.create(req.body)
@@ -88,7 +88,6 @@ router.delete('/:id', function(req, res, next) {
 });
 
 
-//PASSWORD RESET//
 router.post('/reset', function(req, res, next) {
     var token = User.generateSalt();
     User.findOne({ email: req.body.email })
@@ -113,7 +112,7 @@ router.post('/reset', function(req, res, next) {
                 console.error(err);
             } else {
                 res.json('info', 'An e-mail has been sent to ' + savedUser.email + ' with further instructions.');
-                
+
             }
         });
     })
@@ -150,27 +149,6 @@ router.get('/:id/cart', function(req, res, next) {
     res.send(req.requestedUser.cart);
     next();
 });
-
-
-// router.get('/cart/:id', function(req, res, next) {
-//     const promiseQueries = [];
-//     req.requestedUser.cart.forEach((item) => {
-//         promiseQueries.push(
-//             mongoose.model('Product').findById(item.productInfo))
-//     })
-//     Promise.all(promiseQueries)
-//         .then((populatedItems) => {
-//             req.requestedUser.cart.forEach((item) => {
-//                 populatedItems.forEach((popItem) => {
-//                     if (item.productInfo.toString() === popItem._id.toString()) {
-//                         item.productInfo = popItem;
-//                     }
-//                 });
-//             });
-//             res.json(req.requestedUser.cart);
-//         })
-//         .catch(next);
-// });
 
 
 

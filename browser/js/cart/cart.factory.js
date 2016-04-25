@@ -85,19 +85,24 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
         }
     };
 
-    CartFactory.finishOrder = function(shipinfo, billinfo, cardinfo, user) {
-    return $http.put('/api/users/' + user._id +'/checkout', {
-        address: shipinfo,
-        paymentInfo: {
-            name: cardinfo.name,
-            billingAddress: billinfo,
-            ccNum: cardinfo.number,
-            ccExpiration: cardinfo.date
-        }
-    })
-    .then(function(res) {
-        return $http.delete('/api/users/' + user._id + '/cart')
-    })
-}
-return CartFactory;
+    CartFactory.finishOrder = function(shipinfo, billinfo, cardinfo, total, user) {
+        return $http.put('/api/users/' + user._id +'/checkout', {
+                address: shipinfo,
+                paymentInfo: {
+                    name: cardinfo.name,
+                    billingAddress: billinfo,
+                    ccNum: cardinfo.number,
+                    ccExpiration: cardinfo.date
+                }
+            })
+            .then(function() {
+                return $http.delete('/api/users/' + user._id + '/cart');
+            });
+    };
+
+    CartFactory.submitStripeOrder = function(token){
+      $http.put('/api/purchases/', {token: token});
+    };
+
+    return CartFactory;
 });

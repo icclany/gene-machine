@@ -7,7 +7,6 @@ app.factory('ProductFactory', function($http) {
 
     ProductFactory.fetchAll = function() {
         return $http.get('/api/products').then(productArray => {
-            console.log('product http fact callback');
             inventory = productArray.data;
             return productArray.data;
         });

@@ -130,7 +130,7 @@ var seedProducts = function() {
 
     var products = [{
         name: 'Tig',
-        image: '/js/product/images/1.png',
+        image: '/js/product/images/1-resized.png',
         price: 100,
         stock: 5,
         category: 'medium',
@@ -139,7 +139,7 @@ var seedProducts = function() {
         reviews: ['5718e099fbd5f95b55b86e69']
     }, {
         name: 'Squana',
-        image: '/js/product/images/3.png',
+        image: '/js/product/images/3-resized.png',
         price: 20,
         stock: 50,
         category: 'small',
@@ -147,7 +147,7 @@ var seedProducts = function() {
         description: 'this is a squirrel mixed with an iguana'
     }, {
         name: 'Catdog',
-        image: '/js/product/images/2.png',
+        image: '/js/product/images/2-resized.png',
         price: 50,
         stock: 10,
         category: 'medium',
@@ -155,7 +155,7 @@ var seedProducts = function() {
         description: 'this is a cat mixed with a dog'
     }, {
         name: 'Koalasloth',
-        image: '/js/product/images/4.png',
+        image: '/js/product/images/4-resized.png',
         price: 35,
         stock: 15,
         category: 'small',
@@ -163,7 +163,7 @@ var seedProducts = function() {
         description: 'this is a koala mixed with a sloth'
     }, {
         name: 'Eleroost',
-        image: '/js/product/images/5.png',
+        image: '/js/product/images/5-resized.png',
         price: 1000,
         stock: 18,
         category: 'large',
@@ -171,7 +171,7 @@ var seedProducts = function() {
         description: 'this is a chicken mixed with an elephant'
     }, {
         name: 'Whiraffe',
-        image: '/js/product/images/6.png',
+        image: '/js/product/images/6-resized.png',
         price: 2500,
         stock: 1,
         category: 'large',
@@ -179,7 +179,7 @@ var seedProducts = function() {
         description: 'this is a whale mixed with a giraffe'
     }, {
         name: 'Camster',
-        image: '/js/product/images/7.png',
+        image: '/js/product/images/7-resized.png',
         price: 3,
         stock: 600,
         category: 'small',
@@ -187,7 +187,7 @@ var seedProducts = function() {
         description: 'this is a caterpillar mixed with a hamster'
     }, {
         name: 'Bow',
-        image: '/js/product/images/8.png',
+        image: '/js/product/images/8-resized.png',
         price: 500,
         stock: 17,
         category: 'large',
@@ -195,7 +195,7 @@ var seedProducts = function() {
         description: 'this is a bear mixed with a cow'
     }, {
         name: 'Pandaroo',
-        image: '/js/product/images/9.png',
+        image: '/js/product/images/9-resized.png',
         price: 120,
         stock: 6,
         category: 'medium',
@@ -203,7 +203,7 @@ var seedProducts = function() {
         description: 'this is a panda mixed with a kangaroo'
     }, {
         name: 'Camigator',
-        image: '/js/product/images/10.png',
+        image: '/js/product/images/10-resized.png',
         price: 180,
         stock: 11,
         category: 'large',
@@ -288,18 +288,9 @@ connectToDb
     .then(function() {
         return seedProducts();
     })
-    // .then(function() {
-    //   return seedPaymentInfo();
-    // })
     .then(function() {
         return seedAddresses();
     })
-    // .then(function() {
-    //   return seedReviews();
-    // })
-    // .then(function() {
-    //   return seedPurchases();
-    // })
     .then(function() {
         console.log(chalk.green('Seed successful!'));
         process.kill(0);

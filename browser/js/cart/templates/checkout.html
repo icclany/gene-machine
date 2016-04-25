@@ -1,65 +1,62 @@
 <div>
-    <h1>Confirm Your Order</h1>
-    <div ng-repeat="cartItem in cart">
-        <img class="cart-thumb" ng-src="{{cartItem.productInfo.image}}" ui-sref="product({productId: cartItem.productInfo._id})">
-        <h5>Item: {{cartItem.productInfo.name}}</h5>
-        <h5>Price: {{cartItem.productInfo.price}}</h5>
-        <h5>Quantity: {{cartItem.quantity}}</h5>
+  <h1>Confirm Your Order</h1>
+  <div ng-repeat="cartItem in cart">
+    <img class="cart-thumb" ng-src="{{cartItem.productInfo.image}}" ui-sref="product({productId: cartItem.productInfo._id})">
+    <h5>Item: {{cartItem.productInfo.name}}</h5>
+    <h5>Price: {{cartItem.productInfo.price}}</h5>
+    <h5>Quantity: {{cartItem.quantity}}</h5>
+  </div>
+  <h2>Your total is ${{total}}!!</h2>
+  <form name="shippingbilling">
+    <div>
+      <h2>Shipping info</h2>
+      <select ng-model="shipping" data-ng-options="address as address.name for address in user.address">
+        <option value="">Select Account</option>
+      </select>
+
+
+      <label>Name:</label>
+      <input type="text" ng-model="shipping.name">
+      <br>
+      <label>Street:</label>
+      <input type="text" ng-model="shipping.street">
+      <br>
+      <label>City:</label>
+      <input type="text" ng-model="shipping.city">
+      <br>
+      <label>Zipcode:</label>
+      <input type="text" ng-model="shipping.zipCode">
+      <br>
     </div>
-    <h2>Your total is ${{total}}!!</h2>
-    <form name="shippingbilling">
-        <div>
-            <h2>Shipping info</h2>
-            <select ng-model="shipping" data-ng-options="address as address.name for address in user.address">
-                <option value="">Select Account</option>
-            </select>
+    <div>
+      <h2>Billing info</h2>
+      <h3>Credit Card Information</h3>
+      <label>Name:</label>
+      <input type="text" ng-model="billing.cc.name">
+      <br>
+      <label>Number:</label>
+      <input type="text" ng-model="billing.cc.number">
+      <br>
+      <label>Expiration Date:</label>
+      <input type="text" ng-model="billing.cc.date">
+      <br>
+      <h3>Billing Address</h3>
+      <label>Name:</label>
+      <input type="text" ng-model="billing.address.name">
+      <br>
+      <label>Street:</label>
+      <input type="text" ng-model="billing.address.street">
+      <br>
+      <label>City:</label>
+      <input type="text" ng-model="billing.address.city">
+      <br>
+      <label>Zipcode:</label>
+      <input type="text" ng-model="billing.address.zipCode">
+      <br>
+    </div>
+  </form>
 
+  <button class="checkout glyphicon glyphicon-usd" ng-click="checkout()">Finish Checkout</button>
 
-            <label>Name:</label>
-            <input type="text" ng-model="shipping.name">
-            <br>
-            <label>Street:</label>
-            <input type="text" ng-model="shipping.street">
-            <br>
-            <label>City:</label>
-            <input type="text" ng-model="shipping.city">
-            <br>
-            <label>Zipcode:</label>
-            <input type="text" ng-model="shipping.zipCode">
-            <br>
-        </div>
-        <div>
-            <h2>Billing info</h2>
-            <!-- vvv HELP ME WITH THIS PLEASE vvv -->
-            <select ng-model="billing.cc" data-ng-options="creditCard as creditCard.name for paymentInfo in user.paymentInfo">
-                <option value="">Select Account</option>
-            </select>
-            <!-- ^^^ PLEASE HELP !!!!! ^^^ -->
-
-            <h3>Credit Card Information</h3>
-            <label>Name:</label>
-            <input type="text" ng-model="billing.cc.name">
-            <br>
-            <label>Number:</label>
-            <input type="text" ng-model="billing.cc.number">
-            <br>
-            <label>Expiration Date:</label>
-            <input type="text" ng-model="billing.cc.date">
-            <br>
-            <h3>Billing Address</h3>
-            <label>Name:</label>
-            <input type="text" ng-model="billing.address.name">
-            <br>
-            <label>Street:</label>
-            <input type="text" ng-model="billing.address.street">
-            <br>
-            <label>City:</label>
-            <input type="text" ng-model="billing.address.city">
-            <br>
-            <label>Zipcode:</label>
-            <input type="text" ng-model="billing.address.zipCode">
-            <br>
-        </div>
-    </form>
-    <button class="checkout glyphicon glyphicon-usd" ng-click="checkout()">Finish Checkout</button>
+  <button type="button" class="btn btn-primary" ng-click="openStripe()">Pay with Stripe</button>
 </div>

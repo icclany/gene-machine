@@ -21,17 +21,28 @@
 
 <body ng-app="genemachine">
 
-    <navbar></navbar>
-    <div id="main" ui-view>    </div>
+  <navbar></navbar>
+  <div id="main" ui-view> </div>
 
+  <footer class="footer">
     <div class="container">
-          <div class="page-header">
-          </div>
-          <a class="lead" href="http://www.monster.com">Career Opportunities</a>
-          <br>
-          <a class="lead" href="http://www.aspca.org">Made in conjunction with the ASPCA</a>
-          <p style="float: right"> Gene Machine, Inc. Est. 2016 </p>
-        </div>
+      <p class="text-muted"><a class="lead" href="http://www.monster.com">Career Opportunities</a></p>
+      <p class="text-muted"><a class="lead" href="http://www.aspca.org">Made in conjunction with the ASPCA</a></p>
+      <p style="float: right"> Gene Machine, Inc. Est. 2016 </p>
+    </div>
+  </footer>
+
+  <!-- <form action="/checkout" method="POST">
+    <script
+      src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+      data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
+      data-amount="999"
+      data-name="Stripe.com"
+      data-description="Widget"
+      data-image="/img/documentation/checkout/marketplace.png"
+      data-locale="auto">
+    </script>
+  </form> -->
 
 </body>
 

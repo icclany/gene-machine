@@ -31,17 +31,20 @@ router.get('/:id', function (req, res, next) {
 });
 
 router.put('/:id', function(req, res, next){
-  console.log('hello from the router');
-  Products.findByIdAndUpdate(req.params.id, req.body)
-  .then(function(product){
-    product.save();
-  });
-  res.send(200);
+  if(req.user.isAdmin){
+    Products.findByIdAndUpdate(req.params.id, req.body)
+    .then(function(product){
+      product.save();
+    });
+    res.send(200);
+  }
 });
 
 router.delete('/:id', function(req, res, next){
-  Products.findOneAndRemove({_id: req.params.id})
-  .then(function(){
-    res.send(204);
-  });
+  if(req.user.isAdmin){
+    Products.findOneAndRemove({_id: req.params.id})
+    .then(function(){
+      res.send(204);
+    });
+  }
 });

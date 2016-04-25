@@ -10,9 +10,14 @@ app.config(function($stateProvider) {
             currentUser: function(AuthService) {
                 return AuthService.getLoggedInUser();
             },
-            cart: function(ProductFactory, currentUser) {
-                return ProductFactory.getCart(currentUser);
-                
+            cart: function(CartFactory, currentUser, ProductFactory) {
+                console.log('in cart resolve');
+                return ProductFactory.fetchAll()
+                    .then(function(allProducts){
+                        console.log('here i am!');
+                        console.log(allProducts);
+                        return CartFactory.populate(allProducts);
+                    });
             }
         }
     });
@@ -28,8 +33,8 @@ app.config(function($stateProvider) {
             currentUser: function(AuthService) {
                 return AuthService.getLoggedInUser();
             },
-            cart: function(ProductFactory, currentUser) {
-                return ProductFactory.getCart(currentUser);
+            cart: function(CartFactory, currentUser) {
+                return CartFactory(currentUser);
             }
         }
     });
@@ -44,24 +49,31 @@ app.controller('CheckoutCtrl', function($state, $scope, cart, currentUser, CartF
         return CartFactory.finishOrder($scope.shipping, $scope.billing.address, $scope.billing.cc, currentUser)
         .then(function() {
             $state.go('home');
-        })
+        });
     };
 
 });
 
-app.controller('CartCtrl', function($scope, $state, cart, currentUser, ProductFactory) {
+app.controller('CartCtrl', function($scope, $state, cart, currentUser, ProductFactory, CartFactory) {
     $scope.cart = cart;
+    $scope.cart = CartFactory.cart;
+    console.log('in cart controller');
+    console.log($scope.cart);
 
-    $scope.updateQuantity = function($event, cartItem) {
+    $scope.updateQuantity = function(cartItem, $event) {
+        
         var keyCode = $event.which || $event.keyCode;
         if (keyCode === 13) {
-            return ProductFactory.updateQuantity(currentUser, cartItem.productInfo, cartItem.quantity);
+            CartFactory.push(cartItem.productInfo._id, cartItem.quantity, currentUser)
+                    .then(function(updatedCart){
+                        $scope.cart = updatedCart;
+                    });
+        } else {
+            CartFactory.remove(cartItem.productInfo._id, -cartItem.quantity, currentUser)
+                .then(function(updatedCart){
+                    console.log(updatedCart);
+                });
         }
     };
 
-    $scope.removeFromCart = function(cartItem) {
-        return ProductFactory.removeFromCart(currentUser, cartItem.productInfo).then(function(res) {
-            $state.go($state.current, {}, { reload: true });
-        });
-    };
 });

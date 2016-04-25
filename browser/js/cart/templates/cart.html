@@ -2,13 +2,13 @@
     <h1>Your Cart:</h1>
     <form name="cartform" novalidate>
         <div ng-repeat="cartItem in cart">
-            <img class="cart-thumb" ng-src="{{cartItem.productInfo.image}}" ui-sref="product({productId: cartItem.productInfo._id})">
-            <h5>Item: {{cartItem.productInfo.name}}</h5>
-            <h5>Price: {{cartItem.productInfo.price}}</h5>
+            <img class="cart-thumb" ng-src="{{cartItem.description.image}}" ui-sref="product({productId: cartItem.productInfo._id})">
+            <h5>Item: {{cartItem.description.name}}</h5>
+            <h5>Price: {{cartItem.description.price}}</h5>
             <h5>Quantity:</h5>
-            <input ng-model="cartItem.quantity" ng-keypress="updateQuantity($event, cartItem)" type="number" value={{cartItem.quantity}}>
+            <input ng-model="cartItem.quantity" ng-keypress="updateQuantity(cartItem, $event)" type="number" value={{cartItem.quantity}}>
             <button>
-                <span class="glyphicon glyphicon-minus" ng-click="removeFromCart(cartItem)">Remove from Cart</span>
+                <span class="glyphicon glyphicon-minus" ng-click="updateQuantity(cartItem)">Remove from Cart</span>
             </button>
         </div>
     </form>

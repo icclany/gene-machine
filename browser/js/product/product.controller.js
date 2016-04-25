@@ -1,10 +1,11 @@
 'use strict';
 
-app.controller('ProductController', function($scope, theProduct, ProductFactory, currentUser) {
+app.controller('ProductController', function($scope, theProduct, ProductFactory, currentUser, CartFactory) {
     $scope.theProduct = theProduct;
 
     $scope.addToCart = function() {
-        return ProductFactory.addToCart(theProduct, currentUser);
+        CartFactory.push(theProduct._id, 1, currentUser);
+
     };
 
 });

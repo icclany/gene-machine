@@ -38,9 +38,57 @@ router.param('id', function(req, res, next, id) {
         .catch(next);
 });
 
+//USERS//
+router.post('/', function(req, res, next) {
+    if (req.body.username.length && req.body.password.length) {
+        User.create(req.body)
+            .then(function(user) {
+                res.status(201).json(user);
+            })
+            .catch(next);
+    } else {
+        res.send(401);
+    }
+});
+
+router.get('/', function(req, res, next) {
+    User.find({}).exec()
+        .then(function(users) {
+            res.json(users);
+        })
+        .catch(next);
+});
+
+router.get('/:id', function(req, res, next) {
+    req.requestedUser.getPurchases()
+        .then(purchases => {
+            res.json(purchases)
+        });
+});
+
+router.put('/:id', function(req, res, next) {
+    if (req.user.isAdmin) {
+        _.extend(req.requestedUser, req.body);
+        req.requestedUser.save()
+            .then(function(user) {
+                res.json(user);
+            })
+            .catch(next);
+    } else res.sendStatus(401);
+});
+
+router.delete('/:id', function(req, res, next) {
+    if (req.user.isAdmin) {
+        req.requestedUser.remove()
+            .then(function() {
+                res.status(204).end();
+            })
+            .catch(next);
+    } else res.send(401);
+});
 
 
-
+//PASSWORD RESET//
 router.post('/reset', function(req, res, next) {
     var token = User.generateSalt();
     User.findOne({ email: req.body.email })
@@ -51,14 +99,13 @@ router.post('/reset', function(req, res, next) {
         return user.save();
       })
     .then(function(savedUser){
-
         var mailOptions = {
-            to: 'GeneMachine.AGCT@gmail.com',
+            to: savedUser.email,
             from: 'GeneMachine.AGCT@google.com',
             subject: 'Node.js Password Reset',
             text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
             'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-            'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+            'http://73.215.163.200:1337/reset/' + token + '\n\n' +
             'If you did not request this, please ignore this email and your password will remain unchanged.\n'
         };
         smtpTransport.sendMail(mailOptions, function(err, info) {
@@ -88,131 +135,44 @@ router.put('/reset/:token', function(req,res,next){
 });
     
 
-
-
-router.get('/', function(req, res, next) {
-    User.find({}).exec()
-        .then(function(users) {
-            res.json(users);
-        })
-        .catch(next);
-});
-
-router.post('/cart', function(req, res, next) {
-        if (!req.session.cart) {
-            req.session.cart = {};
-            req.session.cart[req.body.item] = req.body.qty;
-        } else if (req.session.cart[req.body.item]){
-            req.session.cart[req.body.item]++;
-        } else {
-            req.session.cart[req.body.item] = 1;
-        }
-    res.send(req.session.cart);
-});
-
-router.get('/cart', function(req, res, next) {
-    var guestCart = req.session.cart;
-    Promise.map(Object.keys(guestCart), product => Product.findById(product))
-    .then(function(populatedSessionCart){
-        populatedSessionCart = populatedSessionCart.map(ele => {return {quantity: guestCart[ele._id], productInfo: ele}; });
-        res.send(populatedSessionCart); })
-    .catch(next);
-});
-
-router.post('/', function(req, res, next) {
-    if (req.body.username.length && req.body.password.length) {
-        User.create(req.body)
-            .then(function(user) {
-                res.status(201).json(user);
-            })
-            .catch(next);
-    } else {
-        res.send(401);
-    }
-});
+//CART
 
 router.post('/:id/cart', function(req, res, next) {
-    let item = req.body.item;
-    req.requestedUser.addToCart(item);
-    res.sendStatus(201);
-});
-
-router.put('/:id/cart', function(req, res, next) {
-    let itemId = req.body.productId;
-    let itemQuantity = req.body.quantity;
-
-    req.requestedUser.cart.forEach((item) => {
-        if (item.productInfo.toString() === itemId.toString()) {
-            item.quantity = itemQuantity;
-        }
-    });
-    req.requestedUser.save();
-    res.sendStatus(201);
-});
-
-router.delete('/:id/cart/:productId', function(req, res, next) {
-    let itemId = req.params.productId;
-    let index = null;
-
-    for (let i = 0; i < req.requestedUser.cart.length; i++) {
-        if (req.requestedUser.cart[i].productInfo.toString() === itemId.toString()) {
-            index = i;
-        }
-    }
-    req.requestedUser.cart.splice(index, 1);
-    req.requestedUser.save();
-    res.sendStatus(201);
-});
-
-router.delete('/:id/cart', function(req, res, next) {
-    Promise.all(req.requestedUser.cart.map(cartSchema => {
-            return cartSchema.populateCart();
-        }))
-        .then(function(populatedCart) {
-            // console.log("finished populating the cart");
-            // console.log(populatedCart)
-            var donePurchase = {
-                items: populatedCart,
-                total: 500,
-                user: req.requestedUser._id,
-            };
-            return Purchase.create(donePurchase)
-                .then(function(createdPurchase) {
-                    // console.log("created purchase")
-                    // console.log(createdPurchase)
-                    req.requestedUser.cart = [];
-                    req.requestedUser.save();
-                    res.sendStatus(201);
-                });
-        });
+    req.requestedUser.cart = req.body.cart;
+    req.requestedUser.save
+        .then(function(savedUser){
+            res.send(savedUser);
+        })
+        .catch(next);
 });
 
 router.get('/:id/cart', function(req, res, next) {
-    const promiseQueries = [];
-    req.requestedUser.cart.forEach((item) => {
-        promiseQueries.push(
-            mongoose.model('Product').findById(item.productInfo))
-    })
-    Promise.all(promiseQueries)
-        .then((populatedItems) => {
-            req.requestedUser.cart.forEach((item) => {
-                populatedItems.forEach((popItem) => {
-                    if (item.productInfo.toString() === popItem._id.toString()) {
-                        item.productInfo = popItem;
-                    }
-                });
-            });
-            res.json(req.requestedUser.cart);
-        })
-        .catch(next);
+    res.send(req.requestedUser.cart);
+    next();
 });
 
-router.get('/:id', function(req, res, next) {
-    req.requestedUser.getPurchases()
-        .then(purchases => {
-            res.json(purchases)
-        });
-});
+
+// router.get('/cart/:id', function(req, res, next) {
+//     const promiseQueries = [];
+//     req.requestedUser.cart.forEach((item) => {
+//         promiseQueries.push(
+//             mongoose.model('Product').findById(item.productInfo))
+//     })
+//     Promise.all(promiseQueries)
+//         .then((populatedItems) => {
+//             req.requestedUser.cart.forEach((item) => {
+//                 populatedItems.forEach((popItem) => {
+//                     if (item.productInfo.toString() === popItem._id.toString()) {
+//                         item.productInfo = popItem;
+//                     }
+//                 });
+//             });
+//             res.json(req.requestedUser.cart);
+//         })
+//         .catch(next);
+// });
+
+
 
 router.put('/:id/checkout', function(req, res, next) {
     req.user.address.push(new Address(req.body.address));
@@ -227,25 +187,5 @@ router.put('/:id/checkout', function(req, res, next) {
     res.sendStatus(202);
 });
 
-router.put('/:id', function(req, res, next) {
-    if (req.user.isAdmin) {
-        _.extend(req.requestedUser, req.body);
-        req.requestedUser.save()
-            .then(function(user) {
-                res.json(user);
-            })
-            .catch(next);
-    } else res.sendStatus(401);
-});
-
-router.delete('/:id', function(req, res, next) {
-    if (req.user.isAdmin) {
-        req.requestedUser.remove()
-            .then(function() {
-                res.status(204).end();
-            })
-            .catch(next);
-    } else res.send(401);
-});
 
 module.exports = router;

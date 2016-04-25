@@ -1,27 +1,103 @@
-app.factory('CartFactory', function($http) {
+app.factory('CartFactory', function($http, $cookies, ProductFactory) {
+    "use strict";
     var CartFactory = {};
+    CartFactory.cart = [];
+    var populated = false;
+    
+    var CartedProduct = function(id, qty){
+        this._id = id;
+        this.quantity = qty;
+    };
 
-    CartFactory.getTotal = function(cartObj) {
-        let total = 0;
-        for (var item in cartObj) {
-            total += (cartObj[item].quantity * cartObj[item].productInfo.price);
+    CartFactory.total = function(){
+        return CartFactory.cart.reduce(function(ele, orig){
+            return ele.description.price + orig.description.price;
+        }, 0);
+    };
+
+    CartFactory.findProd = function(productID){
+        return CartFactory.cart.findIndex(function(ele){
+            console.log(ele._id);
+            return ele._id === productID;
+        });
+    };
+
+    CartFactory.export = function(){
+        var tempCart = {};
+        CartFactory.cart.forEach(function(ele){
+            tempCart[ele._id] = ele.qty;
+        });
+        return tempCart;
+    };
+
+    CartFactory.push = function(productID, QTY, user){
+        if (CartFactory.cart.length === 0 || CartFactory.findProd(productID) === -1){
+            CartFactory.cart.push(new CartedProduct(productID, QTY));
+        } else {
+            CartFactory.cart[CartFactory.findProd(productID)].qty += QTY;
         }
-        return total;
+        CartFactory.persist(user);
+        if (populated) {
+            $http.get('/api/products/'+productID)
+                .then(function(populatedCart){
+                    CartFactory.cart[CartFactory.cart.length-1].description = populatedCart.cart.data;
+                });
+        }
+    };
+
+
+    CartFactory.remove = function(productID, userID){
+        CartFactory.cart.splice(CartFactory.findProd(productID), 1);
+        CartFactory.persist(userID);
+    };
+
+    CartFactory.populate = function(){
+
+        if (CartFactory.cart.length === 0) {return; }
+        CartFactory.cart = ProductFactory.filterInventory(CartFactory.cart);
+        
+    };
+
+
+    CartFactory.initialize = function(user){
+        var tempCart;
+        if (user){
+            $http.get('/api/users/' + user._id +'/cart')
+            .then(function(cart) {
+                tempCart = cart.data;
+            });
+        } else {
+            if (Boolean($cookies.getObject('genemachine'))) {
+                tempCart = $cookies.getObject('genemachine');
+            }
+        }
+        for (var item in tempCart){
+            CartFactory.cart.push(new CartedProduct(item, tempCart[item]));
+        }
+    };
+
+    CartFactory.persist = function(userID){
+        var exportedCart = CartFactory.export();
+        if (userID) {
+            $http.post('/api/users/'+userID._id+'/cart', {cart: exportedCart});
+        } else {
+            $cookies.putObject('genemachine', exportedCart);
+        }
     };
 
     CartFactory.finishOrder = function(shipinfo, billinfo, cardinfo, user) {
-        return $http.put('/api/users/' + user._id +'/checkout', {
-                address: shipinfo,
-                paymentInfo: {
-                    name: cardinfo.name,
-                    billingAddress: billinfo,
-                    ccNum: cardinfo.number,
-                    ccExpiration: cardinfo.date
-                }
-            })
-            .then(function(res) {
-                return $http.delete('/api/users/' + user._id + '/cart')
-            })
-    }
-    return CartFactory;
+    return $http.put('/api/users/' + user._id +'/checkout', {
+        address: shipinfo,
+        paymentInfo: {
+            name: cardinfo.name,
+            billingAddress: billinfo,
+            ccNum: cardinfo.number,
+            ccExpiration: cardinfo.date
+        }
+    })
+    .then(function(res) {
+        return $http.delete('/api/users/' + user._id + '/cart')
+    })
+}
+return CartFactory;
 });

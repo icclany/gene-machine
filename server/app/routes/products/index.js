@@ -29,7 +29,6 @@ router.get('/:id', function (req, res, next) {
 });
 
 router.put('/:id', function(req, res, next){
-  console.log("are you an admin?");
   if(req.user.isAdmin){
     Products.findByIdAndUpdate(req.params.id, req.body)
     .then(function(product){

@@ -27,15 +27,5 @@ app.factory('CartFactory', function($http) {
             });
     };
 
-
-    CartFactory.submitStripeOrder = function(token){
-      console.log('submitStripeOrder. token: ', token);
-      return $http.put('/api/purchases/', {token: token})
-      .then(function(){
-        if(token.user){
-          $http.delete('/api/users/' + token.user._id + '/cart');
-        }
-      });
-    };
     return CartFactory;
 });

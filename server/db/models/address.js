@@ -2,10 +2,6 @@
 var mongoose = require('mongoose');
 
 var addressSchema = new mongoose.Schema({ //add new to mongoose.Schema and made variable schema
-  name: {
-    type: String,
-    required: true
-  },
   street: {
     type: String,
     required: true
@@ -20,4 +16,4 @@ var addressSchema = new mongoose.Schema({ //add new to mongoose.Schema and made 
   },
 });
 
-mongoose.model('Address', addressSchema); 
+mongoose.model('Address', addressSchema);

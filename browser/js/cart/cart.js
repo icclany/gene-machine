@@ -57,25 +57,42 @@ app.controller('CheckoutCtrl', function($state, $scope, cart, currentUser, CartF
       image: '/js/common/directives/logo/gmlogo.png',
       locale: 'auto',
       token: function(token){
-        token.total = $scope.total;
-        token.items = $scope.cart; // need to find the items currently in the cart
-
-        if(currentUser){
-          console.log('theres a currentUser');
-          console.dir(currentUser);
-          token.user = currentUser;
-          token.items = currentUser.cart;
-          CartFactory.submitStripeOrder(token)
-          .then(function(){
+// <<<<<<< HEAD
+//         token.total = $scope.total;
+//         token.items = $scope.cart; // need to find the items currently in the cart
+//
+//         if(currentUser){
+//           console.log('theres a currentUser');
+//           console.dir(currentUser);
+//           token.user = currentUser;
+//           token.items = currentUser.cart;
+//           CartFactory.submitStripeOrder(token)
+//           .then(function(){
+//             $state.go('orderConfirmation');
+//           });
+//         } else {
+//           console.log("currentUser doesnt exist");
+//           CartFactory.submitStripeOrder(token)
+//           .then(function(){
+//             $state.go('orderConfirmation');
+//           });
+//         }
+// =======
+        return CartFactory.finishOrder({
+            street: token.card.address_line1,
+            city: token.card.address_city,
+            zipCode: token.card.address_zip
+        }, {
+            street: token.card.address_line1,
+            city: token.card.address_city,
+            zipCode: token.card.address_zip
+        }, {
+            name: "Paid with Stripe",
+            number: "Paid with Stripe",
+            date: "Paid with Stripe"}, $scope.total, currentUser)
+        .then(function() {
             $state.go('orderConfirmation');
-          });
-        } else {
-          console.log("currentUser doesnt exist");
-          CartFactory.submitStripeOrder(token)
-          .then(function(){
-            $state.go('orderConfirmation');
-          });
-        }
+        });
       }
     });
 

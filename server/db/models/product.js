@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 var mongoose = require('mongoose');
 var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
@@ -32,5 +32,6 @@ var productSchema = new mongoose.Schema({
         type: [String]
     }
 });
+
 productSchema.plugin(deepPopulate);
 mongoose.model('Product', productSchema);

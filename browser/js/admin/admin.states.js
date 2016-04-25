@@ -38,7 +38,6 @@ app.config(function($stateProvider){
     },
     resolve: {
       theProduct: function(ProductFactory, $stateParams){
-        console.log("inside theProduct of productSettings state", $stateParams.product);
         return ProductFactory.fetchById($stateParams.product._id).then(function(product){
           return product;
         });

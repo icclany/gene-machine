@@ -1,13 +1,13 @@
-<div>
-      <p>{{category}}</p>
-      <p> {{filter.categories[category]}}</p>
-  <a class="thumbnail">
-    <img ng-src="{{ theProduct.image }}">
-    <div class="caption">
-      <h5>
+<div class="product" ng-class="{unavailable: theProduct.stock < 1}">
+    <p>{{category}}</p>
+    <p> {{filter.categories[category]}}</p>
+    <a class="thumbnail">
+        <img ng-src="{{ theProduct.image }}">
+        <div class="caption">
+            <h5>
         <span>{{ theProduct.name }}</span>
       </h5>
-      <small>${{ theProduct.price }} </small>
-    </div>
-  </a>
+            <small>${{ theProduct.price }} </small>
+        </div>
+    </a>
 </div>

@@ -5,7 +5,7 @@ app.controller('ProductController', function($scope, theProduct, ProductFactory,
 
     $scope.addToCart = function() {
         return ProductFactory.addToCart(theProduct, currentUser);
-    }
+    };
 
 });
 
@@ -47,14 +47,12 @@ app.controller('AllProductsController', function($scope, allProducts, ProductFac
             if ($scope.filter.tags.find(function(tag) {return tag.status === false})) {
                 $scope.filter.filterByTag = true;
             } else {
-                console.log($scope);
                 $scope.filter.filterByTag = false;
             }
         } else {
             $scope.filter.filterByTag = true;
         }
     };
-
 
     $scope.filter = {
         categories: angular.copy(categories),

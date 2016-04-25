@@ -22,6 +22,7 @@ router.get('/category', function (req, res, next) {
 router.get('/:id', function (req, res, next) {
     Products.findById(req.params.id)
     .populate('reviews')
+    .deepPopulate('reviews.user')
     .then(product=> {
         res.send(product);
     })
@@ -35,7 +36,7 @@ router.put('/:id', function(req, res, next){
       product.save();
     });
     res.send(200);
-  }
+  };
 });
 
 router.delete('/:id', function(req, res, next){

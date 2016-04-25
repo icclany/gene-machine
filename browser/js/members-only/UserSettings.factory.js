@@ -1,6 +1,9 @@
 app.factory('UserSettingsFact', function($http){
 	"use strict";
-  var updateUser = function(user){
+
+  var UserSettingsFactory = {};
+
+  UserSettingsFactory.updateUser = function(user){
 
     return $http.put('/api/users/'+user._id, user)
     .then(function(updatedUser) {
@@ -8,24 +11,24 @@ app.factory('UserSettingsFact', function($http){
     });
   };
 
-  var getOrders = function(user){
+  UserSettingsFactory.getOrders = function(user){
     return $http.get('/api/users/'+user._id)
     .then(function(orders){
       return orders.data;
     });
   };
 
-  var updatePassword = function(user){
+  UserSettingsFactory.updatePassword = function(user){
     return $http.put('/api/users/'+user._id, user)
     .then(function(updatedPword){
       return updatedPword.data;
     });
   };
 
-
-  return {
-  	updateUser: updateUser,
-    getOrders: getOrders,
-    updatePassword: updatePassword
+  UserSettingsFactory.sendReview = function(reviewObj) {
+    return $http.post('/api/reviews', reviewObj);
   };
+
+
+  return UserSettingsFactory;
 });

@@ -40,7 +40,7 @@ app.controller('CheckoutCtrl', function($state, $scope, cart, currentUser, CartF
     $scope.total = CartFactory.getTotal(cart);
 
     $scope.checkout = function() {
-        return CartFactory.finishOrder($scope.shipping, $scope.billing.address, $scope.billing.cc, currentUser)
+        return CartFactory.finishOrder($scope.shipping, $scope.billing.address, $scope.billing.cc, $scope.total,currentUser)
         .then(function() {
             $state.go('home');
         })

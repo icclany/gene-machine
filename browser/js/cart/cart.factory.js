@@ -9,7 +9,7 @@ app.factory('CartFactory', function($http) {
         return total;
     };
 
-    CartFactory.finishOrder = function(shipinfo, billinfo, cardinfo, user) {
+    CartFactory.finishOrder = function(shipinfo, billinfo, cardinfo, total, user) {
         return $http.put('/api/users/' + user._id +'/checkout', {
                 address: shipinfo,
                 paymentInfo: {

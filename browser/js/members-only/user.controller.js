@@ -9,8 +9,11 @@ app.controller('UserCtrl', function($scope, $state, User, UserSettingsFact, Purc
     $scope.billingTransfer;
     $scope.addressTransfer;
     $scope.password;
-
     $scope.purchases = PurchaseHistory;
+
+    $scope.submitReview = function(item) {
+        // IN PROGRESS
+    }
 
 	$scope.submitEdits = function(){
 		if ($state.current.name === 'membersOnly.address') {
@@ -60,5 +63,4 @@ app.controller('UserCtrl', function($scope, $state, User, UserSettingsFact, Purc
 			});
         }
     };
-
 });

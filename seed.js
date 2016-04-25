@@ -288,18 +288,9 @@ connectToDb
     .then(function() {
         return seedProducts();
     })
-    // .then(function() {
-    //   return seedPaymentInfo();
-    // })
     .then(function() {
         return seedAddresses();
     })
-    // .then(function() {
-    //   return seedReviews();
-    // })
-    // .then(function() {
-    //   return seedPurchases();
-    // })
     .then(function() {
         console.log(chalk.green('Seed successful!'));
         process.kill(0);

@@ -62,7 +62,7 @@ router.post('/reset', function(req, res, next) {
                 console.error(err);
             } else {
                 res.json('info', 'An e-mail has been sent to ' + savedUser.email + ' with further instructions.');
-                
+
             }
         });
     })
@@ -83,9 +83,6 @@ router.put('/reset/:token', function(req,res,next){
     })
     .catch(next);
 });
-    
-
-
 
 router.get('/', function(req, res, next) {
     User.find({}).exec()
@@ -141,22 +138,9 @@ router.delete('/:id/cart/:productId', function(req, res, next) {
 });
 
 router.delete('/:id/cart', function(req, res, next) {
-    Promise.all(req.requestedUser.cart.map(cartSchema => {
-            return cartSchema.populateCart();
-        }))
-        .then(function(populatedCart) {
-            var donePurchase = {
-                items: populatedCart,
-                total: 500,
-                user: req.requestedUser._id,
-            };
-            return Purchase.create(donePurchase)
-                .then(function(createdPurchase) {
-                    req.requestedUser.cart = [];
-                    req.requestedUser.save();
-                    res.sendStatus(201);
-                });
-        });
+    req.requestedUser.cart = [];
+    req.requestedUser.save();
+    res.sendStatus(201);
 });
 
 router.get('/:id/cart', function(req, res, next) {

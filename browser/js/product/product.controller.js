@@ -47,7 +47,6 @@ app.controller('AllProductsController', function($scope, allProducts, ProductFac
             if ($scope.filter.tags.find(function(tag) {return tag.status === false})) {
                 $scope.filter.filterByTag = true;
             } else {
-                console.log($scope);
                 $scope.filter.filterByTag = false;
             }
         } else {

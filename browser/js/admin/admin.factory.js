@@ -26,13 +26,7 @@ app.factory('AdminFactory', function($http, $state){
       });
     }
   };
-
-  // AdminFactory.editUser = function(user, options){
-  //   $http.put('/api/users/' + user, options).then(function(anything){
-  //     $state.go($state.current, {}, {reload:true});
-  //   });
-  // };
-
+  
   AdminFactory.updateProduct = function(product){
     $http.put('/api/products/' + product._id, product).then(function(){
       $state.go($state.current, {}, {reload:true});

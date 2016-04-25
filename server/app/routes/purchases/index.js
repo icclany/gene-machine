@@ -12,3 +12,9 @@ router.get('/', function (req, res, next) {
     .catch(next);
 });
 
+router.put('/', function(req, res, next){
+  Purchase.create(req.body.token).then(purchase=>{
+    res.json(purchase);
+  })
+  .catch(next);
+});

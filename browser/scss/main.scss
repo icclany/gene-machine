@@ -79,8 +79,6 @@ sidebar {
   padding: 0 20px;
 }
 
-
-
 .type-btn.active{
   background-color: darken(#dddddd, 30%);
 }
@@ -109,3 +107,4 @@ sidebar {
 @import 'about/main';
 @import 'tutorial/main';
 @import 'login/main';
+@import 'products/products';

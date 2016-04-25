@@ -3,7 +3,7 @@
           <div class="form-group">
             <h4>Categories</h4>
             <label ng-repeat='category in filter.categories'>
-            <input  ng-checked="category.status" ng-click='typeCategoryClick($event)' type='checkbox'>{{category.name}}
+            <input ng-checked="category.status" ng-click='typeCategoryClick($event)' type='checkbox'>{{category.name}}
             </label>
 
             <h4 class='type-btn-holder'>Filter by tags</br></br>
@@ -21,7 +21,7 @@
 
 
 <div class='all-products'>
-    <single-product the-product="product" ng-repeat="product in products | filter:filterByCategory(filter.categories, 'category') | filter: filterByCategory(filter.tags, 'tags') | filter: {description: filter.description}"  ui-sref="product({productId: product._id})" ></single-product>
+    <single-product the-product="product" ng-repeat="product in products | filter:filterByCategory(filter.categories, 'category') | filter: filterByCategory(filter.tags, 'tags') | filter: {description: filter.description}"  ui-sref="product({productId: product._id})"></single-product>
  <div class='all-products'>
 
 

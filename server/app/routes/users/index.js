@@ -163,6 +163,8 @@ router.get('/:id/cart', function(req, res, next) {
 router.get('/:id', function(req, res, next) {
     req.requestedUser.getPurchases()
         .then(purchases => {
+            console.log("purchases are")
+            console.log(purchases)
             res.json(purchases);
         });
 });

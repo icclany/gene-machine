@@ -4,3 +4,22 @@
   background-color: #D3D3D3;
   }
 }
+
+single-product {
+  height: 200px;
+  width: 200px;
+  padding: 10px;
+}
+
+#single-product-image {
+  margin-left: 25%;
+    padding: 9px;
+    border-image-source: url('/js/product/images/frame.jpg');
+    border-image-slice: 15 fill;
+    border-image-repeat: stretch;
+}
+
+#single-product-page {
+  border: 1px solid black;
+  margin: auto;
+}

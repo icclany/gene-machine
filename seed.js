@@ -224,6 +224,14 @@ var seedProducts = function() {
         category: 'medium',
         tags: ['panda', 'koala'],
         description: 'This is a mix of a red panda and a koala.'
+    }, {
+        name: 'Ducko',
+        image: '/js/product/images/14.jpg',
+        price: 30,
+        stock: 5,
+        category: 'small',
+        tags: ['gecko', 'duck'],
+        description: 'This is a mix of a gecko and a yellow duckling.'
     }];
 
     return Product.create(products);

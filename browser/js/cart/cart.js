@@ -56,16 +56,22 @@ app.controller('CheckoutCtrl', function($state, $scope, cart, currentUser, CartF
       image: '/js/common/directives/logo/gmlogo.png',
       locale: 'auto',
       token: function(token){
-        CartFactory.submitStripeOrder(token)
-        .then(function(){
-          console.log('stripe order submitted');
-          $state.go('orderConfirmation');
-        });
+        if(currentUser){
+          token.user = currentUser;
+          CartFactory.submitStripeOrder(token)
+          .then(function(){
+            $state.go('orderConfirmation');
+          });
+        } else {
+          CartFactory.submitStripeOrder(token)
+          .then(function(){
+            $state.go('orderConfirmation');
+          });
+        }
       }
     });
 
     $scope.openStripe = function(){
-      console.log("open stripe");
       handler.open({
         name: "Gene Machine",
         image: '/js/common/directives/logo/gmlogo.png',

@@ -135,8 +135,7 @@ var seedProducts = function() {
         stock: 5,
         category: 'medium',
         tags: ['tiger', 'pig'],
-        description: 'this is a mix of a tiger and a pig',
-        reviews: ['5718e099fbd5f95b55b86e69']
+        description: 'This is a mix of a tiger and a pig.'
     }, {
         name: 'Squana',
         image: '/js/product/images/3-resized.png',
@@ -144,7 +143,7 @@ var seedProducts = function() {
         stock: 50,
         category: 'small',
         tags: ['squirrel', 'iguana'],
-        description: 'this is a squirrel mixed with an iguana'
+        description: 'This is a squirrel mixed with an iguana.'
     }, {
         name: 'Catdog',
         image: '/js/product/images/2-resized.png',
@@ -152,7 +151,7 @@ var seedProducts = function() {
         stock: 10,
         category: 'medium',
         tags: ['dog', 'cat'],
-        description: 'this is a cat mixed with a dog'
+        description: 'This is a cat mixed with a dog.'
     }, {
         name: 'Koalasloth',
         image: '/js/product/images/4-resized.png',
@@ -160,7 +159,7 @@ var seedProducts = function() {
         stock: 15,
         category: 'small',
         tags: ['koala', 'sloth'],
-        description: 'this is a koala mixed with a sloth'
+        description: 'This is a koala mixed with a sloth.'
     }, {
         name: 'Eleroost',
         image: '/js/product/images/5-resized.png',
@@ -168,7 +167,7 @@ var seedProducts = function() {
         stock: 18,
         category: 'large',
         tags: ['chicken', 'elephant'],
-        description: 'this is a chicken mixed with an elephant'
+        description: 'This is a chicken mixed with an elephant.'
     }, {
         name: 'Whiraffe',
         image: '/js/product/images/6-resized.png',
@@ -176,7 +175,7 @@ var seedProducts = function() {
         stock: 1,
         category: 'large',
         tags: ['whale', 'giraffe'],
-        description: 'this is a whale mixed with a giraffe'
+        description: 'This is a whale mixed with a giraffe.'
     }, {
         name: 'Camster',
         image: '/js/product/images/7-resized.png',
@@ -184,7 +183,7 @@ var seedProducts = function() {
         stock: 600,
         category: 'small',
         tags: ['caterpillar', 'hamster'],
-        description: 'this is a caterpillar mixed with a hamster'
+        description: 'This is a caterpillar mixed with a hamster.'
     }, {
         name: 'Bow',
         image: '/js/product/images/8-resized.png',
@@ -192,7 +191,7 @@ var seedProducts = function() {
         stock: 17,
         category: 'large',
         tags: ['bear', 'cow'],
-        description: 'this is a bear mixed with a cow'
+        description: 'This is a bear mixed with a cow.'
     }, {
         name: 'Pandaroo',
         image: '/js/product/images/9-resized.png',
@@ -200,15 +199,39 @@ var seedProducts = function() {
         stock: 6,
         category: 'medium',
         tags: ['panda', 'kangaroo'],
-        description: 'this is a panda mixed with a kangaroo'
+        description: 'This is a panda mixed with a kangaroo.'
     }, {
-        name: 'Camigator',
+        name: 'Bullbird',
         image: '/js/product/images/10-resized.png',
         price: 180,
         stock: 11,
         category: 'large',
-        tags: ['camel', 'alligator'],
-        description: 'this is a camel mixed with an alligator'
+        tags: ['bull', 'bird'],
+        description: 'This is a bull mixed with a dancing tropical bird.'
+    }, {
+        name: 'Kittle',
+        image: '/js/product/images/12.jpg',
+        price: 50,
+        stock: 5,
+        category: 'small',
+        tags: ['cat', 'turtle'],
+        description: 'This is a mix of a kitten and a turtle.'
+    }, {
+        name: 'Red Koala',
+        image: '/js/product/images/13.jpg',
+        price: 200,
+        stock: 5,
+        category: 'medium',
+        tags: ['panda', 'koala'],
+        description: 'This is a mix of a red panda and a koala.'
+    }, {
+        name: 'Ducko',
+        image: '/js/product/images/14.jpg',
+        price: 30,
+        stock: 5,
+        category: 'small',
+        tags: ['gecko', 'duck'],
+        description: 'This is a mix of a gecko and a yellow duckling.'
     }];
 
     return Product.create(products);

@@ -62,33 +62,29 @@ app.controller('CheckoutCtrl', function($state, $scope, total, currentUser, Cart
         });
     };
 
-    // const handler = StripeCheckout.configure({
-    //   key: 'pk_test_IcTLSnuVPyJq7tdlRcU7gzBf',
-    //   image: '/js/common/directives/logo/gmlogo.png',
-    //   locale: 'auto',
-    //   token: function(token){
-    //     CartFactory.submitStripeOrder(token);
-    //   }
-    // });
 
-    // $scope.openStripe = function(){
-    //   handler.open({
-    //     name: "Gene Machine",
-    //     image: '/js/common/directives/logo/gmlogo.png',
-    //     billingAddress: true,
-    //     zipCode: true,
-    //     shippingAddress: true,
-    //     amount: $scope.total * 100
-    //   });
-    // };
-
-    // $scope.stripeCallback = function (code, result) {
-    //   if (result.error) {
-    //       window.alert('it failed! error: ' + result.error.message);
-    //   } else {
-    //       window.alert('success! token: ' + result.id);
-    //   }
-    // };
+    const handler = StripeCheckout.configure({
+      key: 'pk_test_IcTLSnuVPyJq7tdlRcU7gzBf',
+      image: '/js/common/directives/logo/gmlogo.png',
+      locale: 'auto',
+      token: function(token){
+        return CartFactory.finishOrder({
+            street: token.card.address_line1,
+            city: token.card.address_city,
+            zipCode: token.card.address_zip
+        }, {
+            street: token.card.address_line1,
+            city: token.card.address_city,
+            zipCode: token.card.address_zip
+        }, {
+            name: "Paid with Stripe",
+            number: "Paid with Stripe",
+            date: "Paid with Stripe"}, $scope.total, currentUser)
+        .then(function() {
+            $state.go('home');
+        });
+      }
+    });
 
 });
 

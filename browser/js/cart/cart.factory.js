@@ -110,9 +110,5 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
             });
     };
 
-    CartFactory.submitStripeOrder = function(token){
-      $http.put('/api/purchases/', {token: token});
-    };
-
     return CartFactory;
 });

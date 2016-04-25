@@ -11,18 +11,22 @@ app.factory('CartFactory', function($http) {
 
     CartFactory.finishOrder = function(shipinfo, billinfo, cardinfo, total, user) {
         return $http.put('/api/users/' + user._id +'/checkout', {
-            address: shipinfo,
-            paymentInfo: {
-                name: cardinfo.name,
-                billingAddress: billinfo,
-                ccNum: cardinfo.number,
-                ccExpiration: cardinfo.date
-            }
-        })
-        .then(function() {
-            return $http.delete('/api/users/' + user._id + '/cart');
-        });
+                address: shipinfo,
+                paymentInfo: {
+                    name: cardinfo.name,
+                    billingAddress: billinfo,
+                    ccNum: cardinfo.number,
+                    ccExpiration: cardinfo.date
+                }
+            })
+            .then(function() {
+                return $http.post('/api/purchases', {id: user._id, total: total});
+            })
+            .then(function() {
+                return $http.delete('/api/users/' + user._id + '/cart');
+            });
     };
+
 
     CartFactory.submitStripeOrder = function(token){
       console.log('submitStripeOrder');

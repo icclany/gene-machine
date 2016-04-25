@@ -1,4 +1,4 @@
-<div>
+<div class="cart">
     <h1>Your Cart:</h1>
     <form name="cartform" novalidate>
         <div ng-repeat="cartItem in cart">
@@ -7,10 +7,11 @@
             <h5>Price: {{cartItem.productInfo.price}}</h5>
             <h5>Quantity:</h5>
             <input ng-model="cartItem.quantity" ng-keypress="updateQuantity($event, cartItem)" type="number" value={{cartItem.quantity}}>
-            <button>
-                <span class="glyphicon glyphicon-minus" ng-click="removeFromCart(cartItem)">Remove from Cart</span>
-            </button>
+                <button type="button" class="btn btn-warning" ng-click="removeFromCart(cartItem)">Remove from Cart</button>
         </div>
     </form>
-    <button class="checkout glyphicon glyphicon-usd" ui-sref="checkout">CHECKOUT</button>
+
+    <button type="button" class="btn btn-info"ui-sref="checkout">Checkout</button>
+
+
 </div>

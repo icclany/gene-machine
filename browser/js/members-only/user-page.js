@@ -21,6 +21,8 @@ app.config(function ($stateProvider) {
             PurchaseHistory: function(AuthService, User, UserSettingsFact){
                 return UserSettingsFact.getOrders(User.currentUser)
                     .then(function(allOrders){
+                         console.log("PURCHASE HISTORY IS");
+    console.log(allOrders);
                         return allOrders;
                     });
             }

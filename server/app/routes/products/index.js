@@ -22,6 +22,7 @@ router.get('/category', function (req, res, next) {
 router.get('/:id', function (req, res, next) {
     Products.findById(req.params.id)
     .populate('reviews')
+    .deepPopulate('reviews.user')
     .then(product=> {
         res.send(product);
     })
@@ -29,7 +30,6 @@ router.get('/:id', function (req, res, next) {
 });
 
 router.put('/:id', function(req, res, next){
-  console.log('hello from the router');
   Products.findByIdAndUpdate(req.params.id, req.body)
   .then(function(product){
     product.save();

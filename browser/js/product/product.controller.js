@@ -5,7 +5,7 @@ app.controller('ProductController', function($scope, theProduct, ProductFactory,
 
     $scope.addToCart = function() {
         return ProductFactory.addToCart(theProduct, currentUser);
-    }
+    };
 
 });
 
@@ -54,7 +54,6 @@ app.controller('AllProductsController', function($scope, allProducts, ProductFac
             $scope.filter.filterByTag = true;
         }
     };
-
 
     $scope.filter = {
         categories: angular.copy(categories),

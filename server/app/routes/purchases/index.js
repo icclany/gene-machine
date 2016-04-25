@@ -28,9 +28,9 @@ router.post('/', function(req, res, next) {
                     return Purchase.create(donePurchase);
                 })
                 .then(function(purchase) {
-                    console.log("Purchase success")
+                    console.log("Purchase success");
                     res.sendStatus(201);
-                })
+                });
         })
         .catch(next);
 });

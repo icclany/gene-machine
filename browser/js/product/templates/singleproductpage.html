@@ -3,11 +3,12 @@
   <p>Description: {{ theProduct.description }}</p>
   <p>Price: {{ theProduct.price}}</p>
   <button>
-  <span class="glyphicon glyphicon-plus" ng-click="addToCart()">Add to Cart</span>
+  <span class="glyphicon glyphicon-plus" ng-click="addToCart()" ng-show="theProduct.stock > 0">Add to Cart</span>
+  <span class="glyphicon glyphicon-list-alt
+" ng-show="theProduct.stock <= 0"> OUT OF STOCK :(</span>
   </button>
   <p>Reviews:</p>
   <div ng-repeat="review in theProduct.reviews">
-    <p>Review object is: {{review}}</p>
     <p>Stars: {{review.numStars}}</p>
     <p>Review by: {{review.user.username}}</p>
     <p>{{review.text}}</p>

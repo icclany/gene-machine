@@ -16,8 +16,6 @@ var smtpTransport = nodemailer.createTransport('SMTP', {
     }
 });
 
-
-
 var ensureAuthenticated = function(req, res, next) {
     if (req.isAuthenticated()) {
         next();
@@ -70,7 +68,6 @@ router.post('/reset', function(req, res, next) {
 });
 
 router.put('/reset/:token', function(req,res,next){
-    console.log(req.params.token);
     User.findOne({resetPassword: req.params.token })
     .then(function(user){
         req.body.resetPassword = null;
@@ -147,7 +144,7 @@ router.get('/:id/cart', function(req, res, next) {
     const promiseQueries = [];
     req.requestedUser.cart.forEach((item) => {
         promiseQueries.push(
-            mongoose.model('Product').findById(item.productInfo))
+            mongoose.model('Product').findById(item.productInfo));
     })
     Promise.all(promiseQueries)
         .then((populatedItems) => {
@@ -166,7 +163,7 @@ router.get('/:id/cart', function(req, res, next) {
 router.get('/:id', function(req, res, next) {
     req.requestedUser.getPurchases()
         .then(purchases => {
-            res.json(purchases)
+            res.json(purchases);
         });
 });
 

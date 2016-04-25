@@ -1,5 +1,5 @@
 
-app.controller('UserCtrl', function($scope, $state, User, UserSettingsFact, PurchaseHistory) {
+app.controller('UserCtrl', function($scope, $state, User, UserSettingsFact, PurchaseHistory, ProductFactory) {
 	"use strict";
     $scope.user = User.subjectUser;
     $scope.loggedInUser = User.currentUser;
@@ -11,9 +11,28 @@ app.controller('UserCtrl', function($scope, $state, User, UserSettingsFact, Purc
     $scope.password;
     $scope.purchases = PurchaseHistory;
 
-    $scope.submitReview = function(item) {
-        // IN PROGRESS
-    }
+    $scope.submitReview = function(item, reviewObj) {
+        return UserSettingsFact.sendReview({
+            numStars: reviewObj.numStars,
+            text: reviewObj.text,
+            user: $scope.loggedInUser._id,
+            product: item.productInfo._id
+        })
+        .then(function(review) {
+            console.log("Review added.");
+             $state.go($state.current, {}, { reload: true });
+        });
+    };
+
+    $scope.hasReview = function(item) {
+        return ProductFactory.getReviews(item.productInfo._id)
+        .then(function(product) {
+            for (let i = 0; i < product.reviews.length; i++) {
+                if (product.reviews[i].user === loggedInUser._id) {return true};
+            }
+            return false;
+        });
+    };
 
 	$scope.submitEdits = function(){
 		if ($state.current.name === 'membersOnly.address') {

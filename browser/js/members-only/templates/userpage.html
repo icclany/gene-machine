@@ -9,9 +9,11 @@
                 <h5>Item: {{item.productInfo.name}}</h5>
                 <h5>Price: ${{item.productInfo.price}}</h5>
                 <h5>Quantity: {{item.quantity}}</h5>
+                <!-- LEAVE A REVIEW -->
                 <span>
-                <input ng-model="itemReview" type="text" placeholder="Leave a review">
-                <button ng-click="submitReview(item)">Submit Review</button>
+                <input ng-model="review.numStars" type="text" placeholder="Stars">
+                <input ng-model="review.text" type="text" placeholder="Leave a review">
+                <button ng-click="submitReview(item, review)">Submit Review</button>
                 </span>
             </div>
             <h4>Total: ${{purchase.total}}</h4>

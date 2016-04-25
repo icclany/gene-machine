@@ -67,7 +67,7 @@ var seedUsers = function() {
     }, {
         email: 'Iris@gmail.com',
         password: 'fullstack',
-        username: 'hello',
+        username: 'IrisTheFlamingHotCheeto',
         firstName: 'Iris',
         lastName: 'Chang',
         isAdmin: false

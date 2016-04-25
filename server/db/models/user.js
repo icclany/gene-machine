@@ -48,7 +48,7 @@ var userSchema = new mongoose.Schema({
     resetPassword: String,
     resetPasswordExpiration:Date,
     disabled: Boolean
-    
+
 
 });
 
@@ -59,7 +59,7 @@ userSchema.methods.sanitize = function () {
 
 // **Get purchases method**
 userSchema.methods.getPurchases = function () {
-  return mongoose.model('Purchase').find({user: this._id})
+  return mongoose.model('Purchase').find({user: this._id});
 };
 
 userSchema.methods.addToCart = function(obj) {

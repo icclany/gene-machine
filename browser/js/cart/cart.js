@@ -65,6 +65,7 @@ app.controller('CheckoutCtrl', function($state, $scope, cart, currentUser, CartF
     });
 
     $scope.openStripe = function(){
+      console.log("open stripe");
       handler.open({
         name: "Gene Machine",
         image: '/js/common/directives/logo/gmlogo.png',

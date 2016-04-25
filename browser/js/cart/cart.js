@@ -32,6 +32,11 @@ app.config(function($stateProvider) {
             }
         }
     });
+
+    $stateProvider.state('orderConfirmation', {
+      url: '/confirmation',
+      templateUrl: 'js/cart/templates/confirm.html',
+    });
 });
 
 app.controller('CheckoutCtrl', function($state, $scope, cart, currentUser, CartFactory) {
@@ -42,8 +47,8 @@ app.controller('CheckoutCtrl', function($state, $scope, cart, currentUser, CartF
     $scope.checkout = function() {
         return CartFactory.finishOrder($scope.shipping, $scope.billing.address, $scope.billing.cc, $scope.total,currentUser)
         .then(function() {
-            $state.go('home');
-        })
+            $state.go('orderConfirmation');
+        });
     };
 
     const handler = StripeCheckout.configure({
@@ -51,7 +56,11 @@ app.controller('CheckoutCtrl', function($state, $scope, cart, currentUser, CartF
       image: '/js/common/directives/logo/gmlogo.png',
       locale: 'auto',
       token: function(token){
-        CartFactory.submitStripeOrder(token);
+        CartFactory.submitStripeOrder(token)
+        .then(function(){
+          console.log('stripe order submitted');
+          $state.go('orderConfirmation');
+        });
       }
     });
 
@@ -87,7 +96,7 @@ app.controller('CartCtrl', function($scope, $state, cart, currentUser, ProductFa
     };
 
     $scope.removeFromCart = function(cartItem) {
-        return ProductFactory.removeFromCart(currentUser, cartItem.productInfo).then(function(res) {
+        return ProductFactory.removeFromCart(currentUser, cartItem.productInfo).then(function() {
             $state.go($state.current, {}, { reload: true });
         });
     };

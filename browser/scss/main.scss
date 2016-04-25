@@ -15,9 +15,16 @@ body {
   }
 }
 
+.all-products {
+  display: flex;
+  justify-content: center;
+}
+
 .homepage-image {
-  margin-left: 25%;
-  margin-right: 25%;
+  position: absolute;
+  // margin: 0 auto;
+  width: 100%;
+  // margin-left: 18%;
   border: 15px solid black;
 }
 
@@ -78,8 +85,6 @@ sidebar {
   background-color: lightgrey;
   padding: 0 20px;
 }
-
-
 
 .type-btn.active{
   background-color: darken(#dddddd, 30%);

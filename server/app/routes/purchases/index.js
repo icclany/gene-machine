@@ -13,13 +13,13 @@ router.get('/', function(req, res, next) {
         .catch(next);
 });
 
-<<<<<<< HEAD
 router.put('/', function(req, res, next){
   Purchase.create(req.body.token).then(purchase=>{
     res.json(purchase);
   })
   .catch(next);
-=======
+});
+
 router.post('/', function(req, res, next) {
     User.findById(req.body.id)
         .then(function(user) {
@@ -40,5 +40,4 @@ router.post('/', function(req, res, next) {
                 })
         })
         .catch(next);
->>>>>>> master
 });

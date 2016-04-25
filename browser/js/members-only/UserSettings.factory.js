@@ -8,8 +8,24 @@ app.factory('UserSettingsFact', function($http){
     });
   };
 
+  var getOrders = function(user){
+    return $http.get('/api/users/'+user._id)
+    .then(function(orders){
+      return orders.data;
+    });
+  };
+
+  var updatePassword = function(user){
+    return $http.put('/api/users/'+user._id, user)
+    .then(function(updatedPword){
+      return updatedPword.data;
+    });
+  };
+
 
   return {
-  	updateUser: updateUser
+  	updateUser: updateUser,
+    getOrders: getOrders,
+    updatePassword: updatePassword
   };
 });

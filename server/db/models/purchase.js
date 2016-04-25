@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var CartSchema = mongoose.model('Cart').schema;
 
 var purchaseSchema = new mongoose.Schema({
-  items: [CartSchema],
+  items: Array,
   total: {
     type: Number,
     default: 0

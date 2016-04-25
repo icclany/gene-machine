@@ -26,7 +26,15 @@ app.factory('AdminFactory', function($http, $state){
       });
     }
   };
-  
+
+  AdminFactory.resetPassword = function(user){
+    $http.post('/api/users/reset', {email: user.email})
+        .then(function(user){
+          console.log('response');
+          console.log(user);
+      });
+  };
+
   AdminFactory.updateProduct = function(product){
     $http.put('/api/products/' + product._id, product).then(function(){
       $state.go($state.current, {}, {reload:true});

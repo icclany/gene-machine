@@ -33,10 +33,5 @@ var productSchema = new mongoose.Schema({
     }
 });
 
-// productSchema.statics.hasReview = function hasReview(user) {
-//     for
-//     return this.reviews.find({product: user: this._id});
-// }
-
 productSchema.plugin(deepPopulate);
 mongoose.model('Product', productSchema);

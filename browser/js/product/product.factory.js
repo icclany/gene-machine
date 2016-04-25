@@ -29,11 +29,11 @@ ProductFactory.setFilter = function(filterObj) {
     }
     filters.tags = filterObj.tags;
     filters.category = categories;
-}
+};
 
 ProductFactory.getFilters = function() {
     return filters;
-}
+};
 
 ProductFactory.fetchById = function(id) {
     return $http.get('/api/products/' + id).then(product => {

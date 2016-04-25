@@ -46,8 +46,8 @@ var userSchema = new mongoose.Schema({
         id: String
     },
     resetPassword: String,
-    resetPasswordExpiration:Date
-    
+    resetPasswordExpiration:Date,
+
 
 });
 
@@ -60,6 +60,7 @@ userSchema.methods.sanitize = function () {
 userSchema.methods.getPurchases = function () {
   return mongoose.model('Purchase').find({user: this._id});
 };
+
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.

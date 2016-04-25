@@ -18,8 +18,6 @@ var smtpTransport = nodemailer.createTransport('SMTP', {
     }
 });
 
-
-
 var ensureAuthenticated = function(req, res, next) {
     if (req.isAuthenticated()) {
         next();

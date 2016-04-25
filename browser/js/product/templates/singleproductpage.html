@@ -1,14 +1,15 @@
-<div>
-  <img ng-src="{{ theProduct.image }}">
-  <p>Description: {{ theProduct.description }}</p>
-  <p>Price: {{ theProduct.price}}</p>
-  <button>
-  <span class="glyphicon glyphicon-plus" ng-click="addToCart()">Add to Cart</span>
-  </button>
-  <p>Reviews:</p>
-  <div ng-repeat="review in theProduct.reviews">
-    <p>Review object is: {{review}}</p>
-    <p>Stars: {{review.numStars}}</p>
-    <p>Review by: {{review.user.username}}</p>
-    <p>{{review.text}}</p>
+<div class="jumbotron jumbotron-fluid" id="single-product-page">
+  <img height="300" width="600" id="single-product-image" ng-src="{{ theProduct.image }}">
+  <div class="container">
+    <h1>{{ theProduct.name }}</h1>
+    <p>Description: {{ theProduct.description }}</p>
+    <p>Price: ${{ theProduct.price }}</p>
+    <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="addToCart()">Add to Cart</button>
+    <div ng-repeat="review in theProduct.reviews">
+      <p>Review object is: {{review}}</p>
+      <p>Stars: {{review.numStars}}</p>
+      <p>Review by: {{review.user.username}}</p>
+      <p>{{review.text}}</p>
+    </div>
+  </div>
 </div>

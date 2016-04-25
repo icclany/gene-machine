@@ -46,6 +46,34 @@ app.controller('CheckoutCtrl', function($state, $scope, cart, currentUser, CartF
         })
     };
 
+    const handler = StripeCheckout.configure({
+      key: 'pk_test_IcTLSnuVPyJq7tdlRcU7gzBf',
+      image: '/js/common/directives/logo/gmlogo.png',
+      locale: 'auto',
+      token: function(token){
+        CartFactory.submitStripeOrder(token);
+      }
+    });
+
+    $scope.openStripe = function(){
+      handler.open({
+        name: "Gene Machine",
+        image: '/js/common/directives/logo/gmlogo.png',
+        billingAddress: true,
+        zipCode: true,
+        shippingAddress: true,
+        amount: $scope.total * 100
+      });
+    };
+
+    $scope.stripeCallback = function (code, result) {
+      if (result.error) {
+          window.alert('it failed! error: ' + result.error.message);
+      } else {
+          window.alert('success! token: ' + result.id);
+      }
+    };
+
 });
 
 app.controller('CartCtrl', function($scope, $state, cart, currentUser, ProductFactory) {

@@ -16,6 +16,7 @@ router.get('/', function(req, res, next) {
 router.put('/', function(req, res, next){
   console.log("inside purchase put route, req.body.token: ", req.body.token);
   Purchase.create(req.body.token).then(purchase=>{
+    console.log("in purchases route, i think i've created a purchase: ", purchase);
     res.json(purchase);
   })
   .catch(next);

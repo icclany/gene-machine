@@ -13,6 +13,11 @@
     float: left;
   }
 
+  #about-bottom {
+    display: flex;
+    justify-content: space-around;
+  }
+
   .carousel {
     float: right;
     width: 55%;

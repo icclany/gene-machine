@@ -45,7 +45,8 @@ app.controller('CheckoutCtrl', function($state, $scope, cart, currentUser, CartF
     $scope.total = CartFactory.getTotal(cart);
 
     $scope.checkout = function() {
-        return CartFactory.finishOrder($scope.shipping, $scope.billing.address, $scope.billing.cc, $scope.total,currentUser)
+      console.log("in CheckoutCtrl, currentUser: ", currentUser);
+        return CartFactory.finishOrder($scope.shipping, $scope.billing.address, $scope.billing.cc, $scope.total, currentUser)
         .then(function() {
             $state.go('orderConfirmation');
         });
@@ -56,13 +57,20 @@ app.controller('CheckoutCtrl', function($state, $scope, cart, currentUser, CartF
       image: '/js/common/directives/logo/gmlogo.png',
       locale: 'auto',
       token: function(token){
+        token.total = $scope.total;
+        token.items = $scope.cart; // need to find the items currently in the cart
+
         if(currentUser){
+          console.log('theres a currentUser');
+          console.dir(currentUser);
           token.user = currentUser;
+          token.items = currentUser.cart;
           CartFactory.submitStripeOrder(token)
           .then(function(){
             $state.go('orderConfirmation');
           });
         } else {
+          console.log("currentUser doesnt exist");
           CartFactory.submitStripeOrder(token)
           .then(function(){
             $state.go('orderConfirmation');

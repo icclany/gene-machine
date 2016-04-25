@@ -19,10 +19,14 @@ app.factory('CartFactory', function($http) {
                     ccExpiration: cardinfo.date
                 }
             })
-            .then(function() {
+            .then(function(res) {
+                return $http.post('/api/purchases', {id: user._id, total: total});
+            })
+            .then(function(res) {
                 return $http.delete('/api/users/' + user._id + '/cart');
             });
     };
+
 
     CartFactory.submitStripeOrder = function(token){
       $http.put('/api/purchases/', {token: token});

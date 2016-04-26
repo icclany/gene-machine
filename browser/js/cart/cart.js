@@ -19,9 +19,6 @@ app.config(function($stateProvider) {
             }
         }
     });
-});
-
-app.config(function($stateProvider) {
 
     $stateProvider.state('checkout', {
         url: '/checkout',

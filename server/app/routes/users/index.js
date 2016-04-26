@@ -50,8 +50,6 @@ router.get('/', function(req, res, next) {
 router.get('/:id', function(req, res, next) {
     return req.requestedUser.getPurchases()
         .then(purchases => {
-            // console.log("got purchases")
-            // console.log(purchases)
             res.json(purchases);
         });
 });
@@ -65,6 +63,27 @@ router.put('/:id', function(req, res, next) {
             })
             .catch(next);
     } else res.sendStatus(401);
+});
+
+router.put('/:id/checkout', function(req, res, next) {
+    // Save info to user
+  req.requestedUser.address.push(new Address(req.body.address));
+  req.requestedUser.paymentInfo.push(new PaymentInfo(req.body.paymentInfo));
+    req.requestedUser.save()
+        .then(function(savedUser){
+            console.log("saved")
+            res.send(req.requestedUser);
+        })
+        .catch(next);
+});
+
+router.post('/:id/cart', function(req, res, next) {
+    req.requestedUser.cart = req.body.cart;
+    req.requestedUser.save()
+        .then(function(savedUser){
+            res.send(req.requestedUser);
+        })
+        .catch(next);
 });
 
 router.delete('/:id', function(req, res, next) {
@@ -123,16 +142,6 @@ router.put('/reset/:token', function(req,res,next){
     .catch(next);
 });
 
-router.post('/:id/cart', function(req, res, next) {
-    console.log(req.requestedUser);
-    req.requestedUser.cart = req.body.cart;
-    console.log(req.requestedUser);
-    req.requestedUser.save()
-        .then(function(savedUser){
-            res.send(req.requestedUser);
-        })
-        .catch(next);
-});
 
 router.get('/:id/cart', function(req, res, next) {
     res.send(req.requestedUser.cart);

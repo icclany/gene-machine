@@ -53,8 +53,6 @@ app.controller('CheckoutCtrl', function($state, $scope, total, currentUser, Cart
     $scope.user = currentUser;
     $scope.cart = CartFactory.cart;
     $scope.total = CartFactory.getTotal();
-    console.log($scope.total);
-
     $scope.finishCheckout = function() {
         if (!currentUser) {
             currentUser = {};
@@ -77,8 +75,6 @@ app.controller('CheckoutCtrl', function($state, $scope, total, currentUser, Cart
         var address = {};
         var billing = {};
         var paymentInfo = {};
-        console.log("TOKEN IS")
-        console.log(token)
         var user = currentUser || {_id: null, email: token.email};
 
         return CartFactory.finishOrder({

@@ -37,11 +37,7 @@ app.factory('ProductFactory', function($http) {
     };
 
     ProductFactory.filterInventory = function(cart){
-        console.log("CART IS")
-        console.log(cart)
         return cart.map(function(cartProduct){
-            console.log("finding in")
-            console.log(inventory)
             var invMatch = inventory.find(function(invProduct) {
                 return invProduct._id === cartProduct._id;
             });

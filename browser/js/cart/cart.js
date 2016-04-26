@@ -41,6 +41,11 @@ app.config(function($stateProvider) {
             }
         }
     });
+
+    $stateProvider.state('orderConfirmation', {
+      url: '/confirmation',
+      templateUrl: 'js/cart/templates/confirm.html',
+    });
 });
 
 app.controller('CheckoutCtrl', function($state, $scope, total, currentUser, CartFactory) {
@@ -58,7 +63,7 @@ app.controller('CheckoutCtrl', function($state, $scope, total, currentUser, Cart
         console.log('checking out');
         CartFactory.finishOrder($scope.shipping, $scope.billing, currentUser)
         .then(function() {
-            $state.go('home');
+            $state.go('orderConfirmation');
         });
     };
 
@@ -81,7 +86,7 @@ app.controller('CheckoutCtrl', function($state, $scope, total, currentUser, Cart
             number: "Paid with Stripe",
             date: "Paid with Stripe"}, $scope.total, currentUser)
         .then(function() {
-            $state.go('home');
+            $state.go('orderConfirmation');
         });
       }
     });
@@ -98,6 +103,7 @@ app.controller('CartCtrl', function($scope, $state, cart, currentUser, CartFacto
             CartFactory.remove(cartItem._id, currentUser);
         }
     };
+
     $scope.checkOut = function(){
         $state.go('checkout', {cart: $scope.cart});
     };

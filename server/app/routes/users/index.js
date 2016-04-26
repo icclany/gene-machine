@@ -4,11 +4,11 @@ module.exports = router;
 var _ = require('lodash');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-var Address = mongoose.model('Address');
-var Product = mongoose.model('Product');
-var PaymentInfo = mongoose.model('PaymentInfo');
-var Purchase = mongoose.model('Purchase');
-var Promise = require('bluebird');
+// var Address = mongoose.model('Address');
+// var Product = mongoose.model('Product');
+// var PaymentInfo = mongoose.model('PaymentInfo');
+// var Purchase = mongoose.model('Purchase');
+// var Promise = require('bluebird');
 var nodemailer = require('nodemailer');
 var smtpTransport = nodemailer.createTransport('SMTP', {
     service: 'Gmail',
@@ -125,12 +125,12 @@ router.put('/reset/:token', function(req,res,next){
         _.extend(user, req.body);
         return user.save();
     })
-    .then(function(savedUser){
+    .then(function(){
         res.sendStatus(201);
     })
     .catch(next);
 });
-    
+
 
 //CART
 

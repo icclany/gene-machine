@@ -12,7 +12,7 @@ app.factory('AdminFactory', function($http, $state){
   AdminFactory.deleteUser = function(user){
     var areYouSure = confirm("Are you sure you want to delete this user?");
     if(areYouSure){
-      $http.delete('/api/users/' + user).then(function(anything){
+      $http.delete('/api/users/' + user).then(function(){
         $state.go($state.current, {}, {reload:true});
       });
     }
@@ -21,7 +21,7 @@ app.factory('AdminFactory', function($http, $state){
   AdminFactory.deleteProduct = function(product){
     var areYouSure = confirm("Delete this product?");
     if(areYouSure){
-      $http.delete('/api/products/' + product).then(function(anything){
+      $http.delete('/api/products/' + product).then(function(){
         $state.go($state.current, {}, {reload:true});
       });
     }

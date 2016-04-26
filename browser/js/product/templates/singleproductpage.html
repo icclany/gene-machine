@@ -8,7 +8,6 @@
  -  <span class="glyphicon glyphicon-list-alt
  -" ng-show="theProduct.stock <= 0"> OUT OF STOCK :(</span>
     <div ng-repeat="review in theProduct.reviews">
-      <p>Review object is: {{review}}</p>
       <p>Stars: {{review.numStars}}</p>
       <p>Review by: {{review.user.username}}</p>
       <p>{{review.text}}</p>

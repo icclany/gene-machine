@@ -4,7 +4,7 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
     CartFactory.cart = [];
     var populated = false;
 
-    
+
     var CartedProduct = function(id, qty){
         this._id = id;
         this.quantity = qty;
@@ -59,7 +59,7 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
     CartFactory.populate = function(data){
         if (CartFactory.cart.length === 0) {return; }
         CartFactory.cart = ProductFactory.filterInventory(CartFactory.cart);
-        
+
     };
 
 
@@ -83,7 +83,7 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
             }
         }
         console.log(tempCart);
-       
+
         console.log(CartFactory.cart);
     };
 
@@ -97,7 +97,7 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
         } else {
             $cookies.putObject('genemachine', exportedCart);
         }
-        
+
     };
 
     CartFactory.finishOrder = function(shipinfo, billinfo, user) {

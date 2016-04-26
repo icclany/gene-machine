@@ -11,12 +11,13 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
                 { label: 'About', state: 'about' },
                 { label: 'Products', state: 'allProducts' },
                 { label: 'Members Only', state: 'membersOnly', auth: true },
+                { label: 'Admin', state: 'adminHome', admin: true}
             ];
 
-            scope.adminItems = [
-              { label: 'AU',  state: 'adminUsers', admin: true }, // needs to only be visible for admin
-              { label: 'AP', state: 'adminProducts', admin: true }
-            ];
+            // scope.adminItems = [
+            //   { label: 'A-Users',  state: 'adminUsers', admin: true }, // needs to only be visible for admin
+            //   { label: 'A-Products', state: 'adminProducts', admin: true }
+            // ];
 
             scope.user = null;
 

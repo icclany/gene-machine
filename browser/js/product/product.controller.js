@@ -9,7 +9,7 @@ app.controller('ProductController', function($scope, theProduct, ProductFactory,
 
 });
 
-app.controller('AllProductsController', function($scope, allProducts, ProductFactory) {
+app.controller('AllProductsController', function($scope, allProducts) {
 
     $scope.products = allProducts;
     var tags = allProducts.reduce(function(orig, element) {

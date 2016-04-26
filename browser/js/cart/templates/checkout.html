@@ -1,65 +1,20 @@
 <div>
   <h1>Confirm Your Order</h1>
   <div ng-repeat="cartItem in cart">
-    <img class="cart-thumb" ng-src="{{cartItem.description.image}}" ui-sref="product({productId: cartItem.description._id})">
-    <h5>Item: {{cartItem.description.name}}</h5>
-    <h5>Price: {{cartItem.description.price}}</h5>
-    <h5>Quantity: {{cartItem.quantity}}</h5>
-  </div>
-  <h2>Your total is ${{total}}!!</h2>
-  <form name="shippingbilling">
-    <div>
-      <h2>Shipping info</h2>
-      <select ng-model="shipping" data-ng-options="address as address.name for address in user.address">
-        <option value="">Select Account</option>
-      </select>
-
-
-      <label>Name:</label>
-      <input type="text" ng-model="shipping.name">
-      <br>
-      <label>Street:</label>
-      <input type="text" ng-model="shipping.street">
-      <br>
-      <label>City:</label>
-      <input type="text" ng-model="shipping.city">
-      <br>
-      <label>Zipcode:</label>
-      <input type="text" ng-model="shipping.zipCode">
-      <br>
+    <div class="panel panel-primary" id="single-product-panel">
+      <div class="panel-body">
+        <img class="cart-thumb" height="100px" width="500px" ng-src="{{cartItem.description.image}}" ui-sref="product({productId: cartItem.productInfo._id})">
+      </div>
+      <div class="panel-footer">
+        <h1>{{cartItem.description.name}}</h1>
+        <h3 id="cart-price">${{cartItem.description.price * cartItem.quantity}}</h3>
+        <h5 id="quantity">Quantity: <input size= "20" id="quantity-input" ng-model="cartItem.quantity" ng-keypress="updateQuantity($event, cartItem)" type="number" value={{cartItem.quantity}}> </h5>
+        <button type="button" id="remove-from-cart" class="btn btn-danger" ng-click="removeFromCart(cartItem)">Remove from Cart</span>
+        </div>
+      </div>
     </div>
-    <div>
-      
-      <h2>Billing info</h2>
-      <select ng-model="billing" data-ng-options="address as payment.name for payment in user.paymentInfo">
-        <option value="">Select Account</option>
-      </select>
-      <h3>Credit Card Information</h3>
-      <label>Name:</label>
-      <input type="text" ng-model="billing.name">
-      <br>
-      <label>Number:</label>
-      <input type="text" ng-model="billing.ccNum">
-      <br>
-      <label>Expiration Date:</label>
-      <input type="text" ng-model="billing.ccExpiration">
-      <br>
-      <h3>Billing Address</h3>
-      <label>Name:</label>
-      <input type="text" ng-model="billing.Address.name">
-      <br>
-      <label>Street:</label>
-      <input type="text" ng-model="billing.Address.street">
-      <br>
-      <label>City:</label>
-      <input type="text" ng-model="billing.Address.city">
-      <br>
-      <label>Zipcode:</label>
-      <input type="text" ng-model="billing.Address.zipCode">
-      <br>
-    </div>
-  </form>
+  <h2>Your total is ${{total}}</h2>
 
-  <button class="checkout glyphicon glyphicon-usd" ng-click="checkout()">Finish Checkout</button>
-  <button type="button" class="btn btn-primary" ng-click="openStripe()">Pay with Stripe</button>
+  <button class="btn btn-primary" ui-sref="shippingBilling">Proceed to shipping and billing</button>
+
 </div>

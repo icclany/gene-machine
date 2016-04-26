@@ -11,6 +11,38 @@ single-product {
   padding: 10px;
 }
 
+.all-products {
+  display: flex;
+  justify-content: center;
+}
+
+// #remove-from-cart {
+//   margin-left: 33%;
+// }
+
+// #cart-price {
+//   float: right;
+// }
+
+// #quantity {
+//   float: right;
+// }
+
+#shipping-billing-form {
+  background-color: #cce0ff;
+  background-color: rgba(255,255,255,0.5);
+}
+
+#quantity-input {
+  width: 40px;
+}
+
+#single-product-panel {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
 #single-product-image {
   margin-left: 25%;
     padding: 9px;

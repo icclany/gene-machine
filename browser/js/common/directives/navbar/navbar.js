@@ -11,10 +11,10 @@ app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, CartFacto
                 { label: 'About', state: 'about' },
                 { label: 'Products', state: 'allProducts' },
                 { label: 'Members Only', state: 'membersOnly', auth: true },
-                { label: 'Admin', state: 'adminHome', admin: true}
             ];
 
             scope.adminItems = [
+                { label: 'Admin', state: 'adminHome', admin: true},
                 { label: 'AU', state: 'adminUsers', admin: true },
                 { label: 'AP', state: 'adminProducts', admin: true }
             ];
@@ -30,7 +30,6 @@ app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, CartFacto
             };
 
             var setUser = function() {
-                // If there is a user
                 AuthService.getLoggedInUser().then(function(user) {
                     scope.user = user;
                 });

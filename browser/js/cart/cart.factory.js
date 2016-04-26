@@ -92,15 +92,12 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
     };
 
     CartFactory.saveInfo = function(user, addressInfo, billingInfo) {
-        console.log("IN SAVEINFO")
-         if (user) {
-            console.log("has user")
+         if (user._id) {
             return $http.put('/api/users/'+user._id+'/checkout', {address: addressInfo, paymentInfo: billingInfo});
-        }
+        };
     };
 
     CartFactory.finishOrder = function(shipinfo, billinfo, user) {
-
         return $http.post('/api/purchases/', {
             items: CartFactory.cart,
             total: CartFactory.getTotal(),

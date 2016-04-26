@@ -3,6 +3,10 @@ var mongoose = require('mongoose');
 var AddressSchema = mongoose.model('Address').schema;
 
 var paymentInfoSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
   brand: {
     type: String,
     required: true
@@ -11,7 +15,7 @@ var paymentInfoSchema = new mongoose.Schema({
   ccNum: {
     type: String
   },
-  ccExpiration: {
+  ccExp: {
     type: String
   }
 });

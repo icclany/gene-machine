@@ -31,7 +31,7 @@
     <div>
 
       <h2>Billing info</h2>
-      <select ng-model="billing" data-ng-options="address as payment.name for payment in user.paymentInfo">
+      <select ng-model="billing" data-ng-options="payment as payment.brand for payment in user.paymentInfo">
         <option value="">Select Account</option>
       </select>
       <h3>Credit Card Information</h3>
@@ -41,21 +41,23 @@
       <label>Number:</label>
       <input type="text" ng-model="billing.ccNum">
       <br>
+      <label>Type:</label>
+      <input type="text" ng-model="billing.brand">
       <label>Expiration Date:</label>
-      <input type="text" ng-model="billing.ccExpiration">
+      <input type="text" ng-model="billing.ccExp">
       <br>
       <h3>Billing Address</h3>
       <label>Name:</label>
-      <input type="text" ng-model="billing.Address.name">
+      <input type="text" ng-model="billing.billingAddress.name">
       <br>
       <label>Street:</label>
-      <input type="text" ng-model="billing.Address.street">
+      <input type="text" ng-model="billing.billingAddress.street">
       <br>
       <label>City:</label>
-      <input type="text" ng-model="billing.Address.city">
+      <input type="text" ng-model="billing.billingAddress.city">
       <br>
       <label>Zipcode:</label>
-      <input type="text" ng-model="billing.Address.zipCode">
+      <input type="text" ng-model="billing.billingAddress.zipCode">
       <br>
     </div>
   </form>

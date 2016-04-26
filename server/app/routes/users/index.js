@@ -98,7 +98,16 @@ router.post('/:id/cart', function(req, res, next) {
     req.requestedUser.cart = req.body.cart;
     req.requestedUser.save()
         .then(function(savedUser) {
-            res.send(req.requestedUser);
+            res.send(req.savedUser);
+        })
+        .catch(next);
+});
+
+router.post('/:id/wishlist/:wishlistName', function(req, res, next) {
+    req.requestedUser.wishlist[req.body.wishlistName] = req.body.wishlist;
+    req.requestedUser.save()
+        .then(function(savedUser) {
+            res.send(savedUser);
         })
         .catch(next);
 });

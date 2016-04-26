@@ -1,10 +1,39 @@
 'use strict';
 
-app.controller('ProductController', function($scope, theProduct, ProductFactory, currentUser, CartFactory) {
+app.controller('ProductController', function($scope, $http, theProduct, ProductFactory, WishListFactory, currentUser, CartFactory) {
     $scope.theProduct = theProduct;
+    $scope.user = currentUser;
+
+     $scope.dynamicPopover = {
+    
+    templateUrl: 'js/product/templates/popoverTemplate.html',
+    title: 'Title'
+  };
+  $scope.user.activeWishlist = null;
+
+  $scope.placement = {
+    options: [
+      'top',
+      'top-left',
+      'top-right',
+      'bottom',
+      'bottom-left',
+      'bottom-right',
+      'left',
+      'left-top',
+      'left-bottom',
+      'right',
+      'right-top',
+      'right-bottom'
+    ],
+    selected: 'top'
+  };
 
     $scope.addToCart = function() {
         CartFactory.push(theProduct._id, 1, currentUser);
+    };
+    $scope.addToWishList = function() {
+        WishListFactory.push(theProduct._id, 1, currentUser);
     };
 
 });

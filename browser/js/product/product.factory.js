@@ -18,6 +18,13 @@ app.factory('ProductFactory', function($http) {
         return $http.get('/api/reviews');
     };
 
+    ProductFactory.addToWishList = function(product, user){
+        return $http.post('/api/users/'+user._id+'/wishlist', {wishlist: product})
+            .then(function(updatedUser){
+                return updatedUser.data;
+            });
+    };
+
     ProductFactory.addToCart = function(product, user) {
         // If user is logged in...
         if (user) {

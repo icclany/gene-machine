@@ -1,0 +1,9 @@
+<div>
+	<h4>Which Wishlist Would You Like to Use?</h4>
+	<select ng-model='user.activeWishlist' name='wlselect'>
+		<option value='new'>New WishList</option>
+        <option value='{{wl.name}}' ng-repeat="wl in user.wishlist">{{wl.name}}</option>
+    </select>
+    <h4>Please Name Your WishList</h4>
+    <input ng-model='user.activeWishlist'></input>
+</div>

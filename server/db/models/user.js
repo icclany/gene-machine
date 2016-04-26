@@ -35,6 +35,8 @@ var userSchema = new mongoose.Schema({
       required: true
     },
     cart: {},
+    wishlist:{},
+    activeWishlist: String,
     address: [AddressSchema],
     paymentInfo: [PaymentSchema],
     reviews: {

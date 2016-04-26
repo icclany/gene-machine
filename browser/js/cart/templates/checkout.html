@@ -3,7 +3,7 @@
   <div ng-repeat="cartItem in cart">
     <div class="panel panel-primary" id="single-product-panel">
       <div class="panel-body">
-        <img class="cart-thumb" height="100px" width="500px" ng-src="{{cartItem.description.image}}" ui-sref="product({productId: cartItem.productInfo._id})">
+        <img class="cart-thumb" height="100px" width="500px" ng-src="{{cartItem.description.image}}" ui-sref="product({productId: cartItem.description._id})">
       </div>
       <div class="panel-footer">
         <h1>{{cartItem.description.name}}</h1>

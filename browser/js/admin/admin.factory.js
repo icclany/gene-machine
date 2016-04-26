@@ -39,6 +39,23 @@ app.factory('AdminFactory', function($http, $state){
       $state.go($state.current, {}, {reload:true});
     });
   };
+  AdminFactory.getPurchases = function(){
+    return $http.get('/api/purchases/')
+      .then(function(purchases){
+        return purchases.data;
+      });
+  };
+
+  AdminFactory.shipPurchase = function(purchase){
+    return $http.put('/api/purchases/'+purchase._id)
+    .then(function(shippedPurchase){
+      return $http.post('/api/users/email', {email: purchase.email, text: 'Your GeneMachine order, '+purchase._id+', has shipped!', subject: 'GeneMachine Order Shipped'})
+        .then(function(emailSent){
+          console.log(shippedPurchase);
+          return shippedPurchase.data;
+        });
+    });
+  };
 
   return AdminFactory;
 });

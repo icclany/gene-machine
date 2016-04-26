@@ -6,7 +6,6 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Address = mongoose.model('Address');
 var PaymentInfo = mongoose.model('PaymentInfo');
-var Purchase = mongoose.model('Purchase');
 var nodemailer = require('nodemailer');
 var smtpTransport = nodemailer.createTransport('SMTP', {
     service: 'Gmail',
@@ -16,13 +15,13 @@ var smtpTransport = nodemailer.createTransport('SMTP', {
     }
 });
 
-var ensureAuthenticated = function(req, res, next) {
-    if (req.isAuthenticated()) {
-        next();
-    } else {
-        res.status(401).end();
-    }
-};
+// var ensureAuthenticated = function(req, res, next) {
+//     if (req.isAuthenticated()) {
+//         next();
+//     } else {
+//         res.status(401).end();
+//     }
+// };
 
 router.param('id', function(req, res, next, id) {
     User.findById(id).exec()
@@ -75,7 +74,7 @@ router.put('/reset/:token', function(req,res,next){
         _.extend(user, req.body);
         return user.save();
     })
-    .then(function(savedUser){
+    .then(function(){
         res.sendStatus(201);
     })
     .catch(next);

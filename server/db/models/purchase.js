@@ -1,6 +1,5 @@
 'use strict';
 var mongoose = require('mongoose');
-var CartSchema = mongoose.model('Cart').schema;
 
 var purchaseSchema = new mongoose.Schema({
   items: Array,

@@ -8,7 +8,7 @@ app.config(function($stateProvider) {
         controller: 'CartCtrl',
         resolve: {
             currentUser: function(AuthService) {
-                return AuthService.getLoggedInUser();
+                return AuthService.getLoggedInUser() || {};
             },
             cart: function(ProductFactory, currentUser) {
                 return ProductFactory.getCart(currentUser);
@@ -101,7 +101,7 @@ app.controller('CartCtrl', function($scope, $state, cart, currentUser, ProductFa
     };
 
     $scope.removeFromCart = function(cartItem) {
-        return ProductFactory.removeFromCart(currentUser, cartItem.productInfo).then(function(res) {
+        return ProductFactory.removeFromCart(currentUser, cartItem.productInfo).then(function() {
             $state.go($state.current, {}, { reload: true });
         });
     };

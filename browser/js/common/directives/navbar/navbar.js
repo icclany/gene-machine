@@ -1,10 +1,10 @@
-app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) {
+app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, $state) {
 
     return {
         restrict: 'E',
         scope: {},
         templateUrl: 'js/common/directives/navbar/navbar.html',
-        link: function (scope) {
+        link: function(scope) {
 
             scope.items = [
                 { label: 'Home', state: 'home' },
@@ -14,29 +14,33 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
             ];
 
             scope.adminItems = [
-              { label: 'AU',  state: 'adminUsers', admin: true }, // needs to only be visible for admin
-              { label: 'AP', state: 'adminProducts', admin: true }
+                { label: 'AU', state: 'adminUsers', admin: true },
+                { label: 'AP', state: 'adminProducts', admin: true }
             ];
 
-            scope.user = null;
-
-            scope.isLoggedIn = function () {
+            scope.isLoggedIn = function() {
                 return AuthService.isAuthenticated();
             };
 
-            scope.logout = function () {
-                AuthService.logout().then(function () {
-                   $state.go('home');
+            scope.logout = function() {
+                AuthService.logout().then(function() {
+                    $state.go('home');
                 });
             };
 
-            var setUser = function () {
-                AuthService.getLoggedInUser().then(function (user) {
+            var setUser = function() {
+                AuthService.getLoggedInUser().then(function(user) {
                     scope.user = user;
                 });
             };
 
-            var removeUser = function () {
+            // scope.cartSize = function() {
+            //     return scope.user.cart.reduce(function(prev, current) {
+            //         return ({quantity: prev.quantity + current.quantity});
+            //     });
+            // };
+
+            var removeUser = function() {
                 scope.user = null;
             };
 

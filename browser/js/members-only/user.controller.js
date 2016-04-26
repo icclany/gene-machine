@@ -18,7 +18,7 @@ app.controller('UserCtrl', function($scope, $state, User, UserSettingsFact, Purc
             user: $scope.loggedInUser._id,
             product: item.productInfo._id
         })
-        .then(function(review) {
+        .then(function() {
              $state.go($state.current, {}, { reload: true });
         });
     };
@@ -27,7 +27,7 @@ app.controller('UserCtrl', function($scope, $state, User, UserSettingsFact, Purc
         return ProductFactory.getReviews(item.productInfo._id)
         .then(function(product) {
             for (let i = 0; i < product.reviews.length; i++) {
-                if (product.reviews[i].user === loggedInUser._id) {return true};
+                if (product.reviews[i].user === $scope.loggedInUser._id) {return true};
             }
             return false;
         });
@@ -42,8 +42,7 @@ app.controller('UserCtrl', function($scope, $state, User, UserSettingsFact, Purc
 			$scope.newBilling.billingAddress = $scope.newBillingAddress;
 			$scope.user.paymentInfo.push($scope.newBilling);
 		}
-
-	   var user = JSON.parse(angular.toJson($scope.user));
+        var user = JSON.parse(angular.toJson($scope.user));
 		UserSettingsFact.updateUser(user)
 		.then(function(returnedData){
 			$scope.user = returnedData;
@@ -73,7 +72,6 @@ app.controller('UserCtrl', function($scope, $state, User, UserSettingsFact, Purc
         	$scope.incongruentPasswords = true;
         } else {
 			$scope.user.password = password.passwordA;
-
 			var user = JSON.parse(angular.toJson($scope.user));
 	        UserSettingsFact.updatePassword(user)
 			.then(function(returnedData){

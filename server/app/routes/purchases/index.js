@@ -34,7 +34,7 @@ router.post('/', function(req, res, next) {
                     };
                     return Purchase.create(donePurchase);
                 })
-                .then(function(purchase) {
+                .then(function() {
                     console.log("Purchase success");
                     res.sendStatus(201);
                 });

@@ -20,7 +20,7 @@
             </div>
 
             <div class="right-side">
-            <span class="glyphicon glyphicon-shopping-cart" ui-sref="cart"></span>
+            <span class="glyphicon glyphicon-shopping-cart" ui-sref="cart">{{cartSize().quantity}}</span>
             </div>
             <div ng-show="!user" class="right-side">
               <button ui-sref="signup" class="btn btn-primary">Signup</button>

@@ -16,6 +16,16 @@ var smtpTransport = nodemailer.createTransport('SMTP', {
     }
 });
 
+var findStreet;
+var findCC;
+var findAddress = function(address) {
+    return address.street === findStreet;
+};
+
+var findPayment = function(paymentInfo) {
+    return paymentInfo.ccNum === findCC;
+};
+
 router.param('id', function(req, res, next, id) {
     User.findById(id).exec()
         .then(function(user) {
@@ -66,13 +76,19 @@ router.put('/:id', function(req, res, next) {
 });
 
 router.put('/:id/checkout', function(req, res, next) {
-    // Save info to user
-    req.requestedUser.address.push(req.body.address);
-    req.requestedUser.paymentInfo.push(req.body.paymentInfo);
+    findStreet = req.body.address.street;
+    findCC = req.body.paymentInfo.ccNum;
+    // Check to see if info already exists, and saves to the user
+    if (!req.requestedUser.address.find(findAddress)) {
+            req.requestedUser.address.push(req.body.address);
+    };
+
+    if (!req.requestedUser.paymentInfo.find(findPayment)) {
+        req.requestedUser.paymentInfo.push(req.body.paymentInfo);
+    };
 
     req.requestedUser.save()
         .then(function(savedUser) {
-            console.log("saved info to user")
             res.send(req.requestedUser);
         })
         .catch(next);

@@ -1,68 +1,26 @@
 app.factory('ProductFactory', function($http) {
+    "use strict";
     var ProductFactory = {};
     var cart = {};
-    // var inventory;
-    var filters = {
-        // tags: "*",
-        // category: ['small', 'medium', 'large']
-    };
+    var inventory = [];
+
 
     ProductFactory.fetchAll = function() {
         return $http.get('/api/products').then(productArray => {
+            inventory = productArray.data;
             return productArray.data;
         });
     };
 
-    ProductFactory.getReviews = function() {
-        return $http.get('/api/reviews')
-    };
-
-    ProductFactory.addToCart = function(product, user) {
-        return $http.post('/api/users/' + user._id + '/cart', {
-                item: product
-            })
-            .then(function(res) {
-                if (cart[product._id]) {
-                        cart[product._id].quantity++;
-                    }
-                else {
-                    cart[product._id] = {
-                        quantity: 1,
-                        productinfo: product
-                    };
-                }
+    ProductFactory.filterInventory = function(cart){
+        return cart.map(function(cartProduct){
+            var invMatch = inventory.find(function(invProduct) {
+                return invProduct._id === cartProduct._id;
             });
-};
-
-ProductFactory.getCart = function(user) {
-    return $http.get('/api/users/' + user._id +'/cart')
-    .then(function(userCart) {
-        return userCart.data;
-    });
-};
-
-ProductFactory.updateQuantity = function(user, product, quantity) {
-    return $http.put('/api/users/'+ user._id +'/cart', {
-        productId: product._id,
-        quantity: quantity
-    });
-};
-
-ProductFactory.removeFromCart = function(user, product) {
-    return $http.delete('/api/users/'+ user._id +'/cart/'+ product._id);
-};
-
-ProductFactory.emptyCart = function() {
-    cart = [];
-};
-
-ProductFactory.numCart = function() {
-    return cart.length;
-};
-
-ProductFactory.getReviews = function(itemId) {
-    return $http.get('/api/products/'+itemId);
-};
+            cartProduct.description = invMatch;
+            return cartProduct;
+        });
+    };
 
 ProductFactory.setFilter = function(filterObj) {
     var categories = [];

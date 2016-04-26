@@ -8,7 +8,7 @@
         <div class="panel-footer">
           <h1>{{cartItem.description.name}}</h1>
           <h3 id="cart-price">${{cartItem.description.price * cartItem.quantity}}</h3>
-          <h5 id="quantity">Quantity: <input size= "20" id="quantity-input" ng-model="cartItem.quantity" ng-keypress="updateQuantity($event, cartItem)" type="number" value={{cartItem.quantity}}> </h5>
+          <h5 id="quantity">Quantity: <input size= "20" id="quantity-input" ng-model="cartItem.quantity" ng-keypress="updateQuantity(cartItem, $event)" type="number" value={{cartItem.quantity}}> </h5>
           <button type="button" id="remove-from-cart" class="btn btn-danger" ng-click="removeFromCart(cartItem)">Remove from Cart</span>
           </div>
         </div>

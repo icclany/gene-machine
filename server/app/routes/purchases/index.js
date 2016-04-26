@@ -17,7 +17,6 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next){
   Purchase.create(req.body).then(purchase=>{
-    console.log("in purchases route, i think i've created a purchase: ", purchase);
     res.json(purchase);
   })
   .catch(next);

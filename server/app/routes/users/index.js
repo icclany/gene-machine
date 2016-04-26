@@ -11,10 +11,20 @@ var nodemailer = require('nodemailer');
 var smtpTransport = nodemailer.createTransport('SMTP', {
     service: 'Gmail',
     auth: {
-      user: 'genemachine.agct@gmail.com',
-      pass: 'GeneMachine'
+        user: 'genemachine.agct@gmail.com',
+        pass: 'GeneMachine'
     }
 });
+
+var findStreet;
+var findCC;
+var findAddress = function(address) {
+    return address.street === findStreet;
+};
+
+var findPayment = function(paymentInfo) {
+    return paymentInfo.ccNum === findCC;
+};
 
 router.param('id', function(req, res, next, id) {
     User.findById(id).exec()
@@ -50,8 +60,6 @@ router.get('/', function(req, res, next) {
 router.get('/:id', function(req, res, next) {
     return req.requestedUser.getPurchases()
         .then(purchases => {
-            // console.log("got purchases")
-            // console.log(purchases)
             res.json(purchases);
         });
 });
@@ -65,6 +73,34 @@ router.put('/:id', function(req, res, next) {
             })
             .catch(next);
     } else res.sendStatus(401);
+});
+
+router.put('/:id/checkout', function(req, res, next) {
+    findStreet = req.body.address.street;
+    findCC = req.body.paymentInfo.ccNum;
+    // Check to see if info already exists, and saves to the user
+    if (!req.requestedUser.address.find(findAddress)) {
+            req.requestedUser.address.push(req.body.address);
+    };
+
+    if (!req.requestedUser.paymentInfo.find(findPayment)) {
+        req.requestedUser.paymentInfo.push(req.body.paymentInfo);
+    };
+
+    req.requestedUser.save()
+        .then(function(savedUser) {
+            res.send(req.requestedUser);
+        })
+        .catch(next);
+});
+
+router.post('/:id/cart', function(req, res, next) {
+    req.requestedUser.cart = req.body.cart;
+    req.requestedUser.save()
+        .then(function(savedUser) {
+            res.send(req.requestedUser);
+        })
+        .catch(next);
 });
 
 router.delete('/:id', function(req, res, next) {
@@ -81,58 +117,48 @@ router.delete('/:id', function(req, res, next) {
 router.post('/reset', function(req, res, next) {
     var token = User.generateSalt();
     User.findOne({ email: req.body.email })
-    .then(function(user) {
-        user.password = User.generateSalt();
-        user.resetPassword = token;
-        user.resetPasswordExpiration = Date.now() + 3600000; // 1 hour
-        return user.save();
-      })
-    .then(function(savedUser){
-        var mailOptions = {
-            to: savedUser.email,
-            from: 'GeneMachine.AGCT@google.com',
-            subject: 'Node.js Password Reset',
-            text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-            'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-            'http://73.215.163.200:1337/reset/' + token + '\n\n' +
-            'If you did not request this, please ignore this email and your password will remain unchanged.\n'
-        };
-        smtpTransport.sendMail(mailOptions, function(err, info) {
-            if (err){
-                console.error(err);
-            } else {
-                res.json('info', 'An e-mail has been sent to ' + savedUser.email + ' with further instructions.');
+        .then(function(user) {
+            user.password = User.generateSalt();
+            user.resetPassword = token;
+            user.resetPasswordExpiration = Date.now() + 3600000; // 1 hour
+            return user.save();
+        })
+        .then(function(savedUser) {
+            var mailOptions = {
+                to: savedUser.email,
+                from: 'GeneMachine.AGCT@google.com',
+                subject: 'Node.js Password Reset',
+                text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+                    'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                    'http://73.215.163.200:1337/reset/' + token + '\n\n' +
+                    'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+            };
+            smtpTransport.sendMail(mailOptions, function(err, info) {
+                if (err) {
+                    console.error(err);
+                } else {
+                    res.json('info', 'An e-mail has been sent to ' + savedUser.email + ' with further instructions.');
 
-            }
-        });
-    })
-    .catch(next);
-});
-
-router.put('/reset/:token', function(req,res,next){
-    User.findOne({resetPassword: req.params.token })
-    .then(function(user){
-        req.body.resetPassword = null;
-        req.body.resetPasswordExpiration = null;
-        _.extend(user, req.body);
-        return user.save();
-    })
-    .then(function(){
-        res.sendStatus(201);
-    })
-    .catch(next);
-});
-
-router.post('/:id/cart', function(req, res, next) {
-    console.log(req.requestedUser);
-    req.requestedUser.cart = req.body.cart;
-    console.log(req.requestedUser);
-    req.requestedUser.save()
-        .then(function(savedUser){
-            res.send(req.requestedUser);
+                }
+            });
         })
         .catch(next);
 });
+
+router.put('/reset/:token', function(req, res, next) {
+    User.findOne({ resetPassword: req.params.token })
+        .then(function(user) {
+            req.body.resetPassword = null;
+            req.body.resetPasswordExpiration = null;
+            _.extend(user, req.body);
+            return user.save();
+        })
+        .then(function() {
+            res.sendStatus(201);
+        })
+        .catch(next);
+});
+
 
 router.get('/:id/cart', function(req, res, next) {
     res.send(req.requestedUser.cart);

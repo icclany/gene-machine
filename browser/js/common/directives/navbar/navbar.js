@@ -1,4 +1,4 @@
-app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, $state) {
+app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, CartFactory, $state) {
 
     return {
         restrict: 'E',
@@ -11,7 +11,6 @@ app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, $state) {
                 { label: 'About', state: 'about' },
                 { label: 'Products', state: 'allProducts' },
                 { label: 'Members Only', state: 'membersOnly', auth: true },
-                { label: 'Admin', state: 'adminHome', admin: true}
             ];
 
             scope.isLoggedIn = function() {
@@ -30,11 +29,9 @@ app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, $state) {
                 });
             };
 
-            // scope.cartSize = function() {
-            //     return scope.user.cart.reduce(function(prev, current) {
-            //         return ({quantity: prev.quantity + current.quantity});
-            //     });
-            // };
+            scope.cartSize = function() {
+                return CartFactory.getSize();
+            };
 
             var removeUser = function() {
                 scope.user = null;

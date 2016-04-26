@@ -34,6 +34,16 @@ app.controller('AdminSingleProductCtrl', function($scope, theProduct, AdminFacto
     AdminFactory.updateProduct(product);
     $scope.updated = true;
   };
+});
 
-
+app.controller('AdminPurchaseCtrl', function($scope, $http, allPurchases, AdminFactory){
+  $scope.thePurchases = allPurchases;
+  $scope.shipPurchase = function(purchaseID){
+    AdminFactory.shipPurchase(purchaseID)
+      .then(function(shippedPurchase){
+        $scope.thePurchases.find(function(purchase){
+          return purchase._id === shippedPurchase._id;
+        }).shippingDate = shippedPurchase.shippingDate;
+      });
+  };
 });

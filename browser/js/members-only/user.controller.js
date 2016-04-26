@@ -1,6 +1,6 @@
+"use strict";
 
 app.controller('UserCtrl', function($scope, $state, User, UserSettingsFact, PurchaseHistory, ProductFactory) {
-	"use strict";
     $scope.user = User.subjectUser;
     $scope.loggedInUser = User.currentUser;
     $scope.newBilling = {};

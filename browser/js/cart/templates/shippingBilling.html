@@ -1,0 +1,95 @@
+<div id="shipping-billing-form">
+  <div class="container">
+    <h2>Shipping Info</h2>
+    <p>All fields are required</p>
+    <table class="table">
+      <thead>
+        <select ng-model="shipping" data-ng-options="address as address.name for address in user.address">
+          <option value="">Select Account</option>
+        </select>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Name</td>
+          <td>Street</td>
+          <td>City</td>
+          <td>Zip Code</td>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" ng-model="shipping.name">
+          </td>
+          <td>
+            <input type="text" ng-model="shipping.street">
+          </td><td>
+            <input type="text" ng-model="shipping.city">
+          </td><td>
+            <input type="text" ng-model="shipping.zipCode">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="container">
+    <h2>Billing Info</h2>
+    <p>All fields are required</p>
+    <table class="table">
+      <thead>
+        <select ng-model="billing" data-ng-options="payment as payment.brand for payment in user.paymentInfo">
+        <option value="">Select Account</option>
+      </select>
+
+      </thead>
+      <tbody>
+        <h3>Credit Card Information</h3>
+        <tr>
+          <td>Name</td>
+          <td>Number</td>
+          <td>Expiration Date</td>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" ng-model="billing.name">
+          </td>
+          <td>
+            <input type="text" ng-model="billing.brand">
+          </td>
+          <td>
+            <input type="text" ng-model="billing.ccNum">
+          </td>
+          <td>
+            <input type="text" ng-model="billing.ccExp">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table">
+      <h3>Billing Address</h3>
+      <tbody>
+        <tr>
+          <td>Name</td>
+          <td>Street</td>
+          <td>City</td>
+          <td>Zip Code</td>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" ng-model="billing.Address.name">
+          </td>
+          <td>
+            <input type="text" ng-model="billing.Address.street">
+          </td>
+          <td>
+            <input type="text" ng-model="billing.Address.city">
+          </td>
+          <td>
+            <input type="text" ng-model="billing.Address.zipCode">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button class="checkout btn btn-success" ng-click="finishCheckout()">Finish Checkout</button>
+  <button type="button" class="btn btn-primary" ng-click="openStripe()">Pay with Stripe</button>
+</div>

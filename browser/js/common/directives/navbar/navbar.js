@@ -6,17 +6,13 @@ app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, CartFacto
         templateUrl: 'js/common/directives/navbar/navbar.html',
         link: function(scope) {
 
+
             scope.items = [
                 { label: 'Home', state: 'home' },
                 { label: 'About', state: 'about' },
                 { label: 'Products', state: 'allProducts' },
                 { label: 'Members Only', state: 'membersOnly', auth: true },
-            ];
-
-            scope.adminItems = [
-                { label: 'Admin', state: 'adminHome', admin: true},
-                { label: 'AU', state: 'adminUsers', admin: true },
-                { label: 'AP', state: 'adminProducts', admin: true }
+                { label: 'Admin', state: 'adminHome', admin: true}
             ];
 
             scope.isLoggedIn = function() {

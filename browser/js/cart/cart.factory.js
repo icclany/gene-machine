@@ -57,7 +57,7 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
         CartFactory.persist(userID);
     };
 
-    CartFactory.populate = function(data){
+    CartFactory.populate = function(){
         if (CartFactory.cart.length === 0) {return; }
         CartFactory.cart = ProductFactory.filterInventory(CartFactory.cart);
     };
@@ -106,11 +106,21 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
             paymentInfo: billinfo,
             address: shipinfo,
             })
-            .then(function() {
-                CartFactory.cart = [];
-                CartFactory.persist(user);
-                CartFactory.saveInfo(user, shipinfo, billinfo);
-            });
+        .then(function(completedOrder) {
+            
+            var productsPurchased = "%0AYour order, "+ completedOrder.data._id+" is processing.  You will receive a confirmation email when it ships.%0D";
+            productsPurchased =  '%0A'+productsPurchased + completedOrder.data.items.reduce(function(origin, ele){
+                return origin + '%0A'+ele.quantity+'x -'+ele.description.name+' - $'+ele.description.price * ele.quantity+'%0D';
+            }, '');
+            productsPurchased = productsPurchased+ '%0A'+productsPurchased + 'Total - $'+completedOrder.data.total + '%0D';
+            CartFactory.cart = [];
+            CartFactory.persist(user);
+            return $http.post('/api/users/email', {email: user.email, text: productsPurchased, subject: 'Your Gene Machine Order is Processing!'}); })
+        .then(function() {
+            CartFactory.cart = [];
+            CartFactory.persist(user);
+            CartFactory.saveInfo(user, shipinfo, billinfo);
+        });
     };
 
     return CartFactory;

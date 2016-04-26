@@ -114,32 +114,64 @@ router.delete('/:id', function(req, res, next) {
 router.post('/reset', function(req, res, next) {
     var token = User.generateSalt();
     User.findOne({ email: req.body.email })
-        .then(function(user) {
-            user.password = User.generateSalt();
-            user.resetPassword = token;
-            user.resetPasswordExpiration = Date.now() + 3600000; // 1 hour
-            return user.save();
-        })
-        .then(function(savedUser) {
-            var mailOptions = {
-                to: savedUser.email,
-                from: 'GeneMachine.AGCT@google.com',
-                subject: 'Node.js Password Reset',
-                text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-                    'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-                    'http://73.215.163.200:1337/reset/' + token + '\n\n' +
-                    'If you did not request this, please ignore this email and your password will remain unchanged.\n'
-            };
-            smtpTransport.sendMail(mailOptions, function(err, info) {
-                if (err) {
-                    console.error(err);
-                } else {
-                    res.json('info', 'An e-mail has been sent to ' + savedUser.email + ' with further instructions.');
+    .then(function(user) {
+        user.password = User.generateSalt();
+        user.resetPassword = token;
+        user.resetPasswordExpiration = Date.now() + 3600000; // 1 hour
+        return user.save();
+      })
+    .then(function(savedUser){
+        var mailOptions = {
+            to: savedUser.email,
+            from: 'GeneMachine.AGCT@google.com',
+            subject: 'Node.js Password Reset',
+            text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+            'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+            'http://73.215.163.200:1337/reset/' + token + '\n\n' +
+            'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+        };
+        smtpTransport.sendMail(mailOptions, function(err, info) {
+            if (err){
+                console.error(err);
+            } else {
+                res.json('info', 'An e-mail has been sent to ' + savedUser.email + ' with further instructions.');
 
-                }
-            });
-        })
-        .catch(next);
+            }
+        });
+    })
+    .catch(next);
+});
+
+router.post('/email', function(req, res, next) {
+    
+        var mailOptions = {
+            to: req.body.email,
+            from: 'GeneMachine.AGCT@google.com',
+            subject: req.body.subject,
+            text: req.body.text
+        };
+        smtpTransport.sendMail(mailOptions, function(err, info) {
+            if (err){
+                console.error(err);
+            } else {
+                res.json('info', 'An e-mail has been sent to ' + req.body.email+'.');
+
+            }
+        });
+});
+
+router.put('/reset/:token', function(req,res,next){
+    User.findOne({resetPassword: req.params.token })
+    .then(function(user){
+        req.body.resetPassword = null;
+        req.body.resetPasswordExpiration = null;
+        _.extend(user, req.body);
+        return user.save();
+    })
+    .then(function(){
+        res.sendStatus(201);
+    })
+    .catch(next);
 });
 
 router.put('/reset/:token', function(req, res, next) {

@@ -1,1 +1,24 @@
-<h3></h3>
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Purchase Date</th>
+        <th>Shipping Date</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="purchase in thePurchases">
+        <th>{{purchase.email}}</th>
+        <th>{{purchase.date}}</th>
+        <th>{{purchase.shippingDate}}</th>
+        <th>{{purchase.total}}</th>
+        <th>
+          <button class="glyphicon glyphicon-remove" ng-click="shipPurchase(purchase)">
+          </button>
+        </th>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,10 +1,6 @@
 app.factory('ProductFactory', function($http) {
     var ProductFactory = {};
-    var filters = {
-        // category: ['small', 'medium', 'large']
-    };
     var cart = {};
-
     var inventory;
 
     ProductFactory.fetchAll = function() {

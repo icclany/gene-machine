@@ -1,10 +1,8 @@
 'use strict';
 var crypto = require('crypto');
 var mongoose = require('mongoose');
-var CartSchema = mongoose.model('Cart').schema;
 var AddressSchema = mongoose.model('Address').schema;
 var PaymentSchema = mongoose.model('PaymentInfo').schema;
-var Cart = mongoose.model('Cart');
 var _ = require('lodash');
 
 var userSchema = new mongoose.Schema({
@@ -23,8 +21,7 @@ var userSchema = new mongoose.Schema({
     },
     isAdmin: {
       type: Boolean,
-      default: false,
-      required: true
+      default: false
     },
     firstName: {
       type: String,
@@ -79,9 +76,7 @@ userSchema.pre('save', function (next) {
         this.salt = this.constructor.generateSalt();
         this.password = this.constructor.encryptPassword(this.password, this.salt);
     }
-
     next();
-
 });
 
 userSchema.statics.generateSalt = generateSalt;

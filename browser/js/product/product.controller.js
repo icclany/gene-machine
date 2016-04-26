@@ -12,6 +12,7 @@ app.controller('ProductController', function($scope, theProduct, ProductFactory,
 app.controller('AllProductsController', function($scope, allProducts) {
 
     $scope.products = allProducts;
+    var categories = [{name: 'small', status: true}, {name: 'medium', status: true}, {name: 'large', status: true}];
 
     var tags = allProducts.reduce(function(orig, element) {
         element.tags.forEach(function(tag){
@@ -23,20 +24,6 @@ app.controller('AllProductsController', function($scope, allProducts) {
             }
         });
         return orig;
-    }, []);
-
-    var categories = allProducts.reduce(function(orig, element) {
-        if (element.category && (!orig.find(function(x){
-            return x.name === element.category;
-        }))) {
-            var obj = {};
-            obj.status = true;
-            obj.name = element.category;
-            orig.push(obj);
-           return orig;
-        } else {
-            return orig;
-        }
     }, []);
 
     $scope.typeCategoryClick = function($event){

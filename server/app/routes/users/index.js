@@ -4,8 +4,6 @@ module.exports = router;
 var _ = require('lodash');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-var Address = mongoose.model('Address');
-var PaymentInfo = mongoose.model('PaymentInfo');
 
 var nodemailer = require('nodemailer');
 var smtpTransport = nodemailer.createTransport('SMTP', {
@@ -16,12 +14,12 @@ var smtpTransport = nodemailer.createTransport('SMTP', {
     }
 });
 
+// Helper functions
 var findStreet;
 var findCC;
 var findAddress = function(address) {
     return address.street === findStreet;
 };
-
 var findPayment = function(paymentInfo) {
     return paymentInfo.ccNum === findCC;
 };
@@ -35,7 +33,6 @@ router.param('id', function(req, res, next, id) {
         })
         .catch(next);
 });
-
 
 router.post('/', function(req, res, next) {
     if (req.body.username.length && req.body.password.length) {
@@ -61,7 +58,8 @@ router.get('/:id', function(req, res, next) {
     return req.requestedUser.getPurchases()
         .then(purchases => {
             res.json(purchases);
-        });
+        })
+        .catch(next);
 });
 
 router.put('/:id', function(req, res, next) {
@@ -82,14 +80,13 @@ router.put('/:id/checkout', function(req, res, next) {
     if (!req.requestedUser.address.find(findAddress)) {
             req.requestedUser.address.push(req.body.address);
     };
-
     if (!req.requestedUser.paymentInfo.find(findPayment)) {
         req.requestedUser.paymentInfo.push(req.body.paymentInfo);
     };
-
+    //Save info to the user
     req.requestedUser.save()
-        .then(function(savedUser) {
-            res.send(req.requestedUser);
+        .then(function() {
+            res.sendStatus(200);
         })
         .catch(next);
 });
@@ -98,7 +95,7 @@ router.post('/:id/cart', function(req, res, next) {
     req.requestedUser.cart = req.body.cart;
     req.requestedUser.save()
         .then(function(savedUser) {
-            res.send(req.requestedUser);
+            res.send(savedUser);
         })
         .catch(next);
 });

@@ -20,7 +20,6 @@ router.param('id', function(req, res, next, id) {
 router.get('/', function(req, res, next) {
     Purchase.find({})
     .then(purchases => {
-        console.log('check out these purchases bro. in the router', purchases);
         res.json(purchases);
     })
     .catch(next);

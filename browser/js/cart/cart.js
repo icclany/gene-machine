@@ -47,6 +47,26 @@ app.config(function($stateProvider) {
       url: '/confirmation',
       templateUrl: 'js/cart/templates/confirm.html',
     });
+
+    $stateProvider.state('shippingBilling', {
+      url: '/checkout/shippingBilling',
+      templateUrl: 'js/cart/templates/shippingBilling.html',
+      controller: 'CheckoutCtrl',
+      resolve: {
+          currentUser: function(AuthService) {
+              return AuthService.getLoggedInUser();
+          },
+          cart: function(CartFactory, currentUser, ProductFactory) {
+              return ProductFactory.fetchAll()
+                  .then(function(allProducts){
+                      return CartFactory.populate(allProducts);
+                  });
+          },
+          total: function(CartFactory){
+              return CartFactory.getTotal();
+          }
+      }
+    });
 });
 
 app.controller('CheckoutCtrl', function($state, $scope, total, currentUser, CartFactory) {

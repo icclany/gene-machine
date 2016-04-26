@@ -1,0 +1,25 @@
+<div id="previous-purchases">
+  <div ng-repeat="purchase in purchases">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 style="float: right;">Ordered: {{purchase.date}}</h4>
+          <h4>Total: ${{purchase.total}} </h4>
+          <!-- <h4>Shipping Status: Pending</h4> -->
+        </div>
+        <div class="panel-body">
+          <div ng-repeat="item in purchase.items">
+          <h5><a href="/product/{{item.description._id}}">{{item.description.name}}</a></h5>
+          <h5>Price: ${{item.description.price}}</h5>
+          <h5>Quantity: {{item.quantity}}</h5>
+          <span>
+            <h4>Review {{item.description.name}}: </h4>
+            <input ng-model="review.numStars" type="text" placeholder="Stars">
+            <input ng-model="review.text" type="text" placeholder="Leave a review">
+            <button ng-click="submitReview(item, review)">Submit Review</button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

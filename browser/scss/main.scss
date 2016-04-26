@@ -21,17 +21,27 @@ body {
   justify-content: space-between;
 }
 
+#edit-account-info {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(255,255,255,0.7);
+}
+
+#single-product-admin {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
 @mixin clearfix {
   &:after {
     content: "";
     display: table;
     clear: both;
   }
-}
-
-.all-products {
-  display: flex;
-  justify-content: center;
 }
 
 .homepage-image {
@@ -65,10 +75,19 @@ body {
   justify-content: space-between;
 }
 
+#user-page-jumbotron {
+  width: 80%;
+  height: 50%;
+  margin-left: 100px;
+  margin-top: 100px;
+  background-color: rgba(255,255,255,0.7);
+}
+
 sidebar {
   height: 100%;
   width: 20vw;
   background-color: lightgrey;
+  background-color: rgba(255,255,255,0.9);
   padding: 0 20px;
 }
 

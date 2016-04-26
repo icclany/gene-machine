@@ -1,0 +1,55 @@
+<!-- <div ui-view></div>
+  <form class='form-group' name="sidebarForm" novalidate>
+    <div type='button' class="btn" ui-sref='.settings'>Edit User Information</div>
+    <div type='button' class="btn" ui-sref='.updatePassword'>Change Password</div>
+    <div type='button' class="btn">Update Address Information</br>
+      <select ng-change='editOnFileAddress()' name='addressSelect' ng-model='addressSelected'>
+        <option value='null'>Choose Address</option>
+        <option value='{{address._id}}' ng-repeat="address in user.address">{{address.name}}</option>
+      </select>
+    </div>
+    <div type='button' class='btn' ui-sref='.address'>Save New Address</div>
+    <div type='button' class="btn">Update Billing Information</br>
+      <select ng-change='editOnFileBilling()' name='billingSelect' ng-model='billingSelected'>
+        <option value='null'>Choose Billing Profile</option>
+        <option value='{{billing._id}}' ng-repeat="billing in user.paymentInfo">{{billing.name}}</option>
+      </select>
+    </div>
+    <div type='button' class='btn' ui-sref='.billing'>Save New Billing Information</div>
+    <label>Admin Status -
+      <input type='checkbox' ng-show='loggedInUser.isAdmin' ng-model='user.isAdmin'></input>
+    </label>
+    <button type='button' ng-show='loggedInUser.isAdmin' ng-click='submitEdits()'>Update {{user.name}} Admin Status</button>
+  </form> -->
+
+<div class="jumbotron" id="edit-account-info">
+  <form>
+    <fieldset class="form-group">
+      <button type='button' class="btn" ui-sref='.settings'>Edit User Information</button>
+      <br>
+      <button type='button' class="btn" ui-sref='.updatePassword'>Change Password</button>
+      <br>
+      <button type='button' class="btn" ui-sref=".editAddress">Update Address Information<br>
+        <select ng-change='editOnFileAddress()' name='addressSelect' ng-model='addressSelected'>
+          <option value='null'>Choose Address</option>
+          <option value='{{address._id}}' ng-repeat="address in user.address">{{address.name}}</option>
+        </select>
+      <br>
+      <div type='button' class="btn" ui-sref=".editBilling">Update Billing Information <br>
+        <select ng-change='editOnFileBilling()' name='billingSelect' ng-model='billingSelected'>
+          <option value='null'>Choose Billing Profile</option>
+          <option value='{{billing._id}}' ng-repeat="billing in user.paymentInfo">{{billing.name}}</option>
+        </select>
+      </div>
+      <br>
+      <label>Admin Status -
+        <input type='checkbox' ng-show='loggedInUser.isAdmin' ng-model='user.isAdmin'></input>
+      </label>
+  </form>
+
+  <div>
+    <h2>Editing Area: </h2>
+    <div ui-view></div>
+  </div>
+
+</div>

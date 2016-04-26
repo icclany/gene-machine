@@ -61,9 +61,14 @@ app.controller('CheckoutCtrl', function($state, $scope, total, currentUser, Cart
             currentUser._id = null;
             currentUser.email = $scope.shipping.name;
         }
+        $scope.billing.brand = 'Credit Card';
         CartFactory.finishOrder($scope.shipping, $scope.billing, currentUser)
-        .then(function() {
+        .then(function(sentEmail) {
+            console.log(sentEmail);
             $state.go('orderConfirmation');
+        })
+        .catch(function(error){
+            console.error(error);
         });
     };
 

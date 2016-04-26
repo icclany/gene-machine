@@ -58,8 +58,8 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
     CartFactory.populate = function(data){
         if (CartFactory.cart.length === 0) {return; }
         CartFactory.cart = ProductFactory.filterInventory(CartFactory.cart);
-        console.log("POPULATED")
-        console.log(CartFactory.cart)
+        console.log("POPULATED");
+        console.log(CartFactory.cart);
     };
 
     CartFactory.initialize = function(user){
@@ -105,11 +105,22 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
             paymentInfo: billinfo,
             address: shipinfo,
             })
-            .then(function(completedOrder) {
-                console.log(completedOrder);
-                CartFactory.cart = [];
-                CartFactory.persist(user);
-            });
+        .then(function(completedOrder) {
+            console.log(completedOrder);
+            var productsPurchased = "<h3>Your order, "+ completedOrder.data._id+" is processing.  You will receive a confirmation email when it ships.</h3><ul>";
+            console.log(productsPurchased);
+            productsPurchased =  productsPurchased + completedOrder.data.items.reduce(function(origin, ele){
+                return origin + '<li>'+ele.quantity+'x -'+ele.description.name+' - $'+ele.description.price * ele.quantity+'</li>';
+            }, '');
+            console.log(productsPurchased);
+            productsPurchased = productsPurchased+ '</ul><h2>'+productsPurchased + 'Total - $'+completedOrder.data.total + '</h2';
+            
+            console.log(productsPurchased);
+            CartFactory.cart = [];
+            CartFactory.persist(user);
+            return $http.post('/api/users/email', {email: user.email, text: productsPurchased, subject: 'Your Gene Machine Order is Processing!'}); 
+        })
+;
     };
 
     return CartFactory;

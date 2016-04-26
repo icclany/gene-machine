@@ -109,6 +109,24 @@ router.post('/reset', function(req, res, next) {
     .catch(next);
 });
 
+router.post('/email', function(req, res, next) {
+    
+        var mailOptions = {
+            to: req.body.email,
+            from: 'GeneMachine.AGCT@google.com',
+            subject: req.body.subject,
+            text: req.body.text
+        };
+        smtpTransport.sendMail(mailOptions, function(err, info) {
+            if (err){
+                console.error(err);
+            } else {
+                res.json('info', 'An e-mail has been sent to ' + req.body.email+'.');
+
+            }
+        });
+});
+
 router.put('/reset/:token', function(req,res,next){
     User.findOne({resetPassword: req.params.token })
     .then(function(user){

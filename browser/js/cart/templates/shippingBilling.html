@@ -36,9 +36,10 @@
     <p>All fields are required</p>
     <table class="table">
       <thead>
-        <select ng-model="billing" data-ng-options="address as payment.name for payment in user.paymentInfo">
-          <option value="">Select Account</option>
-        </select>
+        <select ng-model="billing" data-ng-options="payment as payment.brand for payment in user.paymentInfo">
+        <option value="">Select Account</option>
+      </select>
+
       </thead>
       <tbody>
         <h3>Credit Card Information</h3>
@@ -52,10 +53,13 @@
             <input type="text" ng-model="billing.name">
           </td>
           <td>
+            <input type="text" ng-model="billing.brand">
+          </td>
+          <td>
             <input type="text" ng-model="billing.ccNum">
           </td>
           <td>
-            <input type="text" ng-model="billing.ccExpiration">
+            <input type="text" ng-model="billing.ccExp">
           </td>
         </tr>
       </tbody>

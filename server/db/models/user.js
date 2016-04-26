@@ -33,7 +33,7 @@ var userSchema = new mongoose.Schema({
       type: String,
       required: true
     },
-    cart: [CartSchema],
+    cart: {},
     address: [AddressSchema],
     paymentInfo: [PaymentSchema],
     reviews: {
@@ -47,7 +47,6 @@ var userSchema = new mongoose.Schema({
     },
     resetPassword: String,
     resetPasswordExpiration:Date,
-    disabled: Boolean
 
 
 });
@@ -62,22 +61,6 @@ userSchema.methods.getPurchases = function () {
   return mongoose.model('Purchase').find({user: this._id});
 };
 
-userSchema.methods.addToCart = function(obj) {
-  var exists = false;
-  for (let i = 0; i < this.cart.length; i++) {
-    if (this.cart[i].productInfo == obj._id) {
-      exists = true;
-      this.cart[i].quantity++;
-    }
-  }
-
-  if(!exists) {
-    this.cart.push(new Cart({
-      productInfo: obj._id
-    }));
-  }
-  this.save();
-};
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.

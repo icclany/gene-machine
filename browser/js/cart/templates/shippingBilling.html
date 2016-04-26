@@ -4,7 +4,7 @@
     <p>All fields are required</p>
     <table class="table">
       <thead>
-        <select ng-model="shipping" data-ng-options="address as address.name for address in user.address">
+        <select ng-model="shipping" data-ng-options="address as address.street for address in user.address">
           <option value="">Select Account</option>
         </select>
       </thead>

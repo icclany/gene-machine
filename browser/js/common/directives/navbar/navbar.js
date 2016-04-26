@@ -11,6 +11,7 @@ app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, CartFacto
                 { label: 'About', state: 'about' },
                 { label: 'Products', state: 'allProducts' },
                 { label: 'Members Only', state: 'membersOnly', auth: true },
+                { label: 'Admin', state: 'adminHome', admin: true}
             ];
 
             scope.isLoggedIn = function() {

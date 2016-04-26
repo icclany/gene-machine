@@ -19,7 +19,7 @@ app.controller('AdminProductCtrl', function($scope, $state, AdminFactory, thePro
   $scope.theProducts = theProducts;
 
   $scope.goToProductSettings = function(product){
-    $state.go('productSettings', {product: product}); // maybe needs to be wrapped
+    $state.go('productSettings', {product: product});
   };
 
   $scope.deleteProduct = AdminFactory.deleteProduct;

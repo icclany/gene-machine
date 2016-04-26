@@ -1,9 +1,11 @@
 app.factory('ProductFactory', function($http) {
-    "use strict";
     var ProductFactory = {};
+    var filters = {
+        // category: ['small', 'medium', 'large']
+    };
     var cart = {};
-    var inventory = [];
 
+    var inventory;
 
     ProductFactory.fetchAll = function() {
         return $http.get('/api/products').then(productArray => {
@@ -12,8 +14,34 @@ app.factory('ProductFactory', function($http) {
         });
     };
 
+    ProductFactory.getReviews = function() {
+        return $http.get('/api/reviews');
+    };
+
+    ProductFactory.addToCart = function(product, user) {
+        // If user is logged in...
+        if (user) {
+            return $http.post('/api/users/' + user._id + '/cart', {
+                item: product
+            });
+        } else { // If guest
+            if (cart[product._id]) {
+                cart[product._id].quantity++;
+            } else {
+                cart[product._id] = {
+                    quantity: 1,
+                    productInfo: product
+                };
+            }
+        }
+    };
+
     ProductFactory.filterInventory = function(cart){
+        console.log("CART IS")
+        console.log(cart)
         return cart.map(function(cartProduct){
+            console.log("finding in")
+            console.log(inventory)
             var invMatch = inventory.find(function(invProduct) {
                 return invProduct._id === cartProduct._id;
             });
@@ -22,24 +50,11 @@ app.factory('ProductFactory', function($http) {
         });
     };
 
-ProductFactory.setFilter = function(filterObj) {
-    var categories = [];
-    for (var size in filterObj.categories) {
-        if (filterObj.categories[size]) categories.push(size);
-    }
-    filters.tags = filterObj.tags;
-    filters.category = categories;
-};
+    ProductFactory.fetchById = function(id) {
+        return $http.get('/api/products/' + id).then(product => {
+            return product.data;
+        });
+    };
 
-ProductFactory.getFilters = function() {
-    return filters;
-};
-
-ProductFactory.fetchById = function(id) {
-    return $http.get('/api/products/' + id).then(product => {
-        return product.data;
-    });
-};
-
-return ProductFactory;
+    return ProductFactory;
 });

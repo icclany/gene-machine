@@ -4,11 +4,9 @@ module.exports = router;
 var _ = require('lodash');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-// var Address = mongoose.model('Address');
-// var Product = mongoose.model('Product');
-// var PaymentInfo = mongoose.model('PaymentInfo');
-// var Purchase = mongoose.model('Purchase');
-// var Promise = require('bluebird');
+var Address = mongoose.model('Address');
+var PaymentInfo = mongoose.model('PaymentInfo');
+
 var nodemailer = require('nodemailer');
 var smtpTransport = nodemailer.createTransport('SMTP', {
     service: 'Gmail',
@@ -17,14 +15,6 @@ var smtpTransport = nodemailer.createTransport('SMTP', {
       pass: 'GeneMachine'
     }
 });
-
-var ensureAuthenticated = function(req, res, next) {
-    if (req.isAuthenticated()) {
-        next();
-    } else {
-        res.status(401).end();
-    }
-};
 
 router.param('id', function(req, res, next, id) {
     User.findById(id).exec()
@@ -58,9 +48,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:id', function(req, res, next) {
-    req.requestedUser.getPurchases()
+    return req.requestedUser.getPurchases()
         .then(purchases => {
-            res.json(purchases)
+            // console.log("got purchases")
+            // console.log(purchases)
+            res.json(purchases);
         });
 });
 
@@ -130,9 +122,6 @@ router.put('/reset/:token', function(req,res,next){
     })
     .catch(next);
 });
-
-
-//CART
 
 router.post('/:id/cart', function(req, res, next) {
     console.log(req.requestedUser);

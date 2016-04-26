@@ -16,5 +16,65 @@
   <h2>Your total is ${{total}}</h2>
 
   <button class="btn btn-primary" ui-sref="shippingBilling">Proceed to shipping and billing</button>
+    <!-- <img class="cart-thumb" ng-src="{{cartItem.description.image}}" ui-sref="product({productId: cartItem.description._id})">
+    <h5>Item: {{cartItem.description.name}}</h5>
+    <h5>Price: {{cartItem.description.price}}</h5>
+    <h5>Quantity: {{cartItem.quantity}}</h5>
+  </div>
+  <h2>Your total is ${{total}}!!</h2>
+  <form name="shippingbilling">
+    <div>
+      <h2>Shipping info</h2>
+      <select ng-model="shipping" data-ng-options="address as address.street for address in user.address">
+        <option value="">Select Account</option>
+      </select>
 
+
+      <label>Name:</label>
+      <input type="text" ng-model="shipping.name">
+      <br>
+      <label>Street:</label>
+      <input type="text" ng-model="shipping.street">
+      <br>
+      <label>City:</label>
+      <input type="text" ng-model="shipping.city">
+      <br>
+      <label>Zipcode:</label>
+      <input type="text" ng-model="shipping.zipCode">
+      <br>
+    </div>
+    <div>
+
+      <h2>Billing info</h2>
+      <select ng-model="billing" data-ng-options="address as payment.name for payment in user.paymentInfo">
+        <option value="">Select Account</option>
+      </select>
+      <h3>Credit Card Information</h3>
+      <label>Name:</label>
+      <input type="text" ng-model="billing.name">
+      <br>
+      <label>Number:</label>
+      <input type="text" ng-model="billing.ccNum">
+      <br>
+      <label>Expiration Date:</label>
+      <input type="text" ng-model="billing.ccExpiration">
+      <br>
+      <h3>Billing Address</h3>
+      <label>Name:</label>
+      <input type="text" ng-model="billing.Address.name">
+      <br>
+      <label>Street:</label>
+      <input type="text" ng-model="billing.Address.street">
+      <br>
+      <label>City:</label>
+      <input type="text" ng-model="billing.Address.city">
+      <br>
+      <label>Zipcode:</label>
+      <input type="text" ng-model="billing.Address.zipCode">
+      <br>
+    </div>
+  </form>
+
+  <button class="checkout glyphicon glyphicon-usd" ng-click="finishCheckout()">Finish Checkout</button>
+  <button type="button" class="btn btn-primary" ng-click="openStripe()">Pay with Stripe</button> -->
 </div>

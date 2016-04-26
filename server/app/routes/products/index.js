@@ -9,10 +9,8 @@ router.get('/', function (req, res, next) {
       Products.find({}).then(products=> {
           res.json(products);
       })
-      .catch(next);      
+      .catch(next);
 });
-
-
 
 router.get('/category', function (req, res, next) {
     Products.find({category: req.query.type}).then(products=> {

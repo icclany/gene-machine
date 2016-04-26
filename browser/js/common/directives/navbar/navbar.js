@@ -14,11 +14,6 @@ app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, $state) {
                 { label: 'Admin', state: 'adminHome', admin: true}
             ];
 
-            scope.adminItems = [
-                { label: 'AU', state: 'adminUsers', admin: true },
-                { label: 'AP', state: 'adminProducts', admin: true }
-            ];
-
             scope.isLoggedIn = function() {
                 return AuthService.isAuthenticated();
             };

@@ -1,5 +1,5 @@
-  <form style="{display: inline-block}">
-    <img ng-src="{{ theProduct.image }}">
+  <form id="single-product-admin">
+    <img height="200px" width="500px" style="border: 1px solid black;"ng-src="{{ theProduct.image }}">
     <fieldset class="form-group">
       <label for="formGroupExampleInput">Product Name</label>
       <input ng-disabled="editSettings" ng-model = "theProduct.name" type="text" class="form-control" placeholder="Product Name" required</>

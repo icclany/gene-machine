@@ -16,17 +16,13 @@ single-product {
   justify-content: center;
 }
 
-// #remove-from-cart {
-//   margin-left: 33%;
-// }
-
-// #cart-price {
-//   float: right;
-// }
-
-// #quantity {
-//   float: right;
-// }
+#previous-purchases {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  justify-content: center;
+}
 
 #shipping-billing-form {
   background-color: #cce0ff;

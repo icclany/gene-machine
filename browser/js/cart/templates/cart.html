@@ -15,22 +15,4 @@
       </div>
   </div>
   <h1 ng-hide="cart.length">Nothing here!</h1>
-  <button ng-show="cart.length" type="button" class="btn btn-primary btn-lg btn-block" ui-sref="checkout">Checkout</button>
-  <!-- <button type="button" class="btn btn-primary btn-lg btn-block" ui-sref="checkout">Checkout</button>
-
-<div class="cart">
-    <h1>Your Cart:</h1>
-    <form name="cartform" novalidate>
-        <div ng-repeat="cartItem in cart">
-            <img class="cart-thumb" ng-src="{{cartItem.description.image}}" ui-sref="product({productId: cartItem.productInfo._id})">
-            <h5>Item: {{cartItem.description.name}}</h5>
-            <h5>Price: {{cartItem.description.price}}</h5>
-            <h5>Quantity:</h5>
-            <input ng-model="cartItem.quantity" ng-keypress="updateQuantity(cartItem, $event)" type="number" value={{cartItem.quantity}}>
-            <button>
-                <span class="glyphicon glyphicon-minus" ng-click="updateQuantity(cartItem, $event)">Remove from Cart</span>
-            </button>
-        </div>
-    </form>
-    <button class="checkout glyphicon glyphicon-usd" ng-click="checkOut()">CHECKOUT</button>
-</div> -->
+<button ng-show="cart.length" type="button" class="btn btn-primary btn-lg btn-block" ui-sref="shippingBilling">Checkout</button>

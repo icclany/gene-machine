@@ -1,46 +1,9 @@
-<h1>Welcome {{loggedInUser.firstName}} !!!!</h1>
-<div class='all-products'>
-    <h1>Your Purchases: </h1>
-    <div class='purchase-list'>
-        <div ng-repeat="purchase in purchases">
-            <h3>Your purchase on {{purchase.date}}</h3>
-            <div ng-repeat="item in purchase.items">
-                <img class="cart-thumb" ng-src="{{item.description.image}}" ui-sref="product({productId: item.description._id})">
-                <h5>Item: {{item.description.name}}</h5>
-                <h5>Price: ${{item.description.price}}</h5>
-                <h5>Quantity: {{item.quantity}}</h5>
-                <span>
-                <input ng-model="review.numStars" type="text" placeholder="Stars">
-                <input ng-model="review.text" type="text" placeholder="Leave a review">
-                <button ng-click="submitReview(item, review)">Submit Review</button>
-                </span>
-            </div>
-            <h4>Total: ${{purchase.total}}</h4>
-        </div>
-    </div>
+<div class="jumbotron" id="user-page-jumbotron">
+  <h1>Welcome, {{loggedInUser.firstName}}</h1>
+  <a ui-sref="previousPurchases">
+    <h2>View your previous purchases</h2>
+  </a>
+  <a ui-sref="editAccountInfo">
+    <h2>Edit your account information</h2>
+  </a>
 </div>
-<div ui-view></div>
-<sidebar>
-    <form class='form-group' name="sidebarForm" novalidate>
-        <div type='button' class="btn" ui-sref='.settings'>Edit User Information</div>
-        <div type='button' class="btn" ui-sref='.updatePassword'>Change Password</div>
-        <div type='button' class="btn">Update Address Information</br>
-            <select ng-change='editOnFileAddress()' name='addressSelect' ng-model='addressSelected'>
-                <option value='null'>Choose Address</option>
-                <option value='{{address._id}}' ng-repeat="address in user.address">{{address.name}}</option>
-            </select>
-        </div>
-        <div type='button' class='btn' ui-sref='.address'>Save New Address</div>
-        <div type='button' class="btn">Update Billing Information</br>
-            <select ng-change='editOnFileBilling()' name='billingSelect' ng-model='billingSelected'>
-                <option value='null'>Choose Billing Profile</option>
-                <option value='{{billing._id}}' ng-repeat="billing in user.paymentInfo">{{billing.name}}</option>
-            </select>
-        </div>
-        <div type='button' class='btn' ui-sref='.billing'>Save New Billing Information</div>
-        <label>Admin Status -
-            <input type='checkbox' ng-show='loggedInUser.isAdmin' ng-model='user.isAdmin'></input>
-        </label>
-        <button type='button' ng-show='loggedInUser.isAdmin' ng-click='submitEdits()'>Update {{user.name}} Admin Status</button>
-    </form>
-</sidebar>

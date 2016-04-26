@@ -21,6 +21,21 @@ body {
   justify-content: space-between;
 }
 
+#edit-account-info {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(255,255,255,0.7);
+}
+
+#single-product-admin {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
 @mixin clearfix {
   &:after {
     content: "";
@@ -58,6 +73,14 @@ body {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
+}
+
+#user-page-jumbotron {
+  width: 80%;
+  height: 50%;
+  margin-left: 100px;
+  margin-top: 100px;
+  background-color: rgba(255,255,255,0.7);
 }
 
 sidebar {

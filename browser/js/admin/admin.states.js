@@ -46,17 +46,17 @@ app.config(function($stateProvider){
   .state('adminHome', {
     url: '/admin',
     templateUrl: '/js/admin/templates/adminHome.html'
-  })
-  .state('adminPurchases',{
+  });
+
+  $stateProvider.state('adminPurchases',{
     url: '/admin/purchases',
     templateUrl: '/js/admin/templates/adminPurchases.html',
-    controller: 'PurchaseCtrl',
+    controller: 'AdminPurchaseCtrl',
     resolve: {
-      thePurchases: function(PurchaseFactory){
-        console.log("hello from adminPurchases state");
-        return PurchaseFactory.fetchAll()
+      allPurchases: function(AdminFactory){
+        console.log('here');
+        return AdminFactory.getPurchases()
         .then(function(purchases){
-          console.log('hello from adminPurchases .then', purchases);
           return purchases;
         });
       }

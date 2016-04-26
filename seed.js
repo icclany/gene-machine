@@ -38,7 +38,8 @@ var wipeCollections = function() {
         Product.remove({}),
         Address.remove({}),
         PaymentInfo.remove({}),
-        Review.remove({})
+        Review.remove({}),
+        Purchase.remove({})
     ]);
 };
 

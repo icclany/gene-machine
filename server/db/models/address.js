@@ -1,7 +1,10 @@
 'use strict';
 var mongoose = require('mongoose');
 
-var addressSchema = new mongoose.Schema({ //add new to mongoose.Schema and made variable schema
+var addressSchema = new mongoose.Schema({
+  name: {
+    type: String
+  },
   street: {
     type: String,
     required: true

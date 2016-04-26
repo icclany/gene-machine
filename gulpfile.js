@@ -77,6 +77,13 @@ gulp.task('testServerJSWithCoverage', function (done) {
         });
 });
 
+gulp.task('testCartModelJS', function () {
+    require('babel-register');
+    return gulp.src('./tests/server/**/*.js', {
+        read: false
+    }).pipe(mocha({ reporter: 'spec' }));
+});
+
 gulp.task('testBrowserJS', function (done) {
     karma.start({
         configFile: __dirname + '/tests/browser/karma.conf.js',

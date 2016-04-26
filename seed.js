@@ -38,7 +38,8 @@ var wipeCollections = function() {
         Product.remove({}),
         Address.remove({}),
         PaymentInfo.remove({}),
-        Review.remove({})
+        Review.remove({}),
+        Purchase.remove({})
     ]);
 };
 
@@ -258,49 +259,6 @@ function seedPaymentInfo() {
     return PaymentInfo.create(paymentsInfo);
 }
 
-function seedAddresses() {
-    var addresses = [{
-        name: 'TK',
-        street: '5 Hanover',
-        city: 'NY',
-        zipCode: 12234
-    }, {
-        name: 'TA',
-        street: '5 HaDnover',
-        city: 'NYC',
-        zipCode: 12214
-    }];
-    return Address.create(addresses);
-}
-
-function seedReviews() {
-    var reviews = [{
-        numStars: 4,
-        user: funUser._id,
-        product: funProduct._id,
-        text: "This is a great thing!"
-    }, {
-        numStars: 1,
-        user: funUser._id,
-        product: funProduct._id
-    }, {
-        numStars: 5,
-        user: funUser._id,
-        product: funProduct._id
-    }];
-    return Review.create(reviews);
-}
-
-///// this needs to be done when we have ObjectId's for products, addresses, and payments info
-function seedPurchases() {
-    var purchases = [{
-        items: [funProduct._id],
-        shippingAddress: funAddress._id,
-        paymentInfo: funPaymentInfo._id
-    }];
-    return Purchase.create(purchases);
-}
-
 connectToDb
     .then(function() {
         return wipeCollections();
@@ -310,9 +268,6 @@ connectToDb
     })
     .then(function() {
         return seedProducts();
-    })
-    .then(function() {
-        return seedAddresses();
     })
     .then(function() {
         console.log(chalk.green('Seed successful!'));

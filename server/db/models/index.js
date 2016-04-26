@@ -4,7 +4,6 @@
 require('./address');
 require('./paymentInfo');
 require('./product');
-require('./cart');
 require('./user');
 require('./purchase');
 require('./review');

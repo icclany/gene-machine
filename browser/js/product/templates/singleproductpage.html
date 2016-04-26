@@ -5,7 +5,7 @@
     <p>Description: {{ theProduct.description }}</p>
     <p>Price: ${{ theProduct.price }}</p>
     <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="addToCart()" ng-show="theProduct.stock > 0">Add to Cart</button>
- -  <span class="glyphicon glyphicon-list-alt
+   <span class="glyphicon glyphicon-list-alt
  -" ng-show="theProduct.stock <= 0"> OUT OF STOCK :(</span>
     <div ng-repeat="review in theProduct.reviews">
       <p>Stars: {{review.numStars}}</p>

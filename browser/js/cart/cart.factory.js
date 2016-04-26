@@ -107,14 +107,12 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
             address: shipinfo,
             })
         .then(function(completedOrder) {
-            
-            var productsPurchased = "%0AYour order, "+ completedOrder.data._id+" is processing.  You will receive a confirmation email when it ships.%0D";
-            productsPurchased =  '%0A'+productsPurchased + completedOrder.data.items.reduce(function(origin, ele){
-                return origin + '%0A'+ele.quantity+'x -'+ele.description.name+' - $'+ele.description.price * ele.quantity+'%0D';
+
+            var productsPurchased = "Your order, "+ completedOrder.data._id+" is processing.  You will receive a confirmation email when it ships.";
+            productsPurchased =  ''+productsPurchased + completedOrder.data.items.reduce(function(origin, ele){
+                return origin + ''+ele.quantity+'x -'+ele.description.name+' - $'+ele.description.price * ele.quantity+'';
             }, '');
-            productsPurchased = productsPurchased+ '%0A'+productsPurchased + 'Total - $'+completedOrder.data.total + '%0D';
-            CartFactory.cart = [];
-            CartFactory.persist(user);
+            productsPurchased = productsPurchased+ ''+productsPurchased + 'Total - $'+completedOrder.data.total + '';
             return $http.post('/api/users/email', {email: user.email, text: productsPurchased, subject: 'Your Gene Machine Order is Processing!'}); })
         .then(function() {
             CartFactory.cart = [];

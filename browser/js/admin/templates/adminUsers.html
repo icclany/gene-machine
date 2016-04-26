@@ -8,6 +8,7 @@
         <th>Email</th>
         <th>Delete User</th>
         <th>Edit User</th>
+        <th>Reset Password</th>
       </tr>
     </thead>
     <tbody>
@@ -17,17 +18,16 @@
         <th>{{user.email}}</th>
         <th>
           <button class="glyphicon glyphicon-remove" ng-click="deleteUser(user._id)">
-            <!-- <a ng-click="deleteUser(user._id)"></a> -->
           </button>
         </th>
         <th>
           <button ng-click="goToUserSettings(user)"class="glyphicon glyphicon-pencil">
-            
+
           </button>
         </th>
          <th>
           <button ng-click="passwordReset(user)"class="glyphicon glyphicon-refresh">
-            
+
           </button>
         </th>
       </tr>

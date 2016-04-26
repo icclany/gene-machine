@@ -7,7 +7,6 @@ router.use('/products', require('./products'));
 router.use('/reviews', require('./reviews'));
 router.use('/purchases', require('./purchases'));
 
-
 // Make sure this is after all of the registered routes!
 router.use(function (req, res) {
     res.status(404).end();

@@ -16,7 +16,7 @@ app.controller('UserCtrl', function($scope, $state, User, UserSettingsFact, Purc
             numStars: reviewObj.numStars,
             text: reviewObj.text,
             user: $scope.loggedInUser._id,
-            product: item.productInfo._id
+            product: item.description._id
         })
         .then(function() {
              $state.go($state.current, {}, { reload: true });

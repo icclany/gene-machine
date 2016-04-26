@@ -1,12 +1,15 @@
-app.factory('ProductFactory', function($http, Session) {
+app.factory('ProductFactory', function($http) {
     var ProductFactory = {};
     var filters = {
         // category: ['small', 'medium', 'large']
     };
     var cart = {};
 
+    var inventory;
+
     ProductFactory.fetchAll = function() {
         return $http.get('/api/products').then(productArray => {
+            inventory = productArray.data;
             return productArray.data;
         });
     };
@@ -33,56 +36,18 @@ app.factory('ProductFactory', function($http, Session) {
         }
     };
 
-    ProductFactory.getCart = function(user) {
-        if (user) {
-            return $http.get('/api/users/' + user._id + '/cart')
-                .then(function(userCart) {
-                    return userCart.data;
-                });
-        } else {
-            return cart;
-        }
-    };
-
-    ProductFactory.updateQuantity = function(user, product, quantity) {
-        if (user) {
-            return $http.put('/api/users/' + user._id + '/cart', {
-                productId: product._id,
-                quantity: quantity
+    ProductFactory.filterInventory = function(cart){
+        console.log("CART IS")
+        console.log(cart)
+        return cart.map(function(cartProduct){
+            console.log("finding in")
+            console.log(inventory)
+            var invMatch = inventory.find(function(invProduct) {
+                return invProduct._id === cartProduct._id;
             });
-        } else {
-            console.log("adding to guest cart")
-            cart[product._id] = quantity;
-        }
-    };
-
-    ProductFactory.removeFromCart = function(user, product) {
-        return $http.delete('/api/users/' + user._id + '/cart/' + product._id);
-    };
-
-    ProductFactory.emptyCart = function() {
-        cart = {};
-    };
-
-    ProductFactory.numCart = function() {
-        return cart.length;
-    };
-
-    ProductFactory.getReviews = function(itemId) {
-        return $http.get('/api/products/' + itemId);
-    };
-
-    ProductFactory.setFilter = function(filterObj) {
-        var categories = [];
-        for (var size in filterObj.categories) {
-            if (filterObj.categories[size]) categories.push(size);
-        }
-        filters.tags = filterObj.tags;
-        filters.category = categories;
-    };
-
-    ProductFactory.getFilters = function() {
-        return filters;
+            cartProduct.description = invMatch;
+            return cartProduct;
+        });
     };
 
     ProductFactory.fetchById = function(id) {

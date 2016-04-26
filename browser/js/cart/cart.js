@@ -10,8 +10,12 @@ app.config(function($stateProvider) {
             currentUser: function(AuthService) {
                 return AuthService.getLoggedInUser() || {};
             },
-            cart: function(ProductFactory, currentUser) {
-                return ProductFactory.getCart(currentUser);
+            cart: function(CartFactory, currentUser, ProductFactory) {
+
+                return ProductFactory.fetchAll()
+                    .then(function(allProducts){
+                        return CartFactory.populate(allProducts);
+                    });
             }
         }
     });
@@ -27,30 +31,56 @@ app.config(function($stateProvider) {
             currentUser: function(AuthService) {
                 return AuthService.getLoggedInUser();
             },
-            cart: function(ProductFactory, currentUser) {
-                return ProductFactory.getCart(currentUser);
+            cart: function(CartFactory, currentUser, ProductFactory) {
+                return ProductFactory.fetchAll()
+                    .then(function(allProducts){
+                        return CartFactory.populate(allProducts);
+                    });
+            },
+            total: function(CartFactory){
+                return CartFactory.getTotal();
             }
         }
     });
+
+    $stateProvider.state('orderConfirmation', {
+      url: '/confirmation',
+      templateUrl: 'js/cart/templates/confirm.html',
+    });
 });
 
-app.controller('CheckoutCtrl', function($state, $scope, cart, currentUser, CartFactory) {
+app.controller('CheckoutCtrl', function($state, $scope, total, currentUser, CartFactory) {
     $scope.user = currentUser;
-    $scope.cart = cart;
-    $scope.total = CartFactory.getTotal(cart);
+    $scope.cart = CartFactory.cart;
+    $scope.total = CartFactory.getTotal();
+    console.log($scope.total);
 
-    $scope.checkout = function() {
-        return CartFactory.finishOrder($scope.shipping, $scope.billing.address, $scope.billing.cc, $scope.total,currentUser)
+    $scope.finishCheckout = function() {
+        if (!currentUser) {
+            currentUser = {};
+            currentUser._id = null;
+            currentUser.email = $scope.shipping.name;
+        }
+        CartFactory.finishOrder($scope.shipping, $scope.billing, currentUser)
         .then(function() {
-            $state.go('home');
+            $state.go('orderConfirmation');
         });
     };
+
 
     const handler = StripeCheckout.configure({
       key: 'pk_test_IcTLSnuVPyJq7tdlRcU7gzBf',
       image: '/js/common/directives/logo/gmlogo.png',
       locale: 'auto',
       token: function(token){
+
+        var address = {};
+        var billing = {};
+        var paymentInfo = {};
+        console.log("TOKEN IS")
+        console.log(token)
+        var user = currentUser || {_id: null, email: token.email};
+
         return CartFactory.finishOrder({
             street: token.card.address_line1,
             city: token.card.address_city,
@@ -58,13 +88,13 @@ app.controller('CheckoutCtrl', function($state, $scope, cart, currentUser, CartF
         }, {
             street: token.card.address_line1,
             city: token.card.address_city,
-            zipCode: token.card.address_zip
-        }, {
-            name: "Paid with Stripe",
-            number: "Paid with Stripe",
-            date: "Paid with Stripe"}, $scope.total, currentUser)
+            zipCode: token.card.address_zip,
+            brand: token.card.brand,
+            ccNum: "Paid with Stripe",
+            ccExp: token.card.exp_month + token.card.exp_year
+        }, user)
         .then(function() {
-            $state.go('home');
+            $state.go('orderConfirmation');
         });
       }
     });
@@ -90,19 +120,20 @@ app.controller('CheckoutCtrl', function($state, $scope, cart, currentUser, CartF
 
 });
 
-app.controller('CartCtrl', function($scope, $state, cart, currentUser, ProductFactory) {
-    $scope.cart = cart;
+app.controller('CartCtrl', function($scope, $state, cart, currentUser, CartFactory) {
+    $scope.cart = CartFactory.cart;
 
-    $scope.updateQuantity = function($event, cartItem) {
+    $scope.updateQuantity = function(cartItem, $event) {
         var keyCode = $event.which || $event.keyCode;
-        if (keyCode === 13) {
-            return ProductFactory.updateQuantity(currentUser, cartItem.productInfo, cartItem.quantity);
+        if (keyCode === 13 && $event.type === 'keypress') {
+            CartFactory.push(cartItem._id, cartItem.quantity, currentUser, true);
+        } else if ($event.type === 'click') {
+            CartFactory.remove(cartItem._id, currentUser);
         }
     };
 
-    $scope.removeFromCart = function(cartItem) {
-        return ProductFactory.removeFromCart(currentUser, cartItem.productInfo).then(function() {
-            $state.go($state.current, {}, { reload: true });
-        });
+    $scope.checkOut = function(){
+        $state.go('checkout', {cart: $scope.cart});
     };
+
 });

@@ -1,10 +1,10 @@
 'use strict';
 
-app.controller('ProductController', function($scope, theProduct, ProductFactory, currentUser) {
+app.controller('ProductController', function($scope, theProduct, ProductFactory, currentUser, CartFactory) {
     $scope.theProduct = theProduct;
 
     $scope.addToCart = function() {
-        ProductFactory.addToCart(theProduct, currentUser);
+        CartFactory.push(theProduct._id, 1, currentUser);
     };
 
 });
@@ -60,6 +60,7 @@ app.controller('AllProductsController', function($scope, allProducts) {
         tags: angular.copy(tags),
         description: ''
     };
+
     $scope.filter.filterByTag = false;
     var modelDefault = angular.copy($scope.filter);
 

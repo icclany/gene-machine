@@ -1,3 +1,5 @@
+'use strict';
+
 app.config(function($stateProvider){
   $stateProvider.state('adminUsers', {
     url: '/admin/users',
@@ -25,11 +27,8 @@ app.config(function($stateProvider){
         });
       }
     }
-  });
-});
-
-app.config(function($stateProvider){
-  $stateProvider.state('productSettings', {
+  })
+  .state('productSettings', {
     url: '/admin/product/edit',
     templateUrl: '/js/admin/templates/adminSingleProduct.html',
     controller: 'AdminSingleProductCtrl',
@@ -42,6 +41,25 @@ app.config(function($stateProvider){
           return product;
         });
       },
+    }
+  })
+  .state('adminHome', {
+    url: '/admin',
+    templateUrl: '/js/admin/templates/adminHome.html'
+  })
+  .state('adminPurchases',{
+    url: '/admin/purchases',
+    templateUrl: '/js/admin/templates/adminPurchases.html',
+    controller: 'PurchaseCtrl',
+    resolve: {
+      thePurchases: function(PurchaseFactory){
+        console.log("hello from adminPurchases state");
+        return PurchaseFactory.fetchAll()
+        .then(function(purchases){
+          console.log('hello from adminPurchases .then', purchases);
+          return purchases;
+        });
+      }
     }
   });
 });

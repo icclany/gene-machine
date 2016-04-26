@@ -1,8 +1,11 @@
 'use strict';
 var mongoose = require('mongoose');
 
+var AddressSchema = mongoose.model('Address').schema;
+var PaymentSchema = mongoose.model('PaymentInfo').schema;
+
 var purchaseSchema = new mongoose.Schema({
-  items: Array,
+  items: {},
   total: {
     type: Number,
     default: 0
@@ -21,14 +24,8 @@ var purchaseSchema = new mongoose.Schema({
   email: {
     type: String
   },
-  shippingAddress: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Address'
-  },
-  billingAddress: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Address'
-  }
+  address: AddressSchema,
+  paymentInfo:PaymentSchema
 });
 
 mongoose.model('Purchase', purchaseSchema);

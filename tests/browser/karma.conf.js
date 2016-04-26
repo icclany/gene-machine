@@ -13,7 +13,8 @@ module.exports = function (config) {
         'public/main.js',
         'node_modules/sinon/pkg/sinon.js',
         'node_modules/angular-mocks/angular-mocks.js',
-        'tests/browser/**/*.js'
+        // 'tests/browser/**/*.js'
+        'tests/browser/*.js'
     ];
 
     var excludeFiles = [

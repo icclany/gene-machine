@@ -10,7 +10,7 @@
   <form name="shippingbilling">
     <div>
       <h2>Shipping info</h2>
-      <select ng-model="shipping" data-ng-options="address as address.name for address in user.address">
+      <select ng-model="shipping" data-ng-options="address as address.street for address in user.address">
         <option value="">Select Account</option>
       </select>
 
@@ -29,7 +29,7 @@
       <br>
     </div>
     <div>
-      
+
       <h2>Billing info</h2>
       <select ng-model="billing" data-ng-options="address as payment.name for payment in user.paymentInfo">
         <option value="">Select Account</option>
@@ -60,6 +60,6 @@
     </div>
   </form>
 
-  <button class="checkout glyphicon glyphicon-usd" ng-click="checkout()">Finish Checkout</button>
+  <button class="checkout glyphicon glyphicon-usd" ng-click="finishCheckout()">Finish Checkout</button>
   <button type="button" class="btn btn-primary" ng-click="openStripe()">Pay with Stripe</button>
 </div>

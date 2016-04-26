@@ -8,9 +8,10 @@ app.config(function($stateProvider) {
         controller: 'CartCtrl',
         resolve: {
             currentUser: function(AuthService) {
-                return AuthService.getLoggedInUser();
+                return AuthService.getLoggedInUser() || {};
             },
             cart: function(CartFactory, currentUser, ProductFactory) {
+
                 return ProductFactory.fetchAll()
                     .then(function(allProducts){
                         return CartFactory.populate(allProducts);
@@ -54,13 +55,12 @@ app.controller('CheckoutCtrl', function($state, $scope, total, currentUser, Cart
     $scope.total = CartFactory.getTotal();
     console.log($scope.total);
 
-    $scope.checkout = function() {
+    $scope.finishCheckout = function() {
         if (!currentUser) {
             currentUser = {};
             currentUser._id = null;
             currentUser.email = $scope.shipping.name;
         }
-        console.log('checking out');
         CartFactory.finishOrder($scope.shipping, $scope.billing, currentUser)
         .then(function() {
             $state.go('orderConfirmation');
@@ -73,6 +73,14 @@ app.controller('CheckoutCtrl', function($state, $scope, total, currentUser, Cart
       image: '/js/common/directives/logo/gmlogo.png',
       locale: 'auto',
       token: function(token){
+
+        var address = {};
+        var billing = {};
+        var paymentInfo = {};
+        console.log("TOKEN IS")
+        console.log(token)
+        var user = currentUser || {_id: null, email: token.email};
+
         return CartFactory.finishOrder({
             street: token.card.address_line1,
             city: token.card.address_city,
@@ -80,21 +88,41 @@ app.controller('CheckoutCtrl', function($state, $scope, total, currentUser, Cart
         }, {
             street: token.card.address_line1,
             city: token.card.address_city,
-            zipCode: token.card.address_zip
-        }, {
-            name: "Paid with Stripe",
-            number: "Paid with Stripe",
-            date: "Paid with Stripe"}, $scope.total, currentUser)
+            zipCode: token.card.address_zip,
+            brand: token.card.brand,
+            ccNum: "Paid with Stripe",
+            ccExp: token.card.exp_month + token.card.exp_year
+        }, user)
         .then(function() {
             $state.go('orderConfirmation');
         });
       }
     });
 
+    $scope.openStripe = function(){
+      handler.open({
+        name: "Gene Machine",
+        image: '/js/common/directives/logo/gmlogo.png',
+        billingAddress: true,
+        zipCode: true,
+        shippingAddress: true,
+        amount: $scope.total * 100
+      });
+    };
+
+    $scope.stripeCallback = function (code, result) {
+      if (result.error) {
+          window.alert('it failed! error: ' + result.error.message);
+      } else {
+          window.alert('success! token: ' + result.id);
+      }
+    };
+
 });
 
 app.controller('CartCtrl', function($scope, $state, cart, currentUser, CartFactory) {
     $scope.cart = CartFactory.cart;
+
     $scope.updateQuantity = function(cartItem, $event) {
         var keyCode = $event.which || $event.keyCode;
         if (keyCode === 13 && $event.type === 'keypress') {

@@ -26,10 +26,7 @@
             <h5>Quantity:</h5>
             <input ng-model="cartItem.quantity" ng-keypress="updateQuantity(cartItem, $event)" type="number" value={{cartItem.quantity}}>
             <button>
-                <span class="glyphicon glyphicon-minus" ng-click="updateQuantity(cartItem)">Remove from Cart</span>
-            </button>
-             <button>
-                <span class="glyphicon glyphicon-minus" ng-click="updateQuantity(cartItem)">Remove from Cart</span>
+                <span class="glyphicon glyphicon-minus" ng-click="updateQuantity(cartItem, $event)">Remove from Cart</span>
             </button>
         </div>
     </form>

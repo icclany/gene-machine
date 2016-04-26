@@ -12,6 +12,7 @@ app.controller('ProductController', function($scope, theProduct, ProductFactory,
 app.controller('AllProductsController', function($scope, allProducts) {
 
     $scope.products = allProducts;
+
     var tags = allProducts.reduce(function(orig, element) {
         element.tags.forEach(function(tag){
             if (orig.indexOf(tag) === -1) {
@@ -38,10 +39,10 @@ app.controller('AllProductsController', function($scope, allProducts) {
         }
     }, []);
 
-    $scope.typeCategoryClick = function($event, scope){
+    $scope.typeCategoryClick = function($event){
         this.category.status = !this.category.status;
     };
-    $scope.typeButtonClick = function($event, scope){
+    $scope.typeButtonClick = function($event){
         this.tag.status = !this.tag.status;
         if (this.tag.status === true) {
             if ($scope.filter.tags.find(function(tag) {return tag.status === false})) {
@@ -59,6 +60,7 @@ app.controller('AllProductsController', function($scope, allProducts) {
         tags: angular.copy(tags),
         description: ''
     };
+
     $scope.filter.filterByTag = false;
     var modelDefault = angular.copy($scope.filter);
 

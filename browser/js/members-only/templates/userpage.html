@@ -5,11 +5,10 @@
         <div ng-repeat="purchase in purchases">
             <h3>Your purchase on {{purchase.date}}</h3>
             <div ng-repeat="item in purchase.items">
-                <img class="cart-thumb" ng-src="{{item.productInfo.image}}" ui-sref="product({productId: item.productInfo._id})">
-                <h5>Item: {{item.productInfo.name}}</h5>
-                <h5>Price: ${{item.productInfo.price}}</h5>
+                <img class="cart-thumb" ng-src="{{item.description.image}}" ui-sref="product({productId: item.description._id})">
+                <h5>Item: {{item.description.name}}</h5>
+                <h5>Price: ${{item.description.price}}</h5>
                 <h5>Quantity: {{item.quantity}}</h5>
-                <!-- LEAVE A REVIEW -->
                 <span>
                 <input ng-model="review.numStars" type="text" placeholder="Stars">
                 <input ng-model="review.text" type="text" placeholder="Leave a review">

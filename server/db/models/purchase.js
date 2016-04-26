@@ -1,6 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
-var CartSchema = mongoose.model('Cart').schema;
+
 var AddressSchema = mongoose.model('Address').schema;
 var PaymentSchema = mongoose.model('PaymentInfo').schema;
 

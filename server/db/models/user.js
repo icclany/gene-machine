@@ -23,6 +23,7 @@ var userSchema = new mongoose.Schema({
     },
     isAdmin: {
       type: Boolean,
+      default: false,
       required: true
     },
     firstName: {
@@ -47,8 +48,6 @@ var userSchema = new mongoose.Schema({
     },
     resetPassword: String,
     resetPasswordExpiration:Date,
-
-
 });
 
 // method to remove sensitive information from user objects before sending them out
@@ -60,7 +59,6 @@ userSchema.methods.sanitize = function () {
 userSchema.methods.getPurchases = function () {
   return mongoose.model('Purchase').find({user: this._id});
 };
-
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.

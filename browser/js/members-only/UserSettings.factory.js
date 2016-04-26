@@ -4,7 +4,6 @@ app.factory('UserSettingsFact', function($http){
   var UserSettingsFactory = {};
 
   UserSettingsFactory.updateUser = function(user){
-
     return $http.put('/api/users/'+user._id, user)
     .then(function(updatedUser) {
     	return updatedUser.data;

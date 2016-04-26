@@ -59,6 +59,9 @@ app.controller('CheckoutCtrl', function($state, $scope, total, currentUser, Cart
         return CartFactory.finishOrder($scope.shipping, $scope.billing, user)
         .then(function() {
             $state.go('orderConfirmation');
+        })
+        .catch(function(error){
+            console.error(error);
         });
     };
 

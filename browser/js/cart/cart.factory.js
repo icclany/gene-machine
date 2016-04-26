@@ -4,16 +4,20 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
     CartFactory.cart = [];
     var populated = false;
 
-
     var CartedProduct = function(id, qty){
         this._id = id;
         this.quantity = qty;
     };
 
     CartFactory.getTotal = function(){
-        console.log(CartFactory.cart);
         return CartFactory.cart.reduce(function(orig, ele){
             return ele.description.price * ele.quantity + orig;
+        }, 0);
+    };
+
+    CartFactory.getSize = function() {
+        return CartFactory.cart.reduce(function(orig, ele){
+            return ele.quantity + orig;
         }, 0);
     };
 
@@ -25,9 +29,7 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
 
     CartFactory.export = function(){
         var tempCart = {};
-        console.log('in export');
         CartFactory.cart.forEach(function(ele){
-            console.log(ele);
             tempCart[ele._id] = ele.quantity;
         });
         return tempCart;
@@ -55,11 +57,9 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
         CartFactory.persist(userID);
     };
 
-    CartFactory.populate = function(data){
+    CartFactory.populate = function(){
         if (CartFactory.cart.length === 0) {return; }
         CartFactory.cart = ProductFactory.filterInventory(CartFactory.cart);
-        console.log("POPULATED");
-        console.log(CartFactory.cart);
     };
 
     CartFactory.initialize = function(user){
@@ -75,7 +75,6 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
         } else {
             if (Boolean($cookies.getObject('genemachine'))) {
                 tempCart = $cookies.getObject('genemachine');
-                console.log($cookies.getObject('genemachine'));
                 for (var item in tempCart){
                     CartFactory.cart.push(new CartedProduct(item, tempCart[item]));
                 }
@@ -86,17 +85,19 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
     CartFactory.persist = function(user){
         var exportedCart = CartFactory.export();
         if (user) {
-            $http.post('/api/users/'+user._id+'/cart', {cart: exportedCart})
-            .then(function(updatedUser){
-                console.log(updatedUser);
-            });
+            return $http.post('/api/users/'+user._id+'/cart', {cart: exportedCart});
         } else {
             $cookies.putObject('genemachine', exportedCart);
         }
     };
 
-    CartFactory.finishOrder = function(shipinfo, billinfo, user) {
+    CartFactory.saveInfo = function(user, addressInfo, billingInfo) {
+         if (user._id) {
+            return $http.put('/api/users/'+user._id+'/checkout', {address: addressInfo, paymentInfo: billingInfo});
+        };
+    };
 
+    CartFactory.finishOrder = function(shipinfo, billinfo, user) {
         return $http.post('/api/purchases/', {
             items: CartFactory.cart,
             total: CartFactory.getTotal(),
@@ -114,9 +115,12 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
             productsPurchased = productsPurchased+ '%0A'+productsPurchased + 'Total - $'+completedOrder.data.total + '%0D';
             CartFactory.cart = [];
             CartFactory.persist(user);
-            return $http.post('/api/users/email', {email: user.email, text: productsPurchased, subject: 'Your Gene Machine Order is Processing!'}); 
-        })
-;
+            return $http.post('/api/users/email', {email: user.email, text: productsPurchased, subject: 'Your Gene Machine Order is Processing!'}); })
+        .then(function() {
+            CartFactory.cart = [];
+            CartFactory.persist(user);
+            CartFactory.saveInfo(user, shipinfo, billinfo);
+        });
     };
 
     return CartFactory;

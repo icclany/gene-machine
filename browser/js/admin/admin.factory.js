@@ -28,10 +28,7 @@ app.factory('AdminFactory', function($http, $state){
   };
 
   AdminFactory.resetPassword = function(user){
-    $http.post('/api/users/reset', {email: user.email})
-        .then(function(resetUser){
-          console.log(resetUser);
-      });
+    return $http.post('/api/users/reset', {email: user.email});
   };
 
   AdminFactory.updateProduct = function(product){

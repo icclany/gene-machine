@@ -1,22 +1,4 @@
 <div class="container" style="margin-left: 10%;">
-  <div class="all-products">
-    <div ng-repeat="cartItem in cart">
-      <div class="panel panel-primary">
-        <div class="panel-body">
-          <img class="cart-thumb" ng-src="{{cartItem.productInfo.image}}" ui-sref="product({productId: cartItem.productInfo._id})">
-        </div>
-        <div class="panel-footer">
-          <h5>Item: {{cartItem.productInfo.name}}</h5>
-          <h5>Price: {{cartItem.productInfo.price}}</h5>
-          <h5>Quantity: <input ng-model="cartItem.quantity" ng-keypress="updateQuantity($event, cartItem)" type="number" value={{cartItem.quantity}}> </h5>
-          <button type="button" class="btn btn-danger glyphicon glyphicon-minus" ng-click="removeFromCart(cartItem)">Remove from Cart</span>
-          </div>
-        </div>
-      </div>
-  </div>
-  <button type="button" class="btn btn-primary btn-lg btn-block" ui-sref="checkout">Checkout</button>
-
-<div class="cart">
     <h1>Your Cart:</h1>
     <form name="cartform" novalidate>
         <div ng-repeat="cartItem in cart">
@@ -25,10 +7,8 @@
             <h5>Price: {{cartItem.description.price}}</h5>
             <h5>Quantity:</h5>
             <input ng-model="cartItem.quantity" ng-keypress="updateQuantity(cartItem, $event)" type="number" value={{cartItem.quantity}}>
-            <button>
-                <span class="glyphicon glyphicon-minus" ng-click="updateQuantity(cartItem, $event)">Remove from Cart</span>
-            </button>
+            <button type="button" class="btn btn-danger glyphicon glyphicon-minus" ng-click="updateQuantity(cartItem, $event)">Remove from Cart</span>
         </div>
     </form>
-    <button class="checkout glyphicon glyphicon-usd" ng-click="checkOut()">CHECKOUT</button>
+    <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="checkOut()">Checkout</button>
 </div>

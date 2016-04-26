@@ -53,18 +53,11 @@ app.controller('CheckoutCtrl', function($state, $scope, total, currentUser, Cart
     $scope.user = currentUser;
     $scope.cart = CartFactory.cart;
     $scope.total = CartFactory.getTotal();
-    console.log($scope.total);
 
     $scope.finishCheckout = function() {
-        if (!currentUser) {
-            currentUser = {};
-            currentUser._id = null;
-            currentUser.email = $scope.shipping.name;
-        }
-        $scope.billing.brand = 'Credit Card';
-        CartFactory.finishOrder($scope.shipping, $scope.billing, currentUser)
-        .then(function(sentEmail) {
-            console.log(sentEmail);
+        var user = currentUser || {_id: null, email: "Stripe"};
+        return CartFactory.finishOrder($scope.shipping, $scope.billing, user)
+        .then(function() {
             $state.go('orderConfirmation');
         })
         .catch(function(error){
@@ -78,25 +71,23 @@ app.controller('CheckoutCtrl', function($state, $scope, total, currentUser, Cart
       image: '/js/common/directives/logo/gmlogo.png',
       locale: 'auto',
       token: function(token){
-
-        var address = {};
-        var billing = {};
-        var paymentInfo = {};
-        console.log("TOKEN IS")
-        console.log(token)
         var user = currentUser || {_id: null, email: token.email};
-
         return CartFactory.finishOrder({
+            name: token.card.name,
             street: token.card.address_line1,
             city: token.card.address_city,
             zipCode: token.card.address_zip
         }, {
-            street: token.card.address_line1,
-            city: token.card.address_city,
-            zipCode: token.card.address_zip,
-            brand: token.card.brand,
+            name: token.card.name,
             ccNum: "Paid with Stripe",
-            ccExp: token.card.exp_month + token.card.exp_year
+            brand: token.card.brand,
+            ccExp: token.card.exp_month +"/"+ token.card.exp_year,
+            billingAddress: {
+                name: token.card.name,
+                street: token.card.address_line1,
+                city: token.card.address_city,
+                zipCode: token.card.address_zip
+            }
         }, user)
         .then(function() {
             $state.go('orderConfirmation');

@@ -11,10 +11,20 @@ var nodemailer = require('nodemailer');
 var smtpTransport = nodemailer.createTransport('SMTP', {
     service: 'Gmail',
     auth: {
-      user: 'genemachine.agct@gmail.com',
-      pass: 'GeneMachine'
+        user: 'genemachine.agct@gmail.com',
+        pass: 'GeneMachine'
     }
 });
+
+var findStreet;
+var findCC;
+var findAddress = function(address) {
+    return address.street === findStreet;
+};
+
+var findPayment = function(paymentInfo) {
+    return paymentInfo.ccNum === findCC;
+};
 
 router.param('id', function(req, res, next, id) {
     User.findById(id).exec()
@@ -50,8 +60,6 @@ router.get('/', function(req, res, next) {
 router.get('/:id', function(req, res, next) {
     return req.requestedUser.getPurchases()
         .then(purchases => {
-            // console.log("got purchases")
-            // console.log(purchases)
             res.json(purchases);
         });
 });
@@ -65,6 +73,34 @@ router.put('/:id', function(req, res, next) {
             })
             .catch(next);
     } else res.sendStatus(401);
+});
+
+router.put('/:id/checkout', function(req, res, next) {
+    findStreet = req.body.address.street;
+    findCC = req.body.paymentInfo.ccNum;
+    // Check to see if info already exists, and saves to the user
+    if (!req.requestedUser.address.find(findAddress)) {
+            req.requestedUser.address.push(req.body.address);
+    };
+
+    if (!req.requestedUser.paymentInfo.find(findPayment)) {
+        req.requestedUser.paymentInfo.push(req.body.paymentInfo);
+    };
+
+    req.requestedUser.save()
+        .then(function(savedUser) {
+            res.send(req.requestedUser);
+        })
+        .catch(next);
+});
+
+router.post('/:id/cart', function(req, res, next) {
+    req.requestedUser.cart = req.body.cart;
+    req.requestedUser.save()
+        .then(function(savedUser) {
+            res.send(req.requestedUser);
+        })
+        .catch(next);
 });
 
 router.delete('/:id', function(req, res, next) {
@@ -141,16 +177,20 @@ router.put('/reset/:token', function(req,res,next){
     .catch(next);
 });
 
-router.post('/:id/cart', function(req, res, next) {
-    console.log(req.requestedUser);
-    req.requestedUser.cart = req.body.cart;
-    console.log(req.requestedUser);
-    req.requestedUser.save()
-        .then(function(savedUser){
-            res.send(req.requestedUser);
+router.put('/reset/:token', function(req, res, next) {
+    User.findOne({ resetPassword: req.params.token })
+        .then(function(user) {
+            req.body.resetPassword = null;
+            req.body.resetPasswordExpiration = null;
+            _.extend(user, req.body);
+            return user.save();
+        })
+        .then(function() {
+            res.sendStatus(201);
         })
         .catch(next);
 });
+
 
 router.get('/:id/cart', function(req, res, next) {
     res.send(req.requestedUser.cart);

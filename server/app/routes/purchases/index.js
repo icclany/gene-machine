@@ -7,10 +7,13 @@ var Purchase = mongoose.model('Purchase');
 var User = mongoose.model('User');
 
 router.get('/', function(req, res, next) {
-    Purchase.find({}).then(purchases => {
-            res.json(purchases);
-        })
-        .catch(next);
+    Purchase.find({})
+    // .populate('items')
+    .then(purchases => {
+        console.log('check out these purchases bro. in the router', purchases);
+        res.json(purchases);
+    })
+    .catch(next);
 });
 
 router.put('/', function(req, res, next){

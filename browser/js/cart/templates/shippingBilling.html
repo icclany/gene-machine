@@ -9,6 +9,12 @@
         </select>
       </thead>
       <tbody>
+          <td>E-mail</td>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" ng-show='!user' ng-model="guest.email" required>
+          </td>
         <tr>
           <td>Name</td>
           <td>Street</td>
@@ -53,13 +59,15 @@
             <input type="text" ng-model="billing.name">
           </td>
           <td>
-            <input type="text" ng-model="billing.brand">
-          </td>
-          <td>
             <input type="text" ng-model="billing.ccNum">
           </td>
           <td>
             <input type="text" ng-model="billing.ccExp">
+          </td>
+          <td>
+            <select ng-model="billing.brand" data-ng-options="brand as brand for brand in brands">
+            
+            <option value="{{brand}}"></option>
           </td>
         </tr>
       </tbody>

@@ -84,8 +84,8 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
 
     CartFactory.persist = function(user){
         var exportedCart = CartFactory.export();
-        if (user._id) {
-            return $http.post('/api/users/'+user._id+'/cart', {cart: exportedCart});
+        if (user) {
+            return $http.post('/api/users/'+user+'/cart', {cart: exportedCart});
         } else {
             $cookies.putObject('genemachine', exportedCart);
         }
@@ -116,8 +116,7 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
             return $http.post('/api/users/email', {email: user.email, text: productsPurchased, subject: 'Your Gene Machine Order is Processing!'}); })
         .then(function() {
             CartFactory.cart = [];
-            CartFactory.persist(user);
-            CartFactory.saveInfo(user, shipinfo, billinfo);
+            CartFactory.persist(user._id);
         });
     };
 

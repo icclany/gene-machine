@@ -70,9 +70,11 @@ app.controller('CheckoutCtrl', function($state, $scope, total, currentUser, Cart
     $scope.user = currentUser;
     $scope.cart = CartFactory.cart;
     $scope.total = CartFactory.getTotal();
+    $scope.guest;
+    $scope.brands = ['American Express', 'Visa', 'Mastercard'];
 
     $scope.finishCheckout = function() {
-        var user = currentUser || {_id: null, email: "Stripe"};
+        var user = currentUser || {_id: null, email: $scope.guest.email};
         return CartFactory.finishOrder($scope.shipping, $scope.billing, user)
         .then(function() {
             $state.go('orderConfirmation');

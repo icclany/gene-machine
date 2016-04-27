@@ -134,7 +134,7 @@ router.post('/reset', function(req, res, next) {
             if (err){
                 console.error(err);
             } else {
-                res.json('info', 'An e-mail has been sent to ' + savedUser.email + ' with further instructions.');
+                res.send('An e-mail has been sent to ' + savedUser.email + ' with further instructions.');
 
             }
         });
@@ -154,7 +154,7 @@ router.post('/email', function(req, res, next) {
             if (err){
                 console.error(err);
             } else {
-                res.json('info', 'An e-mail has been sent to ' + req.body.email+'.');
+                res.send('An e-mail has been sent to ' + req.body.email+'.');
 
             }
         });

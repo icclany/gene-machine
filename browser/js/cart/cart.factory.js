@@ -85,7 +85,7 @@ app.factory('CartFactory', function($http, $cookies, ProductFactory) {
     CartFactory.persist = function(user){
         var exportedCart = CartFactory.export();
         if (user) {
-            return $http.post('/api/users/'+user+'/cart', {cart: exportedCart});
+            return $http.post('/api/users/'+user._id+'/cart', {cart: exportedCart});
         } else {
             $cookies.putObject('genemachine', exportedCart);
         }
